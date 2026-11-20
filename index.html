@@ -18,14 +18,14 @@
       max-width: 900px; margin: 40px auto; padding: 0 20px; line-height: 1.7; 
       color: var(--text); background-color: var(--bg);
     }
-    h1, h2, h3, label, button, .category-btn, .nutrient-row, .per-100g, .fridge-item, .satiety-box, .trend-box, .quiz-box, .diary-box, .detox-box { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    h1, h2, h3, label, button, .category-btn, .nutrient-row, .per-100g, .fridge-item, .satiety-box, .trend-box, .quiz-box, .diary-box, .detox-box, .behavior-box { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     h1 { font-size: 36px; color: var(--primary); margin-bottom: 8px; letter-spacing: -0.5px;}
     h2 { font-size: 24px; color: var(--primary); margin-top: 48px; border-bottom: 1px solid #e0e0e0; padding-bottom: 8px;}
     .subtitle { color: #666; font-size: 17px; margin-bottom: 30px; font-style: italic;}
     
     .form-group { margin-bottom: 16px; }
     label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; }
-    input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 15px; font-family: sans-serif;}
+    input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 15px; font-family: sans-serif;}
     button { width: 100%; margin-top: 24px; padding: 12px; font-size: 16px; font-weight: 600; color: white; background-color: var(--primary); border: none; border-radius: 6px; cursor: pointer; transition: background 0.2s;}
     button:hover { background-color: #325a3f; }
     
@@ -109,7 +109,32 @@
     .legend-item { display: flex; align-items: center; gap: 4px; }
     .legend-color { width: 12px; height: 12px; border-radius: 3px; }
 
-    /* 💡 数字排毒 & 算法控制模块 */
+    /* 💡 行为追踪 & 社交分享 */
+    #behaviorSection { background-color: white; padding: 30px; border-radius: 16px; margin-top: 50px; border: 1px solid #e0e0e0; box-shadow: 0 4px 15px rgba(0,0,0,0.03);}
+    .behavior-log { margin-top: 20px; }
+    .behavior-option { display: flex; justify-content: space-between; align-items: center; background: #f9f9f9; padding: 16px; border-radius: 8px; margin-bottom: 12px; border: 1px solid #eee;}
+    .behavior-option span { font-weight: 600; font-size: 15px; color: #333;}
+    .behavior-option select { width: 120px; padding: 6px; }
+    .behavior-summary { margin-top: 20px; font-size: 14px; color: #555; background: #e8f4ea; padding: 16px; border-radius: 8px; display: none; border-left: 4px solid var(--primary);}
+    
+    /* 分享中心 */
+    #shareSection { background-color: #f0f4f8; padding: 30px; border-radius: 16px; margin-top: 50px; border: 1px solid #d9e2ec;}
+    #shareSection h2 { border-bottom: none; margin-top: 0; color: #2c3e50;}
+    .share-input { display: flex; gap: 10px; margin-bottom: 20px;}
+    .share-input input { margin: 0; }
+    .share-input button { width: auto; margin: 0; background-color: #2c3e50;}
+    .community-recipes { margin-top: 24px; background: white; padding: 20px; border-radius: 12px;}
+    .community-recipe-item { border-bottom: 1px solid #eee; padding: 12px 0;}
+    .community-recipe-item:last-child { border-bottom: none;}
+    .recipe-author { font-size: 12px; color: #888; font-weight: bold;}
+    .recipe-desc { font-size: 14px; color: #333; margin-top: 4px;}
+    
+    /* 报告 */
+    #reportSection { background-color: white; padding: 30px; border-radius: 16px; margin-top: 50px; border: 1px solid #e0e0e0; box-shadow: 0 4px 15px rgba(0,0,0,0.03);}
+    .report-box { background: #f8faf9; padding: 24px; border-radius: 12px; margin-top: 20px; border: 1px solid #e0e6e3; display: none;}
+    .report-box h3 { color: var(--primary); margin-top: 0;}
+
+    /* 数字排毒 */
     #detoxSection { background-color: #f4f6f8; padding: 30px; border-radius: 16px; margin-top: 50px; border: 1px solid #dbe2e8;}
     #detoxSection h2 { border-bottom: none; margin-top: 0; color: #2c3e50;}
     .detox-inputs { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 16px; }
@@ -157,37 +182,17 @@
     <div class="quiz-content" id="quizContent">
       <h2>Before You Start</h2>
       <p style="color:#666; font-size:14px; margin-bottom:24px;">This is not a diagnosis. It's a gentle check-in to make sure this tool is right for you right now.</p>
-      
       <div id="quizQuestions">
-        <div class="quiz-question" data-q="1">
-          <p>1. Do you make yourself sick or skip meals because you feel uncomfortably full or guilty?</p>
-          <label class="quiz-option"><input type="radio" name="q1" value="1"> Yes, sometimes</label>
-          <label class="quiz-option"><input type="radio" name="q1" value="0"> No, not really</label>
-        </div>
-        <div class="quiz-question" data-q="2">
-          <p>2. Do you believe you are fat, even when others tell you that you are too thin?</p>
-          <label class="quiz-option"><input type="radio" name="q2" value="1"> Yes, I often feel this way</label>
-          <label class="quiz-option"><input type="radio" name="q2" value="0"> No, my perception matches reality</label>
-        </div>
-        <div class="quiz-question" data-q="3">
-          <p>3. Do you spend more than an hour a day thinking about or checking your body (mirrors, weighing, comparing)?</p>
-          <label class="quiz-option"><input type="radio" name="q3" value="1"> Yes, it takes up a lot of my time</label>
-          <label class="quiz-option"><input type="radio" name="q3" value="0"> No, it's not a big part of my day</label>
-        </div>
-        <div class="quiz-question" data-q="4">
-          <p>4. Would you say that food or your weight dominates your life and causes you distress?</p>
-          <label class="quiz-option"><input type="radio" name="q4" value="1"> Yes, it often makes me feel bad</label>
-          <label class="quiz-option"><input type="radio" name="q4" value="0"> No, I have a balanced relationship with it</label>
-        </div>
+        <div class="quiz-question" data-q="1"><p>1. Do you make yourself sick or skip meals because you feel uncomfortably full or guilty?</p><label class="quiz-option"><input type="radio" name="q1" value="1"> Yes, sometimes</label><label class="quiz-option"><input type="radio" name="q1" value="0"> No, not really</label></div>
+        <div class="quiz-question" data-q="2"><p>2. Do you believe you are fat, even when others tell you that you are too thin?</p><label class="quiz-option"><input type="radio" name="q2" value="1"> Yes, I often feel this way</label><label class="quiz-option"><input type="radio" name="q2" value="0"> No, my perception matches reality</label></div>
+        <div class="quiz-question" data-q="3"><p>3. Do you spend more than an hour a day thinking about or checking your body (mirrors, weighing, comparing)?</p><label class="quiz-option"><input type="radio" name="q3" value="1"> Yes, it takes up a lot of my time</label><label class="quiz-option"><input type="radio" name="q3" value="0"> No, it's not a big part of my day</label></div>
+        <div class="quiz-question" data-q="4"><p>4. Would you say that food or your weight dominates your life and causes you distress?</p><label class="quiz-option"><input type="radio" name="q4" value="1"> Yes, it often makes me feel bad</label><label class="quiz-option"><input type="radio" name="q4" value="0"> No, I have a balanced relationship with it</label></div>
       </div>
-
       <button onclick="submitQuiz()" id="quizSubmitBtn">See My Result</button>
-      
       <div class="quiz-result" id="quizResult">
-        <h3 id="quizResultTitle"></h3>
-        <p id="quizResultText"></p>
+        <h3 id="quizResultTitle"></h3><p id="quizResultText"></p>
         <button onclick="enterSite()" style="margin-top:10px;">Enter the Site</button>
-        <p style="font-size:12px; color:#999; margin-top:16px;">If you are struggling, please reach out to a healthcare professional. This tool is not a substitute for medical advice.</p>
+        <p style="font-size:12px; color:#999; margin-top:16px;">If you are struggling, please reach out to a healthcare professional.</p>
       </div>
     </div>
   </div>
@@ -259,7 +264,98 @@
     </div>
   </div>
 
-  <!-- 💡 心境日记 -->
+  <!-- 💡 行为追踪 -->
+  <div id="behaviorSection">
+    <h2>Behavior Tracker</h2>
+    <p>Notice your body's signals without judgment. Did you experience extreme hunger or binge eating today?</p>
+    
+    <div class="behavior-log">
+      <div class="behavior-option">
+        <span>Today I felt overly hungry (Starving):</span>
+        <select id="behaviorHunger">
+          <option value="no">No</option>
+          <option value="yes">Yes</option>
+        </select>
+      </div>
+      <div class="behavior-option">
+        <span>Today I had a binge episode (Binge):</span>
+        <select id="behaviorBinge">
+          <option value="no">No</option>
+          <option value="yes">Yes</option>
+        </select>
+      </div>
+      <button onclick="logBehavior()" style="margin-top: 10px; background-color: #4a7c59;">Log Today's Behavior</button>
+    </div>
+    <div class="behavior-summary" id="behaviorSummary"></div>
+  </div>
+
+  <!-- 💡 分享与社区 -->
+  <div id="shareSection">
+    <h2>Support Network & Community</h2>
+    <p>Healing happens in community. Invite a friend or family member to see your daily check-ins, or share a recipe that made you feel great.</p>
+    
+    <div class="share-input">
+      <input type="text" id="friendName" placeholder="Enter friend or family member's name...">
+      <button onclick="inviteFriend()">Send Invite</button>
+    </div>
+
+    <div class="community-recipes" id="communityRecipes">
+      <h4>Your Shared Recipes:</h4>
+      <div id="recipeList">
+        <p style="color:#999; font-size:14px;" id="emptyRecipeText">No custom recipes yet. Share one below!</p>
+      </div>
+      <div style="margin-top: 20px; border-top: 1px solid #eee; padding-top: 20px;">
+        <input type="text" id="newRecipeName" placeholder="Recipe Name (e.g., Warm Berry Oats)" style="margin-bottom: 10px;">
+        <textarea id="newRecipeDesc" placeholder="How did it make you feel? (e.g., It kept me full and happy all morning!)" rows="2" style="margin-bottom: 10px;"></textarea>
+        <button onclick="addCustomRecipe()" style="background-color: #2c3e50; margin-top: 0;">Share Recipe & Feeling</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 💡 两周健康报告 -->
+  <div id="reportSection">
+    <h2>Bi-Weekly Progress Report</h2>
+    <p>Let's look at your data over the last 14 days. This is a judgment-free zone.</p>
+    <button onclick="generateReport()" style="background-color: #8e44ad; margin-top: 10px;">Generate My Report</button>
+    
+    <div class="report-box" id="reportBox">
+      <h3>Your 14-Day Summary</h3>
+      <div id="reportContent"></div>
+    </div>
+  </div>
+
+  <!-- 数字排毒 -->
+  <div id="detoxSection">
+    <h2>Digital Detox & Algorithm Control</h2>
+    <p>Social media algorithms push "ideal" body images based on what you search. By searching for positive nutrition and limiting screen time, you can retrain your feed.</p>
+    <div class="detox-inputs">
+      <div><label>Daily Social Media Screen Time (Minutes)</label><input type="number" id="screenTimeInput" placeholder="e.g., 120" min="0"></div>
+      <div><label>Your Daily Limit Goal (Minutes)</label><input type="number" id="screenTimeLimit" placeholder="e.g., 45" min="0"></div>
+    </div>
+    <div class="challenge-box">
+      <h4 style="margin-top:0; color:#2c3e50;">Today's Anti-Algorithm Challenge:</h4>
+      <label><input type="checkbox" id="checkAvoid"> I avoided searching for "body image", "weight loss", or "thinspo" today.</label>
+      <label><input type="checkbox" id="checkPositive"> I actively searched for positive content (e.g., "healthy recipes", "balanced diet").</label>
+      <label><input type="checkbox" id="checkUnfollow"> I clicked "Not Interested" or unfollowed accounts that made me feel bad.</label>
+    </div>
+    <button onclick="checkDetox()" style="background-color: #2c3e50;">Evaluate My Digital Habits</button>
+    <div class="detox-feedback" id="detoxFeedback"></div>
+  </div>
+
+  <div id="trendSection">
+    <h2>Weight Trend</h2>
+    <p>We don't recommend daily weighing. It causes anxiety. Based on your goal, we recommend checking in <strong>once a week</strong> under the same conditions.</p>
+    <div class="trend-log">
+      <input type="number" id="logWeight" placeholder="Today's weight (kg)" step="0.1" style="max-width: 200px; margin:0;">
+      <button onclick="logWeight()" style="width:auto; margin:0; padding: 10px 20px;">Log Weight</button>
+    </div>
+    <div class="trend-box" id="trendResult">
+      <h4 style="margin-top:0; color: var(--primary);">Your Weight Trend Analysis:</h4>
+      <p id="trendText"></p>
+    </div>
+  </div>
+
+  <!-- 心境日记 -->
   <div id="diarySection">
     <h2>Mindful Diary</h2>
     <p>Food affects our mood, and our mood affects our food choices. Track how you feel today. Are you moving towards a more positive place?</p>
@@ -285,47 +381,6 @@
     </div>
   </div>
 
-  <!-- 💡 数字排毒 & 算法控制 -->
-  <div id="detoxSection">
-    <h2>Digital Detox & Algorithm Control</h2>
-    <p>Social media algorithms push "ideal" body images based on what you search. By searching for positive nutrition and limiting screen time, you can retrain your feed.</p>
-    
-    <div class="detox-inputs">
-      <div>
-        <label>Daily Social Media Screen Time (Minutes)</label>
-        <input type="number" id="screenTimeInput" placeholder="e.g., 120" min="0">
-      </div>
-      <div>
-        <label>Your Daily Limit Goal (Minutes)</label>
-        <input type="number" id="screenTimeLimit" placeholder="e.g., 45" min="0">
-      </div>
-    </div>
-
-    <div class="challenge-box">
-      <h4 style="margin-top:0; color:#2c3e50;">Today's Anti-Algorithm Challenge:</h4>
-      <label><input type="checkbox" id="checkAvoid"> I avoided searching for "body image", "weight loss", or "thinspo" today.</label>
-      <label><input type="checkbox" id="checkPositive"> I actively searched for positive content (e.g., "healthy recipes", "balanced diet").</label>
-      <label><input type="checkbox" id="checkUnfollow"> I clicked "Not Interested" or unfollowed accounts that made me feel bad about my body.</label>
-    </div>
-
-    <button onclick="checkDetox()" style="background-color: #2c3e50;">Evaluate My Digital Habits</button>
-    
-    <div class="detox-feedback" id="detoxFeedback"></div>
-  </div>
-
-  <div id="trendSection">
-    <h2>Weight Trend</h2>
-    <p>We don't recommend daily weighing. It causes anxiety. Based on your goal, we recommend checking in <strong>once a week</strong> under the same conditions.</p>
-    <div class="trend-log">
-      <input type="number" id="logWeight" placeholder="Today's weight (kg)" step="0.1" style="max-width: 200px; margin:0;">
-      <button onclick="logWeight()" style="width:auto; margin:0; padding: 10px 20px;">Log Weight</button>
-    </div>
-    <div class="trend-box" id="trendResult">
-      <h4 style="margin-top:0; color: var(--primary);">Your Weight Trend Analysis:</h4>
-      <p id="trendText"></p>
-    </div>
-  </div>
-
   <div class="modal-overlay" id="recipeModal" onclick="closeModal(event)">
     <div class="modal-content" onclick="event.stopPropagation()">
       <button class="close-modal" onclick="closeModal(event)">×</button>
@@ -336,6 +391,17 @@
   </div>
 
   <script>
+    // --- 全局变量 ---
+    let targets = { protein: 0, fat: 0, fiber: 28 };
+    let fridge = [];
+    let userMetrics = { height: 0, weight: 0, goal: 'maintain' };
+    let weightLogs = [];
+    let moodLogs = [];
+    let behaviorLogs = [];
+    let customRecipes = [];
+    let sharedFriends = [];
+
+    // --- 测评和 Quiz 逻辑 ---
     function submitQuiz() {
       const q1 = document.querySelector('input[name="q1"]:checked');
       const q2 = document.querySelector('input[name="q2"]:checked');
@@ -362,12 +428,6 @@
     }
 
     function enterSite() { document.getElementById('quizOverlay').style.display = 'none'; }
-
-    let targets = { protein: 0, fat: 0, fiber: 28 };
-    let fridge = [];
-    let userMetrics = { height: 0, weight: 0, goal: 'maintain' };
-    let weightLogs = [];
-    let moodLogs = [];
 
     function calculate() {
       const h = parseFloat(document.getElementById('height').value);
@@ -396,6 +456,7 @@
       updateFridgeUI();
     }
 
+    // --- 食物库逻辑 ---
     const foods = [
       { name: "Chicken Breast", category: "Protein", protein: 31, fat: 3.6, fiber: 0, emoji: "🍗", satiety: "high", recipe: ["Pan-sear or air-fry for 10 mins with salt.", "Let it rest, then slice.", "Pair with greens."] },
       { name: "Salmon", category: "Protein", protein: 20, fat: 13, fiber: 0, emoji: "🐟", satiety: "high", recipe: ["Wrap in foil with lemon.", "Bake at 200°C for 12-15 mins.", "Enjoy directly."] },
@@ -548,16 +609,194 @@
       text.innerText = feedback;
     }
 
+    // --- 行为追踪逻辑 ---
+    function logBehavior() {
+      const hungry = document.getElementById('behaviorHunger').value;
+      const binge = document.getElementById('behaviorBinge').value;
+      const today = new Date().toLocaleDateString('en-US');
+      
+      // 简单覆盖当天的记录
+      const existingIndex = behaviorLogs.findIndex(log => log.date === today);
+      if (existingIndex > -1) {
+        behaviorLogs[existingIndex] = { date: today, hungry, binge };
+      } else {
+        behaviorLogs.push({ date: today, hungry, binge });
+      }
+
+      const summaryBox = document.getElementById('behaviorSummary');
+      summaryBox.style.display = 'block';
+      
+      let feedback = `Recorded for ${today}. `;
+      if (hungry === 'yes' || binge === 'yes') {
+        feedback += "Thank you for being honest. These things happen, and noticing them is the first step. Be gentle with yourself today.";
+        summaryBox.style.background = '#fff3cd';
+        summaryBox.style.color = '#856404';
+        summaryBox.style.borderLeftColor = '#ffc107';
+      } else {
+        feedback += "You had a great day listening to your body's hunger cues. Keep it up!";
+        summaryBox.style.background = '#e8f4ea';
+        summaryBox.style.color = '#2e7d32';
+        summaryBox.style.borderLeftColor = '#4a7c59';
+      }
+      summaryBox.innerText = feedback;
+    }
+
+    // --- 社交分享逻辑 ---
+    function inviteFriend() {
+      const name = document.getElementById('friendName').value.trim();
+      if (!name) { alert("Please enter a name."); return; }
+      if (!sharedFriends.includes(name)) sharedFriends.push(name);
+      document.getElementById('friendName').value = '';
+      alert(`Invitation sent to ${name}! They can now see your daily nutrient goals and mood check-ins (simulated).`);
+    }
+
+    function addCustomRecipe() {
+      const name = document.getElementById('newRecipeName').value.trim();
+      const desc = document.getElementById('newRecipeDesc').value.trim();
+      if (!name || !desc) { alert("Please fill in both the recipe name and how it made you feel."); return; }
+
+      customRecipes.push({ name, desc, author: "You (Shared with Friends)" });
+      
+      document.getElementById('newRecipeName').value = '';
+      document.getElementById('newRecipeDesc').value = '';
+      
+      updateRecipeList();
+    }
+
+    function updateRecipeList() {
+      const list = document.getElementById('recipeList');
+      const emptyText = document.getElementById('emptyRecipeText');
+      
+      if (customRecipes.length === 0) {
+        emptyText.style.display = 'block';
+        return;
+      }
+      emptyText.style.display = 'none';
+
+      // 保留提示文字，清空其他
+      list.innerHTML = '<p style="color:#999; font-size:14px; display:none;" id="emptyRecipeText">No custom recipes yet.</p>';
+
+      customRecipes.forEach(r => {
+        const div = document.createElement('div');
+        div.className = 'community-recipe-item';
+        div.innerHTML = `
+          <div class="recipe-author">${r.author}</div>
+          <div style="font-weight: bold; margin: 4px 0;">${r.name}</div>
+          <div class="recipe-desc">"${r.desc}"</div>
+        `;
+        list.appendChild(div);
+      });
+    }
+
+    // --- 两周报告逻辑 ---
+    function generateReport() {
+      const box = document.getElementById('reportBox');
+      const content = document.getElementById('reportContent');
+      box.style.display = 'block';
+
+      // 统计情绪
+      let positiveMoods = 0, negativeMoods = 0;
+      moodLogs.forEach(log => {
+        if (log.mood === 'great' || log.mood === 'okay') positiveMoods++;
+        else negativeMoods++;
+      });
+
+      // 统计行为
+      let hungryDays = 0, bingeDays = 0;
+      behaviorLogs.forEach(log => {
+        if (log.hungry === 'yes') hungryDays++;
+        if (log.binge === 'yes') bingeDays++;
+      });
+
+      let html = `<p>Over the last period, you have checked in <strong>${moodLogs.length}</strong> times for your mood, and <strong>${behaviorLogs.length}</strong> times for your behavior.</p>`;
+      
+      if (moodLogs.length > 0) {
+        html += `<p><strong>Mood:</strong> You logged ${positiveMoods} positive days and ${negativeMoods} difficult days. `;
+        if (positiveMoods > negativeMoods) {
+          html += `It looks like your overall mindset is moving in a positive direction. Keep nourishing yourself!</p>`;
+        } else {
+          html += `It seems like this has been a tough week. Remember to be kind to yourself and reach out to your support network.</p>`;
+        }
+      }
+
+      if (behaviorLogs.length > 0) {
+        html += `<p><strong>Behaviors:</strong> You reported feeling overly hungry on ${hungryDays} days, and having a binge episode on ${bingeDays} days. `;
+        if (hungryDays === 0 && bingeDays === 0) {
+          html += `Amazing! Your regular eating pattern is working perfectly for you.</p>`;
+        } else {
+          html += `This is valuable data. Are you restricting too much during the day? Try adding more filling snacks (like Greek Yogurt or Almonds) to prevent extreme hunger.</p>`;
+        }
+      }
+
+      html += `<p style="font-size:14px; color:#888; font-style:italic; margin-top:16px;">"Progress is not linear. Every day you observe your habits is a victory."</p>`;
+
+      content.innerHTML = html;
+    }
+
+    // --- 数字排毒逻辑 ---
+    function checkDetox() {
+      const time = parseFloat(document.getElementById('screenTimeInput').value);
+      const limit = parseFloat(document.getElementById('screenTimeLimit').value);
+      const avoid = document.getElementById('checkAvoid').checked;
+      const positive = document.getElementById('checkPositive').checked;
+      const unfollow = document.getElementById('checkUnfollow').checked;
+
+      if (isNaN(time) || isNaN(limit)) {
+        alert("Please enter your screen time and limit goal (in minutes).");
+        return;
+      }
+
+      const feedbackBox = document.getElementById('detoxFeedback');
+      feedbackBox.style.display = 'block';
+      let messages = [];
+
+      if (time > limit) {
+        messages.push(`⚠️ You exceeded your goal (${time} mins vs ${limit} mins). It's okay, tomorrow is a new day.`);
+        feedbackBox.style.background = '#fff3cd'; feedbackBox.style.color = '#856404'; feedbackBox.style.borderLeftColor = '#ffc107';
+      } else {
+        messages.push(`✅ Great job staying within your limit (${time} mins / ${limit} mins).`);
+        feedbackBox.style.background = '#e8f5e9'; feedbackBox.style.color = '#2e7d32'; feedbackBox.style.borderLeftColor = '#2e7d32';
+      }
+
+      if (avoid && positive && unfollow) {
+        messages.push("🌟 Incredible! You completely controlled your algorithm today.");
+      } else if (avoid || positive || unfollow) {
+        messages.push("👍 Good start. Keep trying to avoid negative keywords and unfollow accounts that hurt your mental health.");
+      } else {
+        messages.push("💡 Tip: Try clicking 'Not Interested' on body image posts. The algorithm learns from your clicks.");
+      }
+
+      feedbackBox.innerHTML = messages.join('<br><br>');
+    }
+
+    // --- 体重趋势逻辑 ---
+    function logWeight() {
+      const val = parseFloat(document.getElementById('logWeight').value);
+      if (!val) return;
+      const today = new Date().toLocaleDateString();
+      weightLogs.push({ date: today, weight: val });
+      document.getElementById('logWeight').value = '';
+      const box = document.getElementById('trendResult');
+      const text = document.getElementById('trendText');
+      box.style.display = 'block';
+      if (weightLogs.length === 1) {
+        text.innerText = "Baseline logged. Come back in a week to see your trend. Remember, one number doesn't define you.";
+      } else {
+        const diff = weightLogs[weightLogs.length - 1].weight - weightLogs[weightLogs.length - 2].weight;
+        if (Math.abs(diff) < 0.5) text.innerText = "Your weight is stable. This is a great sign of consistency.";
+        else if (diff > 0) text.innerText = "Your weight has shifted up slightly. This is normal fluctuation. Don't panic.";
+        else text.innerText = "Your weight has shifted down slightly. Ensure you're eating enough filling foods.";
+      }
+    }
+
+    // --- 心境日记逻辑 ---
     function logMood(mood, btn) {
       document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
       const today = new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
       const existingIndex = moodLogs.findIndex(log => log.date === today);
-      if (existingIndex > -1) {
-        moodLogs[existingIndex].mood = mood;
-      } else {
-        moodLogs.push({ date: today, mood: mood });
-      }
+      if (existingIndex > -1) moodLogs[existingIndex].mood = mood;
+      else moodLogs.push({ date: today, mood: mood });
       updateDiaryUI();
     }
 
@@ -602,49 +841,7 @@
       }
     }
 
-    // 💡 数字排毒评估逻辑
-    function checkDetox() {
-      const time = parseFloat(document.getElementById('screenTimeInput').value);
-      const limit = parseFloat(document.getElementById('screenTimeLimit').value);
-      const avoid = document.getElementById('checkAvoid').checked;
-      const positive = document.getElementById('checkPositive').checked;
-      const unfollow = document.getElementById('checkUnfollow').checked;
-
-      if (isNaN(time) || isNaN(limit)) {
-        alert("Please enter your screen time and limit goal (in minutes).");
-        return;
-      }
-
-      const feedbackBox = document.getElementById('detoxFeedback');
-      feedbackBox.style.display = 'block';
-      
-      let messages = [];
-
-      // 时长评估
-      if (time > limit) {
-        messages.push(`⚠️ You exceeded your goal (${time} mins vs ${limit} mins). It's okay, tomorrow is a new day. Try putting your phone in another room while eating.`);
-        feedbackBox.style.background = '#fff3cd';
-        feedbackBox.style.color = '#856404';
-        feedbackBox.style.borderLeftColor = '#ffc107';
-      } else {
-        messages.push(`✅ Great job staying within your limit (${time} mins / ${limit} mins).`);
-        feedbackBox.style.background = '#e8f5e9';
-        feedbackBox.style.color = '#2e7d32';
-        feedbackBox.style.borderLeftColor = '#2e7d32';
-      }
-
-      // 挑战评估
-      if (avoid && positive && unfollow) {
-        messages.push("🌟 Incredible! You completely controlled your algorithm today. You didn't feed the negative loop, and you fed the positive one.");
-      } else if (avoid || positive || unfollow) {
-        messages.push("👍 Good start. Keep trying to avoid negative keywords and unfollow accounts that hurt your mental health.");
-      } else {
-        messages.push("💡 Tip: Try clicking 'Not Interested' on body image posts. The algorithm learns from your clicks.");
-      }
-
-      feedbackBox.innerHTML = messages.join('<br><br>');
-    }
-
+    // --- 内置食谱弹窗逻辑 ---
     function showRecipe(name) {
       const food = foods.find(f => f.name === name);
       if (!food) return;
@@ -660,29 +857,6 @@
     function closeModal(event) {
       if (event) event.preventDefault();
       document.getElementById('recipeModal').classList.remove('active');
-    }
-
-    function logWeight() {
-      const val = parseFloat(document.getElementById('logWeight').value);
-      if (!val) return;
-      const today = new Date().toLocaleDateString();
-      weightLogs.push({ date: today, weight: val });
-      document.getElementById('logWeight').value = '';
-      const box = document.getElementById('trendResult');
-      const text = document.getElementById('trendText');
-      box.style.display = 'block';
-      if (weightLogs.length === 1) {
-        text.innerText = "Baseline logged. Come back in a week to see your trend. Remember, one number doesn't define you.";
-      } else {
-        const diff = weightLogs[weightLogs.length - 1].weight - weightLogs[weightLogs.length - 2].weight;
-        if (Math.abs(diff) < 0.5) {
-          text.innerText = "Your weight is stable. This is a great sign of consistency. Keep focusing on how you feel.";
-        } else if (diff > 0) {
-          text.innerText = "Your weight has shifted up slightly. This is normal fluctuation. Don't panic. Just check if your meals are leaving you satisfied.";
-        } else {
-          text.innerText = "Your weight has shifted down slightly. If this is your goal, great. If not, ensure you're eating enough filling foods.";
-        }
-      }
     }
 
     renderFoods(foods);
