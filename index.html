@@ -18,12 +18,11 @@
       max-width: 900px; margin: 40px auto; padding: 0 20px; line-height: 1.7; 
       color: var(--text); background-color: var(--bg);
     }
-    h1, h2, h3, label, button, .category-btn, .nutrient-row, .per-100g, .fridge-item, .satiety-box { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    h1, h2, h3, label, button, .category-btn, .nutrient-row, .per-100g, .fridge-item, .satiety-box, .trend-box, .quiz-box { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     h1 { font-size: 36px; color: var(--primary); margin-bottom: 8px; letter-spacing: -0.5px;}
     h2 { font-size: 24px; color: var(--primary); margin-top: 48px; border-bottom: 1px solid #e0e0e0; padding-bottom: 8px;}
     .subtitle { color: #666; font-size: 17px; margin-bottom: 30px; font-style: italic;}
     
-    /* 表单 */
     .form-group { margin-bottom: 16px; }
     label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; }
     input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 15px; font-family: sans-serif;}
@@ -34,13 +33,11 @@
     #result h3 { margin-top: 0; color: var(--primary); }
     .disclaimer { font-size: 12px; color: #888; margin-top: 16px; font-style: italic; }
 
-    /* 研究背景 */
     .research-section { background-color: white; padding: 24px; border-radius: 12px; border-left: 4px solid var(--primary); box-shadow: 0 2px 10px rgba(0,0,0,0.03); margin-top: 20px;}
     .research-section p { margin-bottom: 16px; }
     .research-section ul { padding-left: 20px; }
     .research-section li { margin-bottom: 8px; }
 
-    /* 食物库 */
     #searchInput { margin-bottom: 16px; padding: 14px; font-size: 16px; border-radius: 8px; border: 1px solid #ddd; width: 100%; box-sizing: border-box; font-family: sans-serif; }
     .categories { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; }
     .category-btn { padding: 6px 16px; border-radius: 20px; border: 1px solid #ccc; background: white; cursor: pointer; font-size: 14px; transition: all 0.2s; color: #555;}
@@ -76,7 +73,6 @@
     .recipe-btn { background: #f0f0f0; color: #555; border: 1px solid #ddd;}
     .recipe-btn:hover { background: #e0e0e0; }
 
-    /* 冰箱区域 */
     #fridgeSection { background-color: var(--fridge-bg); padding: 30px; border-radius: 16px; margin-top: 50px; box-shadow: inset 0 2px 10px rgba(0,0,0,0.05);}
     #fridgeSection h2 { border-bottom: none; margin-top: 0;}
     .fridge-items { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; min-height: 50px;}
@@ -89,24 +85,45 @@
     .progress-bar-bg { width: 100%; height: 12px; background: #e0e0e0; border-radius: 6px; overflow: hidden;}
     .progress-bar-fill { height: 100%; background: var(--primary); width: 0%; transition: width 0.4s ease;}
 
-    /* 饱腹感总结框 */
-    .satiety-box {
-      margin-top: 24px; padding: 20px; background: #fff9eb; border: 1px solid #fce7c0; 
-      border-radius: 12px; display: none; animation: fadeInUp 0.5s ease forwards;
-    }
+    .satiety-box { margin-top: 24px; padding: 20px; background: #fff9eb; border: 1px solid #fce7c0; border-radius: 12px; display: none; animation: fadeInUp 0.5s ease forwards;}
     .satiety-box h4 { margin: 0 0 10px 0; color: #d18e1a; display: flex; align-items: center; gap: 8px;}
     .satiety-box p { margin: 0; font-size: 15px; color: #5c4a2c;}
 
-    /* 弹窗 */
-    .modal-overlay {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5);
-      display: none; justify-content: center; align-items: center; z-index: 1000; opacity: 0; transition: opacity 0.3s;
+    #trendSection { background-color: white; padding: 30px; border-radius: 16px; margin-top: 50px; border: 1px solid #e0e0e0; box-shadow: 0 4px 15px rgba(0,0,0,0.03);}
+    .trend-box { background: #f0f7f4; padding: 16px; border-radius: 8px; margin-top: 16px; display: none; border-left: 4px solid var(--primary);}
+    .trend-log { display: flex; gap: 10px; align-items: center; margin-bottom: 10px;}
+    .trend-hint { font-size: 13px; color: #888; margin-bottom: 16px; font-style: italic;}
+
+    /* 💡 Quiz 弹窗样式 */
+    .quiz-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6);
+      display: flex; justify-content: center; align-items: center; z-index: 2000;
     }
+    .quiz-content {
+      background: var(--bg); width: 90%; max-width: 550px; border-radius: 16px; padding: 36px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3); max-height: 85vh; overflow-y: auto;
+    }
+    .quiz-content h2 { margin-top: 0; border-bottom: none; color: var(--primary); }
+    .quiz-question { margin-bottom: 24px; text-align: left; }
+    .quiz-question p { font-weight: 600; margin-bottom: 10px; font-family: sans-serif; color: #333;}
+    .quiz-option { 
+      display: flex; align-items: center; gap: 10px; padding: 10px 16px; border: 1px solid #ddd; 
+      border-radius: 8px; margin-bottom: 8px; cursor: pointer; transition: all 0.2s; font-family: sans-serif;
+    }
+    .quiz-option:hover { background: #f5f5f5; }
+    .quiz-option.selected { border-color: var(--primary); background: #eef6f0; }
+    .quiz-option input { width: auto; margin: 0; }
+    
+    .quiz-result { display: none; text-align: center; padding: 20px 0; }
+    .quiz-result h3 { font-size: 22px; margin-bottom: 16px; }
+    .quiz-result p { font-family: sans-serif; font-size: 15px; line-height: 1.6; margin-bottom: 20px; }
+    .result-green { color: #2e7d32; }
+    .result-yellow { color: #d18e1a; }
+    .result-red { color: #c62828; }
+
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 1000; opacity: 0; transition: opacity 0.3s; }
     .modal-overlay.active { display: flex; opacity: 1; }
-    .modal-content {
-      background: var(--bg); width: 90%; max-width: 500px; border-radius: 16px; padding: 30px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2); transform: translateY(20px); transition: transform 0.3s; position: relative;
-    }
+    .modal-content { background: var(--bg); width: 90%; max-width: 500px; border-radius: 16px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transform: translateY(20px); transition: transform 0.3s; position: relative;}
     .modal-overlay.active .modal-content { transform: translateY(0); }
     .close-modal { position: absolute; top: 15px; right: 20px; font-size: 24px; cursor: pointer; color: #999; border: none; background: none;}
     .close-modal:hover { color: #333; }
@@ -117,6 +134,47 @@
   </style>
 </head>
 <body>
+
+  <!-- 💡 Quiz 入口弹窗 (Before You Start) -->
+  <div class="quiz-overlay" id="quizOverlay">
+    <div class="quiz-content" id="quizContent">
+      <h2>Before You Start</h2>
+      <p style="color:#666; font-size:14px; margin-bottom:24px;">This is not a diagnosis. It's a gentle check-in to make sure this tool is right for you right now.</p>
+      
+      <div id="quizQuestions">
+        <div class="quiz-question" data-q="1">
+          <p>1. Do you make yourself sick or skip meals because you feel uncomfortably full or guilty?</p>
+          <label class="quiz-option"><input type="radio" name="q1" value="1"> Yes, sometimes</label>
+          <label class="quiz-option"><input type="radio" name="q1" value="0"> No, not really</label>
+        </div>
+        <div class="quiz-question" data-q="2">
+          <p>2. Do you believe you are fat, even when others tell you that you are too thin?</p>
+          <label class="quiz-option"><input type="radio" name="q2" value="1"> Yes, I often feel this way</label>
+          <label class="quiz-option"><input type="radio" name="q2" value="0"> No, my perception matches reality</label>
+        </div>
+        <div class="quiz-question" data-q="3">
+          <p>3. Do you spend more than an hour a day thinking about or checking your body (mirrors, weighing, comparing)?</p>
+          <label class="quiz-option"><input type="radio" name="q3" value="1"> Yes, it takes up a lot of my time</label>
+          <label class="quiz-option"><input type="radio" name="q3" value="0"> No, it's not a big part of my day</label>
+        </div>
+        <div class="quiz-question" data-q="4">
+          <p>4. Would you say that food or your weight dominates your life and causes you distress?</p>
+          <label class="quiz-option"><input type="radio" name="q4" value="1"> Yes, it often makes me feel bad</label>
+          <label class="quiz-option"><input type="radio" name="q4" value="0"> No, I have a balanced relationship with it</label>
+        </div>
+      </div>
+
+      <button onclick="submitQuiz()" id="quizSubmitBtn">See My Result</button>
+      
+      <div class="quiz-result" id="quizResult">
+        <h3 id="quizResultTitle"></h3>
+        <p id="quizResultText"></p>
+        <button onclick="enterSite()" style="margin-top:10px;">Enter the Site</button>
+        <p style="font-size:12px; color:#999; margin-top:16px;">If you are struggling, please reach out to a healthcare professional. This tool is not a substitute for medical advice.</p>
+      </div>
+    </div>
+  </div>
+
   <h1>Nutrient Plan</h1>
   <p class="subtitle">A calorie-free approach to personalized nutrition. Focus on what your body needs, not the numbers.</p>
 
@@ -162,11 +220,9 @@
   <div id="fridgeSection">
     <h2>My Fridge</h2>
     <p>Add foods above to see if your meal meets your targets and keeps you full.</p>
-    
     <div class="fridge-items" id="fridgeItems">
       <p style="color:#999; font-size:14px;" id="emptyFridgeText">Your fridge is empty. Add some foods above!</p>
     </div>
-
     <div class="progress-container">
       <div class="progress-label"><span>Protein (Target: <span id="targetProtein">--</span>g)</span><span id="currentProtein">0g</span></div>
       <div class="progress-bar-bg"><div class="progress-bar-fill" id="proteinBar"></div></div>
@@ -179,13 +235,23 @@
       <div class="progress-label"><span>Fiber (Target: 28g)</span><span id="currentFiber">0g</span></div>
       <div class="progress-bar-bg"><div class="progress-bar-fill" id="fiberBar"></div></div>
     </div>
-
     <button onclick="generateMealSummary()" style="background-color:#d18e1a; margin-top:10px;">Evaluate Fullness & Meal</button>
-
-    <!-- 饱腹感结果区 -->
     <div class="satiety-box" id="satietyResult">
       <h4>🍽️ How you'll feel:</h4>
       <p id="satietyText"></p>
+    </div>
+  </div>
+
+  <div id="trendSection">
+    <h2>Weight Trend</h2>
+    <p>We don't recommend daily weighing. It causes anxiety. Based on your goal, we recommend checking in <strong>once a week</strong> under the same conditions (e.g., Monday morning).</p>
+    <div class="trend-log">
+      <input type="number" id="logWeight" placeholder="Today's weight (kg)" step="0.1" style="max-width: 200px; margin:0;">
+      <button onclick="logWeight()" style="width:auto; margin:0; padding: 10px 20px;">Log Weight</button>
+    </div>
+    <div class="trend-box" id="trendResult">
+      <h4 style="margin-top:0; color: var(--primary);">Your Weight Trend Analysis:</h4>
+      <p id="trendText"></p>
     </div>
   </div>
 
@@ -199,27 +265,62 @@
   </div>
 
   <script>
+    // 💡 Quiz 逻辑
+    function submitQuiz() {
+      const q1 = document.querySelector('input[name="q1"]:checked');
+      const q2 = document.querySelector('input[name="q2"]:checked');
+      const q3 = document.querySelector('input[name="q3"]:checked');
+      const q4 = document.querySelector('input[name="q4"]:checked');
+
+      if (!q1 || !q2 || !q3 || !q4) { alert("Please answer all questions."); return; }
+
+      let score = parseInt(q1.value) + parseInt(q2.value) + parseInt(q3.value) + parseInt(q4.value);
+
+      document.getElementById('quizQuestions').style.display = 'none';
+      document.getElementById('quizSubmitBtn').style.display = 'none';
+      
+      const resDiv = document.getElementById('quizResult');
+      const title = document.getElementById('quizResultTitle');
+      const text = document.getElementById('quizResultText');
+      resDiv.style.display = 'block';
+
+      if (score <= 1) {
+        title.className = 'result-green';
+        title.innerText = "You seem to be in a healthy headspace.";
+        text.innerText = "You have a balanced relationship with food and your body. You can use this site freely to explore nutrients and how foods make you feel.";
+      } else if (score <= 3) {
+        title.className = 'result-yellow';
+        title.innerText = "You might be a bit hard on yourself.";
+        text.innerText = "It sounds like you think about food or your body quite a lot. This is common, but it can be stressful. We recommend using this site to focus on how foods make you feel, rather than on numbers. Try skipping the 'Weight Trend' section for now.";
+      } else {
+        title.className = 'result-red';
+        title.innerText = "Food and body image may be weighing on you heavily.";
+        text.innerText = "Your responses suggest that these thoughts are taking a significant toll. Please know you are not alone. This website is a tool for gentle exploration, but it is not a substitute for professional support. We strongly encourage you to speak with a doctor or a mental health professional.";
+      }
+    }
+
+    function enterSite() {
+      document.getElementById('quizOverlay').style.display = 'none';
+    }
+
+    // 其余逻辑不变...
     let targets = { protein: 0, fat: 0, fiber: 28 };
     let fridge = [];
     let userMetrics = { height: 0, weight: 0, goal: 'maintain' };
+    let weightLogs = [];
 
     function calculate() {
       const h = parseFloat(document.getElementById('height').value);
       const w = parseFloat(document.getElementById('weight').value);
       const age = parseFloat(document.getElementById('age').value);
       const goal = document.getElementById('goal').value;
-
       if (!h || !w || !age) { alert('Please fill in height, weight, and age.'); return; }
-
       userMetrics = { height: h, weight: w, goal: goal };
-      
       const bmi = w / ((h / 100) ** 2);
       let bmiNote = bmi < 18.5 ? 'Underweight.' : (bmi < 25 ? 'Normal range.' : 'Overweight.');
-      
       let proteinPerKg = goal === 'gain' ? 1.8 : (goal === 'lose' ? 1.6 : 1.2);
       targets.protein = Math.round(w * proteinPerKg);
       targets.fat = Math.round(w * 0.8);
-
       document.getElementById('result').style.display = 'block';
       document.getElementById('result').innerHTML = `
         <h3>Your Daily Nutrition Plan</h3>
@@ -230,70 +331,38 @@
         <p><strong>Dietary Fiber Target:</strong> 28 g</p>
         <p class="disclaimer">* General guideline, not medical advice.</p>
       `;
-
       document.getElementById('targetProtein').innerText = targets.protein;
       document.getElementById('targetFat').innerText = targets.fat;
       updateFridgeUI();
     }
 
-    // 💡 增加 satiety 字段: high, med, low 用来评估饱腹感
     const foods = [
-      { name: "Chicken Breast", category: "Protein", protein: 31, fat: 3.6, fiber: 0, emoji: "🍗", satiety: "high",
-        recipe: ["Pan-sear or air-fry for 10 mins with salt.", "Let it rest, then slice.", "Pair with greens."] },
-      { name: "Salmon", category: "Protein", protein: 20, fat: 13, fiber: 0, emoji: "🐟", satiety: "high",
-        recipe: ["Wrap in foil with lemon.", "Bake at 200°C for 12-15 mins.", "Enjoy directly."] },
-      { name: "Eggs", category: "Protein", protein: 13, fat: 11, fiber: 0, emoji: "🥚", satiety: "high",
-        recipe: ["Boil water.", "Add eggs, cook 7-10 mins.", "Season with salt/pepper."] },
-      { name: "Lean Beef", category: "Protein", protein: 26, fat: 15, fiber: 0, emoji: "🥩", satiety: "high",
-        recipe: ["Stir-fry slices on high heat.", "Add soy sauce and water.", "Serve immediately."] },
-      { name: "Tofu", category: "Protein", protein: 8, fat: 4.8, fiber: 0.3, emoji: "🍲", satiety: "med",
-        recipe: ["Pat tofu dry and cube.", "Pan-fry until golden.", "Drizzle with sesame oil."] },
-      { name: "Shrimp", category: "Protein", protein: 24, fat: 0.3, fiber: 0, emoji: "🍤", satiety: "med",
-        recipe: ["Boil for 2-3 mins.", "Toss with garlic and oil.", "Great quick snack."] },
-      
-      { name: "Greek Yogurt", category: "Dairy", protein: 10, fat: 0.4, fiber: 0, emoji: "🥣", satiety: "med",
-        recipe: ["Scoop into a bowl.", "Top with berries.", "Ready in 1 minute."] },
-      { name: "Whole Milk", category: "Dairy", protein: 3.2, fat: 3.3, fiber: 0, emoji: "🥛", satiety: "low",
-        recipe: ["Pour a glass.", "Best served cold.", "Great with oats."] },
-      { name: "Cheddar Cheese", category: "Dairy", protein: 25, fat: 33, fiber: 0, emoji: "🧀", satiety: "med",
-        recipe: ["Slice a small piece.", "Pair with an apple.", "Perfect snack."] },
-      { name: "Cottage Cheese", category: "Dairy", protein: 11, fat: 4.3, fiber: 0, emoji: "🍚", satiety: "med",
-        recipe: ["Scoop into a bowl.", "Add pepper and oil.", "Eat straight or on toast."] },
-      
-      { name: "Oats", category: "Carbs", protein: 17, fat: 7, fiber: 10, emoji: "🌾", satiety: "high",
-        recipe: ["Mix oats with milk.", "Microwave 2-3 mins.", "Stir and add fruit."] },
-      { name: "Brown Rice", category: "Carbs", protein: 2.6, fat: 0.9, fiber: 1.8, emoji: "🍚", satiety: "high",
-        recipe: ["Use microwave rice.", "Heat 90 seconds.", "Pair with protein."] },
-      { name: "Sweet Potato", category: "Carbs", protein: 1.6, fat: 0.1, fiber: 3, emoji: "🍠", satiety: "high",
-        recipe: ["Prick with a fork.", "Microwave 5-7 mins.", "Slice open and add butter."] },
-      { name: "Quinoa", category: "Carbs", protein: 14, fat: 6, fiber: 7, emoji: "🌾", satiety: "high",
-        recipe: ["Rinse quinoa.", "Simmer 15 mins.", "Fluff with a fork."] },
-      { name: "Whole Wheat Bread", category: "Carbs", protein: 13, fat: 3.4, fiber: 6, emoji: "🍞", satiety: "high",
-        recipe: ["Toast slices.", "Top with avocado.", "Quick breakfast."] },
-      { name: "Lentils", category: "Carbs", protein: 9, fat: 0.4, fiber: 8, emoji: "🫘", satiety: "high",
-        recipe: ["Use canned lentils.", "Toss with oil and lemon.", "Ready in 2 mins."] },
-
-      { name: "Broccoli", category: "Veggies", protein: 2.8, fat: 0.4, fiber: 2.6, emoji: "🥦", satiety: "med",
-        recipe: ["Cut into florets.", "Steam 3-4 mins.", "Season with salt."] },
-      { name: "Spinach", category: "Veggies", protein: 2.9, fat: 0.4, fiber: 2.2, emoji: "🥬", satiety: "low",
-        recipe: ["Wash.", "Sauté 2 mins.", "Add garlic powder."] },
-      { name: "Avocado", category: "Veggies", protein: 2, fat: 15, fiber: 6.7, emoji: "🥑", satiety: "high",
-        recipe: ["Cut in half.", "Scoop with a spoon.", "Add salt and pepper."] },
-      { name: "Blueberries", category: "Veggies", protein: 0.7, fat: 0.3, fiber: 2.4, emoji: "🫐", satiety: "low",
-        recipe: ["Wash a handful.", "Eat fresh.", "Zero prep."] },
-      { name: "Banana", category: "Veggies", protein: 1.1, fat: 0.3, fiber: 2.6, emoji: "🍌", satiety: "med",
-        recipe: ["Peel and eat.", "Slice into oats.", "Naturally sweet."] },
-      { name: "Tomato", category: "Veggies", protein: 0.9, fat: 0.2, fiber: 1.2, emoji: "🍅", satiety: "low",
-        recipe: ["Slice into wedges.", "Sprinkle with salt.", "Great with eggs."] },
-      
-      { name: "Almonds", category: "Fats", protein: 21, fat: 49, fiber: 12, emoji: "🥜", satiety: "high",
-        recipe: ["Grab a handful.", "Eat as a snack.", "No prep required."] },
-      { name: "Olive Oil", category: "Fats", protein: 0, fat: 100, fiber: 0, emoji: "🫒", satiety: "low",
-        recipe: ["Drizzle over salads.", "Use as a dip.", "Do not deep fry."] },
-      { name: "Chia Seeds", category: "Fats", protein: 17, fat: 31, fiber: 34, emoji: "🌱", satiety: "high",
-        recipe: ["Mix 1 tbsp with water.", "Let sit for 10 mins.", "Add to yogurt."] },
-      { name: "Peanut Butter", category: "Fats", protein: 25, fat: 50, fiber: 6, emoji: "🥜", satiety: "high",
-        recipe: ["Scoop a tbsp.", "Spread on toast.", "Enjoy."] }
+      { name: "Chicken Breast", category: "Protein", protein: 31, fat: 3.6, fiber: 0, emoji: "🍗", satiety: "high", recipe: ["Pan-sear or air-fry for 10 mins with salt.", "Let it rest, then slice.", "Pair with greens."] },
+      { name: "Salmon", category: "Protein", protein: 20, fat: 13, fiber: 0, emoji: "🐟", satiety: "high", recipe: ["Wrap in foil with lemon.", "Bake at 200°C for 12-15 mins.", "Enjoy directly."] },
+      { name: "Eggs", category: "Protein", protein: 13, fat: 11, fiber: 0, emoji: "🥚", satiety: "high", recipe: ["Boil water.", "Add eggs, cook 7-10 mins.", "Season with salt/pepper."] },
+      { name: "Lean Beef", category: "Protein", protein: 26, fat: 15, fiber: 0, emoji: "🥩", satiety: "high", recipe: ["Stir-fry slices on high heat.", "Add soy sauce and water.", "Serve immediately."] },
+      { name: "Tofu", category: "Protein", protein: 8, fat: 4.8, fiber: 0.3, emoji: "🍲", satiety: "med", recipe: ["Pat tofu dry and cube.", "Pan-fry until golden.", "Drizzle with sesame oil."] },
+      { name: "Shrimp", category: "Protein", protein: 24, fat: 0.3, fiber: 0, emoji: "🍤", satiety: "med", recipe: ["Boil for 2-3 mins.", "Toss with garlic and oil.", "Great quick snack."] },
+      { name: "Greek Yogurt", category: "Dairy", protein: 10, fat: 0.4, fiber: 0, emoji: "🥣", satiety: "med", recipe: ["Scoop into a bowl.", "Top with berries.", "Ready in 1 minute."] },
+      { name: "Whole Milk", category: "Dairy", protein: 3.2, fat: 3.3, fiber: 0, emoji: "🥛", satiety: "low", recipe: ["Pour a glass.", "Best served cold.", "Great with oats."] },
+      { name: "Cheddar Cheese", category: "Dairy", protein: 25, fat: 33, fiber: 0, emoji: "🧀", satiety: "med", recipe: ["Slice a small piece.", "Pair with an apple.", "Perfect snack."] },
+      { name: "Cottage Cheese", category: "Dairy", protein: 11, fat: 4.3, fiber: 0, emoji: "🍚", satiety: "med", recipe: ["Scoop into a bowl.", "Add pepper and oil.", "Eat straight or on toast."] },
+      { name: "Oats", category: "Carbs", protein: 17, fat: 7, fiber: 10, emoji: "🌾", satiety: "high", recipe: ["Mix oats with milk.", "Microwave 2-3 mins.", "Stir and add fruit."] },
+      { name: "Brown Rice", category: "Carbs", protein: 2.6, fat: 0.9, fiber: 1.8, emoji: "🍚", satiety: "high", recipe: ["Use microwave rice.", "Heat 90 seconds.", "Pair with protein."] },
+      { name: "Sweet Potato", category: "Carbs", protein: 1.6, fat: 0.1, fiber: 3, emoji: "🍠", satiety: "high", recipe: ["Prick with a fork.", "Microwave 5-7 mins.", "Slice open and add butter."] },
+      { name: "Quinoa", category: "Carbs", protein: 14, fat: 6, fiber: 7, emoji: "🌾", satiety: "high", recipe: ["Rinse quinoa.", "Simmer 15 mins.", "Fluff with a fork."] },
+      { name: "Whole Wheat Bread", category: "Carbs", protein: 13, fat: 3.4, fiber: 6, emoji: "🍞", satiety: "high", recipe: ["Toast slices.", "Top with avocado.", "Quick breakfast."] },
+      { name: "Lentils", category: "Carbs", protein: 9, fat: 0.4, fiber: 8, emoji: "🫘", satiety: "high", recipe: ["Use canned lentils.", "Toss with oil and lemon.", "Ready in 2 mins."] },
+      { name: "Broccoli", category: "Veggies", protein: 2.8, fat: 0.4, fiber: 2.6, emoji: "🥦", satiety: "med", recipe: ["Cut into florets.", "Steam 3-4 mins.", "Season with salt."] },
+      { name: "Spinach", category: "Veggies", protein: 2.9, fat: 0.4, fiber: 2.2, emoji: "🥬", satiety: "low", recipe: ["Wash.", "Sauté 2 mins.", "Add garlic powder."] },
+      { name: "Avocado", category: "Veggies", protein: 2, fat: 15, fiber: 6.7, emoji: "🥑", satiety: "high", recipe: ["Cut in half.", "Scoop with a spoon.", "Add salt and pepper."] },
+      { name: "Blueberries", category: "Veggies", protein: 0.7, fat: 0.3, fiber: 2.4, emoji: "🫐", satiety: "low", recipe: ["Wash a handful.", "Eat fresh.", "Zero prep."] },
+      { name: "Banana", category: "Veggies", protein: 1.1, fat: 0.3, fiber: 2.6, emoji: "🍌", satiety: "med", recipe: ["Peel and eat.", "Slice into oats.", "Naturally sweet."] },
+      { name: "Tomato", category: "Veggies", protein: 0.9, fat: 0.2, fiber: 1.2, emoji: "🍅", satiety: "low", recipe: ["Slice into wedges.", "Sprinkle with salt.", "Great with eggs."] },
+      { name: "Almonds", category: "Fats", protein: 21, fat: 49, fiber: 12, emoji: "🥜", satiety: "high", recipe: ["Grab a handful.", "Eat as a snack.", "No prep required."] },
+      { name: "Olive Oil", category: "Fats", protein: 0, fat: 100, fiber: 0, emoji: "🫒", satiety: "low", recipe: ["Drizzle over salads.", "Use as a dip.", "Do not deep fry."] },
+      { name: "Chia Seeds", category: "Fats", protein: 17, fat: 31, fiber: 34, emoji: "🌱", satiety: "high", recipe: ["Mix 1 tbsp with water.", "Let sit for 10 mins.", "Add to yogurt."] },
+      { name: "Peanut Butter", category: "Fats", protein: 25, fat: 50, fiber: 6, emoji: "🥜", satiety: "high", recipe: ["Scoop a tbsp.", "Spread on toast.", "Enjoy."] }
     ];
 
     let currentCategory = 'All';
@@ -301,12 +370,10 @@
     function renderFoods(foodArray) {
       const grid = document.getElementById('foodGrid');
       grid.innerHTML = '';
-      
       foodArray.forEach(food => {
         const card = document.createElement('div');
         card.className = 'food-card';
         card.onclick = function(e) { if (e.target.tagName !== 'BUTTON') chopFood(this); };
-        
         card.innerHTML = `
           <div class="food-card-content">
             <div class="emoji-container">${food.emoji}</div>
@@ -362,7 +429,7 @@
       if (fridge.find(item => item.name === name)) { alert(name + " is already in your fridge!"); return; }
       fridge.push(food);
       updateFridgeUI();
-      document.getElementById('satietyResult').style.display = 'none'; // 重置评价
+      document.getElementById('satietyResult').style.display = 'none';
     }
 
     function removeFromFridge(name) {
@@ -374,10 +441,8 @@
     function updateFridgeUI() {
       const container = document.getElementById('fridgeItems');
       const emptyText = document.getElementById('emptyFridgeText');
-      
       Array.from(container.children).forEach(child => { if (child.id !== 'emptyFridgeText') container.removeChild(child); });
       if (fridge.length === 0) emptyText.style.display = 'block'; else emptyText.style.display = 'none';
-
       let totalP = 0, totalF = 0, totalFi = 0;
       fridge.forEach(item => {
         totalP += item.protein; totalF += item.fat; totalFi += item.fiber;
@@ -386,59 +451,40 @@
         tag.innerHTML = `<span>${item.name}</span><button onclick="removeFromFridge('${item.name}')">×</button>`;
         container.appendChild(tag);
       });
-
       document.getElementById('currentProtein').innerText = totalP.toFixed(1) + 'g';
       document.getElementById('currentFat').innerText = totalF.toFixed(1) + 'g';
       document.getElementById('currentFiber').innerText = totalFi.toFixed(1) + 'g';
-
       if (targets.protein > 0) document.getElementById('proteinBar').style.width = Math.min((totalP / targets.protein) * 100, 100) + '%';
       if (targets.fat > 0) document.getElementById('fatBar').style.width = Math.min((totalF / targets.fat) * 100, 100) + '%';
       document.getElementById('fiberBar').style.width = Math.min((totalFi / targets.fiber) * 100, 100) + '%';
     }
 
-    // 💡 评估饱腹感逻辑
     function generateMealSummary() {
       if (fridge.length === 0) { alert("Add some foods to your fridge first!"); return; }
       if (userMetrics.weight === 0) { alert("Please fill in your body metrics at the top first!"); return; }
-
-      // 计算总饱腹感分数
       let satietyScore = 0;
       fridge.forEach(item => {
         if (item.satiety === 'high') satietyScore += 3;
         else if (item.satiety === 'med') satietyScore += 2;
         else satietyScore += 1;
       });
-
-      // 根据身高体重(这里用BMI做简单参考)设定一个基准阈值
       const bmi = userMetrics.weight / ((userMetrics.height / 100) ** 2);
-      let threshold = 8; // 默认基准
-      
-      // 体型较大、需求较高的人，需要更多饱腹感
+      let threshold = 8;
       if (bmi > 25 || userMetrics.goal === 'gain') threshold = 10; 
-      // 体型较小的人，不需要那么顶饱
       else if (bmi < 18.5 || userMetrics.goal === 'lose') threshold = 6;
-
       const box = document.getElementById('satietyResult');
       const text = document.getElementById('satietyText');
-      
       box.style.display = 'block';
-
-      // 生成反馈文案
       let feedback = "";
       if (satietyScore < threshold - 2) {
-        feedback = `Given your height and weight (BMI: ${bmi.toFixed(1)}), this meal might leave you feeling quite hungry very soon. Since you mentioned you need something filling, consider adding a high-satiety carb (like Sweet Potato or Oats) or more protein.`;
+        feedback = `Given your height and weight (BMI: ${bmi.toFixed(1)}), this meal might leave you feeling quite hungry very soon. Consider adding a high-satiety carb or more protein.`;
       } else if (satietyScore >= threshold - 1 && satietyScore <= threshold + 2) {
-        feedback = `Perfect! For your body size (BMI: ${bmi.toFixed(1)}) and current goal, this combination should leave you feeling comfortably full and satisfied without being overly stuffed.`;
+        feedback = `Perfect! For your body size (BMI: ${bmi.toFixed(1)}) and current goal, this combination should leave you feeling comfortably full and satisfied.`;
       } else {
-        feedback = `This is a very heavy and filling meal! For your body size (BMI: ${bmi.toFixed(1)}), this might feel a bit too much. It will definitely keep you full for a long time, which is great if you are doing heavy exercise today.`;
+        feedback = `This is a very heavy and filling meal! For your body size (BMI: ${bmi.toFixed(1)}), this might feel a bit too much. It will definitely keep you full for a long time.`;
       }
-
-      // 检查营养素是否达标辅助提示
       const currentP = parseFloat(document.getElementById('currentProtein').innerText);
-      if (currentP < targets.protein * 0.5) {
-         feedback += " (Note: Your protein is still a bit low for your daily target.)";
-      }
-
+      if (currentP < targets.protein * 0.5) { feedback += " (Note: Your protein is still a bit low for your daily target.)"; }
       text.innerText = feedback;
     }
 
@@ -457,6 +503,29 @@
     function closeModal(event) {
       if (event) event.preventDefault();
       document.getElementById('recipeModal').classList.remove('active');
+    }
+
+    function logWeight() {
+      const val = parseFloat(document.getElementById('logWeight').value);
+      if (!val) return;
+      const today = new Date().toLocaleDateString();
+      weightLogs.push({ date: today, weight: val });
+      document.getElementById('logWeight').value = '';
+      const box = document.getElementById('trendResult');
+      const text = document.getElementById('trendText');
+      box.style.display = 'block';
+      if (weightLogs.length === 1) {
+        text.innerText = "Baseline logged. Come back in a week to see your trend. Remember, one number doesn't define you.";
+      } else {
+        const diff = weightLogs[weightLogs.length - 1].weight - weightLogs[weightLogs.length - 2].weight;
+        if (Math.abs(diff) < 0.5) {
+          text.innerText = "Your weight is stable. This is a great sign of consistency. Keep focusing on how you feel.";
+        } else if (diff > 0) {
+          text.innerText = "Your weight has shifted up slightly. This is normal fluctuation. Don't panic. Just check if your meals are leaving you satisfied.";
+        } else {
+          text.innerText = "Your weight has shifted down slightly. If this is your goal, great. If not, ensure you're eating enough filling foods.";
+        }
+      }
     }
 
     renderFoods(foods);
