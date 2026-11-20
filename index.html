@@ -6,155 +6,234 @@
   <title>Nutrient Plan | Redefining Healthy Eating</title>
   <style>
     :root {
-      --primary: #2e7d32;
-      --bg: #f9fbf9;
-      --text: #333;
-      --card-bg: #ffffff;
+      --primary: #4a7c59;
+      --bg: #fcfbfa;
+      --text: #3a3a3a;
+      --watercolor-bg-1: #f2f7f4;
+      --watercolor-bg-2: #fdfaf6;
     }
     body { 
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
-      max-width: 700px; 
-      margin: 40px auto; 
-      padding: 0 20px; 
-      line-height: 1.6; 
-      color: var(--text);
-      background-color: var(--bg);
+      font-family: "Georgia", "Times New Roman", serif; 
+      max-width: 900px; margin: 40px auto; padding: 0 20px; line-height: 1.7; 
+      color: var(--text); background-color: var(--bg);
     }
-    h1 { font-size: 32px; color: var(--primary); margin-bottom: 8px;}
-    h2 { font-size: 22px; color: var(--primary); margin-top: 40px; border-bottom: 2px solid #e0e0e0; padding-bottom: 8px;}
-    .subtitle { color: #666; font-size: 16px; margin-bottom: 30px; }
+    h1, h2, h3, label, button { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    h1 { font-size: 36px; color: var(--primary); margin-bottom: 8px; letter-spacing: -0.5px;}
+    h2 { font-size: 24px; color: var(--primary); margin-top: 48px; border-bottom: 1px solid #e0e0e0; padding-bottom: 8px;}
+    .subtitle { color: #666; font-size: 17px; margin-bottom: 30px; font-style: italic;}
     
-    /* 表单样式 */
     .form-group { margin-bottom: 16px; }
     label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; }
-    input, select { 
-      width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 15px;
-    }
-    button { 
-      width: 100%; margin-top: 24px; padding: 12px; font-size: 16px; font-weight: 600; color: white;
-      background-color: var(--primary); border: none; border-radius: 6px; cursor: pointer; transition: background 0.2s;
-    }
-    button:hover { background-color: #1b5e20; }
+    input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 15px; font-family: sans-serif;}
+    button { width: 100%; margin-top: 24px; padding: 12px; font-size: 16px; font-weight: 600; color: white; background-color: var(--primary); border: none; border-radius: 6px; cursor: pointer; transition: background 0.2s;}
+    button:hover { background-color: #325a3f; }
     
-    /* 结果框样式 */
-    #result { 
-      margin-top: 30px; padding: 20px; background: var(--card-bg); border: 1px solid #e0e0e0;
-      border-radius: 8px; display: none; box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-    }
+    #result { margin-top: 30px; padding: 24px; background: white; border: 1px solid #e0e0e0; border-radius: 12px; display: none; box-shadow: 0 4px 15px rgba(0,0,0,0.03);}
     #result h3 { margin-top: 0; color: var(--primary); }
     .disclaimer { font-size: 12px; color: #888; margin-top: 16px; font-style: italic; }
 
-    /* 研究背景样式 */
-    .research-section {
-      background-color: var(--card-bg);
-      padding: 24px;
-      border-radius: 8px;
-      border-left: 4px solid var(--primary);
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-      margin-top: 20px;
-    }
+    .research-section { background-color: white; padding: 24px; border-radius: 12px; border-left: 4px solid var(--primary); box-shadow: 0 2px 10px rgba(0,0,0,0.03); margin-top: 20px;}
     .research-section p { margin-bottom: 16px; }
     .research-section ul { padding-left: 20px; }
     .research-section li { margin-bottom: 8px; }
+
+    #searchInput { margin-bottom: 24px; padding: 14px; font-size: 16px; border-radius: 8px; border: 1px solid #ddd; width: 100%; box-sizing: border-box; font-family: sans-serif; }
+    
+    /* 💡 食物卡片基础样式 */
+    .food-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 24px; }
+    .food-card {
+      background: linear-gradient(135deg, var(--watercolor-bg-1), var(--watercolor-bg-2));
+      border-radius: 16px; padding: 24px; box-shadow: 0 8px 20px rgba(0,0,0,0.04), inset 0 0 0 1px rgba(255,255,255,0.8);
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease; /* 弹跳曲线 */
+      position: relative; overflow: hidden; cursor: pointer;
+    }
+    /* 💡 跳跃性悬停效果 */
+    .food-card:hover { 
+      transform: translateY(-8px) scale(1.02); 
+      box-shadow: 0 15px 30px rgba(74, 124, 89, 0.15); 
+    }
+    
+    .food-card::before {
+      content: ""; position: absolute; top: -20px; right: -20px; width: 100px; height: 100px;
+      background: radial-gradient(circle, rgba(162, 196, 170, 0.2) 0%, rgba(255,255,255,0) 70%);
+      border-radius: 50%; z-index: 0;
+    }
+    
+    .food-card-content { position: relative; z-index: 1; text-align: center; }
+    
+    /* 💡 切菜动画核心容器 */
+    .emoji-container {
+      font-size: 48px; margin-bottom: 12px; display: flex; justify-content: center; align-items: center; height: 60px;
+      transition: transform 0.3s ease;
+    }
+    /* 动画类：点击时触发 */
+    .chopping .emoji-container { animation: chop 0.4s ease forwards; }
+    @keyframes chop {
+      0% { transform: scale(1) rotate(0deg); }
+      30% { transform: scale(1.1) rotate(-10deg); }
+      50% { transform: scale(1.1) rotate(10deg); } /* 模拟刀切下去的震动 */
+      100% { transform: scale(0.9) rotate(0deg); opacity: 0; } /* 切成两半并消失 */
+    }
+
+    .food-card h4 { margin: 0 0 16px 0; font-size: 20px; color: var(--primary); font-family: "Georgia", serif;}
+    
+    /* 数据面板默认隐藏，切菜后出现 */
+    .nutrient-data { display: none; text-align: left; animation: fadeInUp 0.5s ease forwards; }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .nutrient-row { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 8px; color: #555; border-bottom: 1px dashed #dcdcdc; padding-bottom: 6px; font-family: sans-serif;}
+    .nutrient-row span:last-child { font-weight: bold; color: #222; }
+    .per-100g { font-size: 11px; color: #999; margin-top: 12px; text-align: right; font-family: sans-serif;}
   </style>
 </head>
 <body>
   <h1>Nutrient Plan</h1>
   <p class="subtitle">A calorie-free approach to personalized nutrition. Focus on what your body needs, not the numbers.</p>
 
-  <!-- 测评部分 -->
-  <div class="form-group">
-    <label>Height (cm)</label>
-    <input id="height" type="number" placeholder="e.g., 170">
-  </div>
-  <div class="form-group">
-    <label>Weight (kg)</label>
-    <input id="weight" type="number" placeholder="e.g., 65">
-  </div>
-  <div class="form-group">
-    <label>Age</label>
-    <input id="age" type="number" placeholder="e.g., 25">
-  </div>
+  <div class="form-group"><label>Height (cm)</label><input id="height" type="number" placeholder="e.g., 170"></div>
+  <div class="form-group"><label>Weight (kg)</label><input id="weight" type="number" placeholder="e.g., 65"></div>
+  <div class="form-group"><label>Age</label><input id="age" type="number" placeholder="e.g., 25"></div>
   <div class="form-group">
     <label>Sex</label>
-    <select id="sex">
-      <option value="male">Male</option>
-      <option value="female">Female</option>
-    </select>
+    <select id="sex"><option value="male">Male</option><option value="female">Female</option></select>
   </div>
   <div class="form-group">
     <label>Activity Level</label>
     <select id="activity">
-      <option value="sedentary">Sedentary</option>
-      <option value="light">Lightly active</option>
-      <option value="moderate">Moderately active</option>
-      <option value="high">Very active</option>
+      <option value="sedentary">Sedentary</option><option value="light">Lightly active</option>
+      <option value="moderate">Moderately active</option><option value="high">Very active</option>
     </select>
   </div>
   <div class="form-group">
     <label>Your Goal</label>
     <select id="goal">
-      <option value="maintain">Maintain current state</option>
-      <option value="lose">Reduce fat / Lose weight</option>
-      <option value="gain">Build muscle</option>
+      <option value="maintain">Maintain current state</option><option value="lose">Reduce fat / Lose weight</option><option value="gain">Build muscle</option>
     </select>
   </div>
 
   <button onclick="calculate()">Generate My Nutrient Targets</button>
-
   <div id="result"></div>
 
-  <!-- 研究背景部分 (Research Context) -->
   <h2>Why We Built This</h2>
   <div class="research-section">
     <p><strong>Project Context:</strong> This platform is developed as part of a research project exploring the impact of social media on body image and dietary habits.</p>
     <p>We identified several main issues in modern diet culture influenced by social media:</p>
     <ul>
-      <li><strong>Social Media Influence:</strong> Constant exposure to idealized body images and fitness posts on social media creates unrealistic standards and body anxiety.</li>
-      <li><strong>Restrictive Diets:</strong> Over-fixation on calorie counting and extreme food restriction.</li>
+      <li><strong>Social Media Influence:</strong> Constant exposure to idealized body images and fitness posts creates unrealistic standards.</li>
+      <li><strong>Restrictive Diets:</strong> Over-fixation on calorie counting and extreme restriction.</li>
       <li><strong>Over-exercising:</strong> Unhealthy compensatory behaviors driven by guilt.</li>
-      <li><strong>Over Self-Checking:</strong> Constant weighing and mirror checking that lead to obsessive thoughts about appearance.</li>
+      <li><strong>Over Self-Checking:</strong> Constant weighing and mirror checking that lead to obsessive thoughts.</li>
     </ul>
-    <p><strong>Our Solution:</strong> Instead of focusing on calories and weight numbers, we want to help individuals build a healthy relationship with food by understanding <em>nutrients</em>. We provide personalized nutrient targets, encourage using available food in your fridge, and promote a healthy, non-obsessive routine for weight monitoring.</p>
+    <p><strong>Our Solution:</strong> Instead of calories, we help you build a healthy relationship with food through <em>nutrients</em>. Personalized targets, fridge-based cooking, and a non-obsessive routine.</p>
   </div>
 
+  <h2>Food Library</h2>
+  <p>Click on the cards to "chop" the food and reveal its nutrients (per 100g). No calories, just nutrients.</p>
+  
+  <input type="text" id="searchInput" placeholder="Search foods (e.g., Chicken, Rice, Broccoli)..." onkeyup="filterFoods()">
+  <div class="food-grid" id="foodGrid"></div>
+
   <script>
+    // 测评逻辑
     function calculate() {
       const h = parseFloat(document.getElementById('height').value);
       const w = parseFloat(document.getElementById('weight').value);
       const age = parseFloat(document.getElementById('age').value);
       const goal = document.getElementById('goal').value;
 
-      if (!h || !w || !age) {
-        alert('Please fill in height, weight, and age.');
-        return;
-      }
+      if (!h || !w || !age) { alert('Please fill in height, weight, and age.'); return; }
 
       const bmi = w / ((h / 100) ** 2);
-      let bmiNote = '';
-      if (bmi < 18.5) bmiNote = 'Underweight. Reducing diet is not recommended.';
-      else if (bmi < 25) bmiNote = 'Normal range. Great!';
-      else bmiNote = 'Overweight. Focusing on nutrition might be beneficial.';
-
-      let proteinPerKg = 1.2;
-      if (goal === 'gain') proteinPerKg = 1.8;
-      if (goal === 'lose') proteinPerKg = 1.6;
-
+      let bmiNote = bmi < 18.5 ? 'Underweight.' : (bmi < 25 ? 'Normal range.' : 'Overweight.');
+      
+      let proteinPerKg = goal === 'gain' ? 1.8 : (goal === 'lose' ? 1.6 : 1.2);
       const protein = Math.round(w * proteinPerKg);
-      const fiber = 28;
       const fat = Math.round(w * 0.8);
 
       document.getElementById('result').style.display = 'block';
       document.getElementById('result').innerHTML = `
         <h3>Your Daily Nutrition Plan</h3>
-        <p><strong>Your BMI:</strong> ${bmi.toFixed(1)} (${bmiNote})</p>
+        <p><strong>BMI:</strong> ${bmi.toFixed(1)} (${bmiNote})</p>
         <hr style="border:0; border-top:1px solid #eee; margin: 16px 0;">
         <p><strong>Protein Target:</strong> ${protein} g</p>
         <p><strong>Fat Target:</strong> ~${fat} g</p>
-        <p><strong>Dietary Fiber Target:</strong> ${fiber} g</p>
-        <p class="disclaimer">* This is a general guideline, not medical advice.</p>
+        <p><strong>Dietary Fiber Target:</strong> 28 g</p>
+        <p class="disclaimer">* General guideline, not medical advice.</p>
       `;
     }
+
+    // 食物数据库（加了 Emoji 图标）
+    const foods = [
+      { name: "Chicken Breast", protein: 31, fat: 3.6, fiber: 0, emoji: "🍗" },
+      { name: "Salmon", protein: 20, fat: 13, fiber: 0, emoji: "🐟" },
+      { name: "Eggs", protein: 13, fat: 11, fiber: 0, emoji: "🥚" },
+      { name: "Lean Beef", protein: 26, fat: 15, fiber: 0, emoji: "🥩" },
+      { name: "Tofu", protein: 8, fat: 4.8, fiber: 0.3, emoji: "🧊" },
+      { name: "Oats", protein: 17, fat: 7, fiber: 10, emoji: "🌾" },
+      { name: "Brown Rice", protein: 2.6, fat: 0.9, fiber: 1.8, emoji: "🍚" },
+      { name: "Sweet Potato", protein: 1.6, fat: 0.1, fiber: 3, emoji: "🍠" },
+      { name: "Broccoli", protein: 2.8, fat: 0.4, fiber: 2.6, emoji: "🥦" },
+      { name: "Spinach", protein: 2.9, fat: 0.4, fiber: 2.2, emoji: "🥬" },
+      { name: "Avocado", protein: 2, fat: 15, fiber: 6.7, emoji: "🥑" },
+      { name: "Almonds", protein: 21, fat: 49, fiber: 12, emoji: "🥜" },
+      { name: "Banana", protein: 1.1, fat: 0.3, fiber: 2.6, emoji: "🍌" }
+    ];
+
+    // 渲染食物卡片
+    function renderFoods(foodArray) {
+      const grid = document.getElementById('foodGrid');
+      grid.innerHTML = '';
+      
+      foodArray.forEach(food => {
+        const card = document.createElement('div');
+        card.className = 'food-card';
+        card.onclick = function() { chopFood(this); }; // 绑定点击切菜事件
+        
+        card.innerHTML = `
+          <div class="food-card-content">
+            <div class="emoji-container">${food.emoji}</div>
+            <h4>${food.name}</h4>
+            <div class="nutrient-data">
+              <div class="nutrient-row"><span>Protein</span><span>${food.protein} g</span></div>
+              <div class="nutrient-row"><span>Fat</span><span>${food.fat} g</span></div>
+              <div class="nutrient-row"><span>Fiber</span><span>${food.fiber} g</span></div>
+              <div class="per-100g">per 100g</div>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // 💡 切菜动画逻辑
+    function chopFood(card) {
+      // 防止重复点击
+      if (card.classList.contains('chopping')) return;
+      
+      card.classList.add('chopping');
+      
+      // 0.4秒动画结束后，隐藏 Emoji，显示营养素数据
+      setTimeout(() => {
+        card.querySelector('.emoji-container').style.display = 'none';
+        card.querySelector('.nutrient-data').style.display = 'block';
+        // 移除动画类，方便下次可能重置
+        card.classList.remove('chopping'); 
+      }, 400);
+    }
+
+    // 搜索过滤逻辑
+    function filterFoods() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const filtered = foods.filter(f => f.name.toLowerCase().includes(query));
+      renderFoods(filtered);
+    }
+
+    // 初始化加载
+    renderFoods(foods);
   </script>
 </body>
 </html>
+
