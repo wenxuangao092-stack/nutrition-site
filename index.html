@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nutrient Plan - 营养素计划</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 640px; margin: 40px auto; padding: 0 20px; line-height: 1.7; color: #222; }
+    h1 { font-size: 28px; }
+    label { display: block; margin-top: 16px; font-weight: 600; }
+    input, select { width: 100%; padding: 8px; margin-top: 4px; box-sizing: border-box; }
+    button { margin-top: 24px; padding: 10px 20px; font-size: 16px; cursor: pointer; }
+    #result { margin-top: 28px; padding: 16px; background: #f4f6f8; border-radius: 8px; display: none; }
+  </style>
+</head>
+<body>
+  <h1>营养素计划</h1>
+  <p>输入你的信息，获得每日营养素目标（不计算卡路里）。</p>
+
+  <label>身高 (cm)</label>
+  <input id="height" type="number" placeholder="170">
+
+  <label>体重 (kg)</label>
+  <input id="weight" type="number" placeholder="65">
+
+  <label>年龄</label>
+  <input id="age" type="number" placeholder="25">
+
+  <label>性别</label>
+  <select id="sex">
+    <option value="male">男</option>
+    <option value="female">女</option>
+  </select>
+
+  <label>活动量</label>
+  <select id="activity">
+    <option value="sedentary">久坐</option>
+    <option value="light">轻度</option>
+    <option value="moderate">中度</option>
+    <option value="high">高强度</option>
+  </select>
+
+  <label>目标</label>
+  <select id="goal">
+    <option value="maintain">维持</option>
+    <option value="lose">减脂</option>
+    <option value="gain">增肌</option>
+  </select>
+
+  <button onclick="calculate()">生成我的营养素目标</button>
+
+  <div id="result"></div>
+
+  <script>
+    function calculate() {
+      const h = parseFloat(document.getElementById('height').value);
+      const w = parseFloat(document.getElementById('weight').value);
+      const age = parseFloat(document.getElementById('age').value);
+      const sex = document.getElementById('sex').value;
+      const goal = document.getElementById('goal').value;
+
+      if (!h || !w || !age) {
+        alert('请填写身高、体重、年龄');
+        return;
+      }
+
+      const bmi = w / ((h / 100) ** 2);
+      let bmiNote = '';
+      if (bmi < 18.5) bmiNote = '偏瘦，不建议减脂。';
+      else if (bmi < 25) bmiNote = '正常范围。';
+      else bmiNote = '偏高，可考虑减脂。';
+
+      let proteinPerKg = 1.2;
+      if (goal === 'gain') proteinPerKg = 1.8;
+      if (goal === 'lose') proteinPerKg = 1.6;
+
+      const protein = Math.round(w * proteinPerKg);
+      const fiber = 28;
+      const fat = Math.round(w * 0.8);
+
+      document.getElementById('result').style.display = 'block';
+      document.getElementById('result').innerHTML = `
+        <strong>你的 BMI：</strong>${bmi.toFixed(1)}（${bmiNote}）<br>
+        <strong>每日蛋白质目标：</strong>${protein} g<br>
+        <strong>每日脂肪目标：</strong>约 ${fat} g<br>
+        <strong>每日膳食纤维目标：</strong>${fiber} g<br>
+        <em style="color:#666">此结果仅作参考，不构成医学建议。</em>
+      `;
+    }
+  </script>
+</body>
+</html>
