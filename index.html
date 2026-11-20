@@ -223,6 +223,9 @@
       <div id="wRes" style="display:none; padding:15px; background:#f0f7f4; border-radius:8px; margin-bottom:20px; font-size:14px;"></div>
       <button onclick="genReport()" class="btn" style="background:#8e44ad;">Generate 2-Week Report</button>
       <div id="reportBox" style="display:none; margin-top:20px; padding:20px; background:#fff; border-radius:8px; border-left:4px solid #8e44ad;"></div>
+      
+      <!-- 💡 重置按钮 -->
+      <button onclick="resetApp()" class="btn" style="background:#ccc; color:#333; margin-top:30px; font-size:14px;">Reset All Data (For Demo)</button>
     </div>
   </div>
 
@@ -428,9 +431,16 @@
     }
     function closeModal(e) { if(e) e.preventDefault(); document.getElementById('recipeModal').classList.remove('active'); }
 
-    // 初始化
+    // 初始化与重置
     function loadData() {
       if(state.targets.p > 0) { document.getElementById('tPro').innerText = state.targets.p; document.getElementById('tFat').innerText = state.targets.f; updateFridgeUI(); }
+    }
+
+    function resetApp() {
+      if(confirm("Are you sure you want to clear all your data and restart? This cannot be undone.")) {
+        localStorage.clear();
+        location.reload(); // 刷新网页，回到 Quiz 页面
+      }
     }
   </script>
 </body>
