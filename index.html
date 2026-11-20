@@ -15,28 +15,57 @@
     }
     body { 
       font-family: "Georgia", "Times New Roman", serif; 
-      max-width: 900px; margin: 40px auto; padding: 0 20px; line-height: 1.7; 
+      margin: 0; padding: 0; line-height: 1.7; 
       color: var(--text); background-color: var(--bg);
+      overflow-x: hidden;
     }
     h1, h2, h3, label, button, .category-btn, .nutrient-row, .per-100g, .fridge-item, .satiety-box, .trend-box, .quiz-box, .diary-box, .detox-box, .behavior-box { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     h1 { font-size: 36px; color: var(--primary); margin-bottom: 8px; letter-spacing: -0.5px;}
-    h2 { font-size: 24px; color: var(--primary); margin-top: 48px; border-bottom: 1px solid #e0e0e0; padding-bottom: 8px;}
+    h2 { font-size: 24px; color: var(--primary); margin-bottom: 16px;}
     .subtitle { color: #666; font-size: 17px; margin-bottom: 30px; font-style: italic;}
-    
+
+    /* 💡 幻灯片架构 */
+    .slide {
+      display: none; /* 默认隐藏 */
+      padding: 60px 20px;
+      max-width: 900px;
+      margin: 0 auto;
+      min-height: 80vh;
+      animation: slideFadeIn 0.5s ease forwards;
+    }
+    .slide.active {
+      display: block; /* 激活时显示 */
+    }
+    @keyframes slideFadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 导航控制 */
+    .nav-controls {
+      position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(252, 251, 250, 0.95);
+      padding: 16px; display: flex; justify-content: space-between; align-items: center;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.05); backdrop-filter: blur(5px); z-index: 500;
+    }
+    .nav-btn {
+      padding: 10px 24px; font-size: 16px; font-weight: 600; border-radius: 30px; border: none;
+      cursor: pointer; transition: all 0.2s; background-color: var(--primary); color: white;
+    }
+    .nav-btn:hover { background-color: #325a3f; transform: translateY(-2px); }
+    .nav-btn:disabled { background-color: #ccc; cursor: not-allowed; transform: none; }
+    .progress-indicator { font-family: monospace; font-size: 14px; color: #666; }
+
+    /* 内容样式（之前的基础样式） */
     .form-group { margin-bottom: 16px; }
     label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; }
-    input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 15px; font-family: sans-serif;}
-    button { width: 100%; margin-top: 24px; padding: 12px; font-size: 16px; font-weight: 600; color: white; background-color: var(--primary); border: none; border-radius: 6px; cursor: pointer; transition: background 0.2s;}
-    button:hover { background-color: #325a3f; }
+    input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 15px; font-family: sans-serif;}
+    .action-btn { width: 100%; margin-top: 24px; padding: 14px; font-size: 16px; font-weight: 600; color: white; background-color: var(--primary); border: none; border-radius: 8px; cursor: pointer; transition: background 0.2s;}
+    .action-btn:hover { background-color: #325a3f; }
     
-    #result { margin-top: 30px; padding: 24px; background: white; border: 1px solid #e0e0e0; border-radius: 12px; display: none; box-shadow: 0 4px 15px rgba(0,0,0,0.03);}
-    #result h3 { margin-top: 0; color: var(--primary); }
-    .disclaimer { font-size: 12px; color: #888; margin-top: 16px; font-style: italic; }
-
-    .research-section { background-color: white; padding: 24px; border-radius: 12px; border-left: 4px solid var(--primary); box-shadow: 0 2px 10px rgba(0,0,0,0.03); margin-top: 20px;}
-    .research-section p { margin-bottom: 16px; }
+    .research-section { background-color: white; padding: 30px; border-radius: 16px; border-left: 6px solid var(--primary); box-shadow: 0 8px 20px rgba(0,0,0,0.04);}
+    .research-section p { margin-bottom: 16px; font-size: 16px;}
     .research-section ul { padding-left: 20px; }
-    .research-section li { margin-bottom: 8px; }
+    .research-section li { margin-bottom: 12px; }
 
     #searchInput { margin-bottom: 16px; padding: 14px; font-size: 16px; border-radius: 8px; border: 1px solid #ddd; width: 100%; box-sizing: border-box; font-family: sans-serif; }
     .categories { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; }
@@ -44,99 +73,57 @@
     .category-btn:hover { background: #f0f0f0; }
     .category-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
     
-    .food-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 24px; }
+    .food-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
     .food-card {
       background: linear-gradient(135deg, var(--watercolor-bg-1), var(--watercolor-bg-2));
-      border-radius: 16px; padding: 24px; box-shadow: 0 8px 20px rgba(0,0,0,0.04), inset 0 0 0 1px rgba(255,255,255,0.8);
+      border-radius: 16px; padding: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.04), inset 0 0 0 1px rgba(255,255,255,0.8);
       transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
       position: relative; overflow: hidden; cursor: pointer;
     }
     .food-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 15px 30px rgba(74, 124, 89, 0.15); }
     .food-card-content { position: relative; z-index: 1; text-align: center; }
-    
-    .emoji-container { font-size: 48px; margin-bottom: 12px; display: flex; justify-content: center; align-items: center; height: 60px; transition: transform 0.3s ease; }
+    .emoji-container { font-size: 40px; margin-bottom: 12px; display: flex; justify-content: center; align-items: center; height: 50px; transition: transform 0.3s ease; }
     .chopping .emoji-container { animation: chop 0.4s ease forwards; }
     @keyframes chop { 0% { transform: scale(1) rotate(0deg); } 30% { transform: scale(1.1) rotate(-10deg); } 50% { transform: scale(1.1) rotate(10deg); } 100% { transform: scale(0.9) rotate(0deg); opacity: 0; } }
-    
-    .food-card h4 { margin: 0 0 16px 0; font-size: 20px; color: var(--primary); font-family: "Georgia", serif;}
-    
+    .food-card h4 { margin: 0 0 12px 0; font-size: 18px; color: var(--primary); font-family: "Georgia", serif;}
     .nutrient-data { display: none; text-align: left; animation: fadeInUp 0.5s ease forwards; }
     @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    .nutrient-row { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 8px; color: #555; border-bottom: 1px dashed #dcdcdc; padding-bottom: 6px;}
+    .nutrient-row { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; color: #555; border-bottom: 1px dashed #dcdcdc; padding-bottom: 4px;}
     .nutrient-row span:last-child { font-weight: bold; color: #222; }
-    .per-100g { font-size: 11px; color: #999; margin-top: 12px; text-align: right;}
-    
-    .action-btns { display: flex; gap: 8px; margin-top: 16px; }
-    .add-btn, .recipe-btn { flex: 1; padding: 8px; font-size: 13px; border-radius: 6px; font-weight: 600; text-align: center;}
+    .per-100g { font-size: 11px; color: #999; margin-top: 8px; text-align: right;}
+    .action-btns { display: flex; gap: 6px; margin-top: 12px; }
+    .add-btn, .recipe-btn { flex: 1; padding: 6px; font-size: 12px; border-radius: 6px; font-weight: 600; text-align: center; cursor:pointer;}
     .add-btn { background: white; color: var(--primary); border: 1px solid var(--primary);}
     .add-btn:hover { background: var(--primary); color: white;}
     .recipe-btn { background: #f0f0f0; color: #555; border: 1px solid #ddd;}
     .recipe-btn:hover { background: #e0e0e0; }
 
-    #fridgeSection { background-color: var(--fridge-bg); padding: 30px; border-radius: 16px; margin-top: 50px; box-shadow: inset 0 2px 10px rgba(0,0,0,0.05);}
-    #fridgeSection h2 { border-bottom: none; margin-top: 0;}
-    .fridge-items { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; min-height: 50px;}
-    .fridge-item { background: white; padding: 8px 16px; border-radius: 20px; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 8px;}
+    #fridgeSection { background-color: var(--fridge-bg); padding: 24px; border-radius: 16px; margin-top: 20px;}
+    .fridge-items { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; min-height: 40px;}
+    .fridge-item { background: white; padding: 6px 12px; border-radius: 20px; font-size: 13px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 6px;}
     .fridge-item button { width: auto; margin: 0; padding: 0; background: none; color: #999; border: none; font-size: 16px; font-weight: bold; cursor: pointer;}
     .fridge-item button:hover { color: red; }
-    
-    .progress-container { margin-bottom: 16px; background: white; padding: 16px; border-radius: 12px;}
-    .progress-label { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 8px; font-weight: bold; font-family: sans-serif;}
-    .progress-bar-bg { width: 100%; height: 12px; background: #e0e0e0; border-radius: 6px; overflow: hidden;}
+    .progress-container { margin-bottom: 12px; background: white; padding: 12px; border-radius: 8px;}
+    .progress-label { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; font-weight: bold; font-family: sans-serif;}
+    .progress-bar-bg { width: 100%; height: 10px; background: #e0e0e0; border-radius: 5px; overflow: hidden;}
     .progress-bar-fill { height: 100%; background: var(--primary); width: 0%; transition: width 0.4s ease;}
+    .satiety-box { margin-top: 16px; padding: 16px; background: #fff9eb; border: 1px solid #fce7c0; border-radius: 8px; display: none;}
+    .satiety-box h4 { margin: 0 0 8px 0; color: #d18e1a;}
+    .satiety-box p { margin: 0; font-size: 14px; color: #5c4a2c;}
 
-    .satiety-box { margin-top: 24px; padding: 20px; background: #fff9eb; border: 1px solid #fce7c0; border-radius: 12px; display: none; animation: fadeInUp 0.5s ease forwards;}
-    .satiety-box h4 { margin: 0 0 10px 0; color: #d18e1a; display: flex; align-items: center; gap: 8px;}
-    .satiety-box p { margin: 0; font-size: 15px; color: #5c4a2c;}
-
-    /* 心境日记 */
-    #diarySection { background-color: white; padding: 30px; border-radius: 16px; margin-top: 50px; border: 1px solid #e0e0e0; box-shadow: 0 4px 15px rgba(0,0,0,0.03);}
+    /* 心境、行为、排毒、报告模块 */
     .mood-selector { display: flex; gap: 16px; justify-content: center; margin: 24px 0;}
     .mood-btn { font-size: 30px; background: white; border: 2px solid #eee; border-radius: 50%; width: 60px; height: 60px; cursor: pointer; transition: all 0.2s; display: flex; justify-content: center; align-items: center; margin: 0; padding:0;}
     .mood-btn:hover { transform: scale(1.1); border-color: #ddd;}
     .mood-btn.selected { border-color: var(--primary); background: #eef6f0; transform: scale(1.1);}
-    .diary-history { margin-top: 24px; border-top: 1px solid #eee; padding-top: 20px;}
-    .history-log { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px dashed #eee; font-size: 14px;}
+    .history-log { display: flex; justify-content: space-between; padding: 8px; border-bottom: 1px dashed #eee; font-size: 13px;}
     .mood-text { font-weight: bold; }
-    .mood-great { color: #2e7d32; }
-    .mood-okay { color: #7cb342; }
-    .mood-anxious { color: #f57c00; }
-    .mood-distressed { color: #c62828; }
-    .chart-container { margin-top: 24px; display: none;}
-    .chart-bar { display: flex; height: 20px; border-radius: 10px; overflow: hidden; width: 100%; margin-bottom: 8px;}
-    .chart-segment { height: 100%; transition: width 0.5s ease; }
-    .chart-legend { display: flex; gap: 16px; font-size: 12px; margin-top: 8px; justify-content: center; flex-wrap: wrap;}
-    .legend-item { display: flex; align-items: center; gap: 4px; }
-    .legend-color { width: 12px; height: 12px; border-radius: 3px; }
+    .chart-bar { display: flex; height: 16px; border-radius: 8px; overflow: hidden; width: 100%; margin-top: 12px;}
 
-    /* 💡 行为追踪 & 社交分享 */
-    #behaviorSection { background-color: white; padding: 30px; border-radius: 16px; margin-top: 50px; border: 1px solid #e0e0e0; box-shadow: 0 4px 15px rgba(0,0,0,0.03);}
-    .behavior-log { margin-top: 20px; }
     .behavior-option { display: flex; justify-content: space-between; align-items: center; background: #f9f9f9; padding: 16px; border-radius: 8px; margin-bottom: 12px; border: 1px solid #eee;}
     .behavior-option span { font-weight: 600; font-size: 15px; color: #333;}
     .behavior-option select { width: 120px; padding: 6px; }
-    .behavior-summary { margin-top: 20px; font-size: 14px; color: #555; background: #e8f4ea; padding: 16px; border-radius: 8px; display: none; border-left: 4px solid var(--primary);}
-    
-    /* 分享中心 */
-    #shareSection { background-color: #f0f4f8; padding: 30px; border-radius: 16px; margin-top: 50px; border: 1px solid #d9e2ec;}
-    #shareSection h2 { border-bottom: none; margin-top: 0; color: #2c3e50;}
-    .share-input { display: flex; gap: 10px; margin-bottom: 20px;}
-    .share-input input { margin: 0; }
-    .share-input button { width: auto; margin: 0; background-color: #2c3e50;}
-    .community-recipes { margin-top: 24px; background: white; padding: 20px; border-radius: 12px;}
-    .community-recipe-item { border-bottom: 1px solid #eee; padding: 12px 0;}
-    .community-recipe-item:last-child { border-bottom: none;}
-    .recipe-author { font-size: 12px; color: #888; font-weight: bold;}
-    .recipe-desc { font-size: 14px; color: #333; margin-top: 4px;}
-    
-    /* 报告 */
-    #reportSection { background-color: white; padding: 30px; border-radius: 16px; margin-top: 50px; border: 1px solid #e0e0e0; box-shadow: 0 4px 15px rgba(0,0,0,0.03);}
-    .report-box { background: #f8faf9; padding: 24px; border-radius: 12px; margin-top: 20px; border: 1px solid #e0e6e3; display: none;}
-    .report-box h3 { color: var(--primary); margin-top: 0;}
 
-    /* 数字排毒 */
-    #detoxSection { background-color: #f4f6f8; padding: 30px; border-radius: 16px; margin-top: 50px; border: 1px solid #dbe2e8;}
-    #detoxSection h2 { border-bottom: none; margin-top: 0; color: #2c3e50;}
     .detox-inputs { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 16px; }
     .detox-inputs > div { flex: 1; min-width: 200px;}
     .challenge-box { background: white; padding: 20px; border-radius: 12px; margin-top: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);}
@@ -144,26 +131,32 @@
     .challenge-box input[type="checkbox"] { width: auto; margin-top: 4px; transform: scale(1.2); }
     .detox-feedback { margin-top: 16px; padding: 16px; border-radius: 8px; display: none; background: #e8f5e9; color: #2e7d32; font-weight: 600; font-size: 14px; border-left: 4px solid #2e7d32;}
 
-    #trendSection { background-color: white; padding: 30px; border-radius: 16px; margin-top: 50px; border: 1px solid #e0e0e0; box-shadow: 0 4px 15px rgba(0,0,0,0.03);}
-    .trend-box { background: #f0f7f4; padding: 16px; border-radius: 8px; margin-top: 16px; display: none; border-left: 4px solid var(--primary);}
-    .trend-log { display: flex; gap: 10px; align-items: center; margin-bottom: 10px;}
+    .community-recipe-item { border-bottom: 1px solid #eee; padding: 12px 0;}
+    .community-recipe-item:last-child { border-bottom: none;}
+    .recipe-author { font-size: 12px; color: #888; font-weight: bold;}
+    .recipe-desc { font-size: 14px; color: #333; margin-top: 4px;}
+    .report-box { background: #f8faf9; padding: 24px; border-radius: 12px; margin-top: 20px; border: 1px solid #e0e6e3; display: none;}
 
+    /* 💡 首页激励动画 */
+    #welcomeSlide { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; height: 100vh; max-width: 800px; margin: 0 auto; padding: 20px;}
+    .fade-in-text { opacity: 0; animation: textFadeIn 2s ease forwards; font-family: "Georgia", serif; font-size: 32px; color: var(--primary); font-style: italic;}
+    .fade-in-subtext { opacity: 0; animation: textFadeIn 2s ease 1.5s forwards; font-size: 18px; color: #666; margin-top: 20px;}
+    @keyframes textFadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Quiz 弹窗 */
     .quiz-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center; z-index: 2000; }
     .quiz-content { background: var(--bg); width: 90%; max-width: 550px; border-radius: 16px; padding: 36px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); max-height: 85vh; overflow-y: auto; }
-    .quiz-content h2 { margin-top: 0; border-bottom: none; color: var(--primary); }
+    .quiz-content h2 { margin-top: 0; color: var(--primary); }
     .quiz-question { margin-bottom: 24px; text-align: left; }
     .quiz-question p { font-weight: 600; margin-bottom: 10px; font-family: sans-serif; color: #333;}
     .quiz-option { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 8px; cursor: pointer; transition: all 0.2s; font-family: sans-serif; }
     .quiz-option:hover { background: #f5f5f5; }
-    .quiz-option.selected { border-color: var(--primary); background: #eef6f0; }
-    .quiz-option input { width: auto; margin: 0; }
     .quiz-result { display: none; text-align: center; padding: 20px 0; }
     .quiz-result h3 { font-size: 22px; margin-bottom: 16px; }
     .quiz-result p { font-family: sans-serif; font-size: 15px; line-height: 1.6; margin-bottom: 20px; }
-    .result-green { color: #2e7d32; }
-    .result-yellow { color: #d18e1a; }
-    .result-red { color: #c62828; }
+    .result-green { color: #2e7d32; } .result-yellow { color: #d18e1a; } .result-red { color: #c62828; }
 
+    /* 弹窗 */
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 1000; opacity: 0; transition: opacity 0.3s; }
     .modal-overlay.active { display: flex; opacity: 1; }
     .modal-content { background: var(--bg); width: 90%; max-width: 500px; border-radius: 16px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transform: translateY(20px); transition: transform 0.3s; position: relative;}
@@ -173,159 +166,148 @@
     .modal-content h3 { margin-top: 0; color: var(--primary); font-size: 24px; }
     .recipe-steps { padding-left: 20px; font-family: sans-serif; color: #444; }
     .recipe-steps li { margin-bottom: 12px; }
-    .recipe-tag { display: inline-block; background: #e8f0eb; color: var(--primary); padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: bold; margin-bottom: 16px; font-family: sans-serif;}
   </style>
 </head>
 <body>
 
+  <!-- Quiz 拦截 -->
   <div class="quiz-overlay" id="quizOverlay">
     <div class="quiz-content" id="quizContent">
       <h2>Before You Start</h2>
       <p style="color:#666; font-size:14px; margin-bottom:24px;">This is not a diagnosis. It's a gentle check-in to make sure this tool is right for you right now.</p>
+      
       <div id="quizQuestions">
-        <div class="quiz-question" data-q="1"><p>1. Do you make yourself sick or skip meals because you feel uncomfortably full or guilty?</p><label class="quiz-option"><input type="radio" name="q1" value="1"> Yes, sometimes</label><label class="quiz-option"><input type="radio" name="q1" value="0"> No, not really</label></div>
-        <div class="quiz-question" data-q="2"><p>2. Do you believe you are fat, even when others tell you that you are too thin?</p><label class="quiz-option"><input type="radio" name="q2" value="1"> Yes, I often feel this way</label><label class="quiz-option"><input type="radio" name="q2" value="0"> No, my perception matches reality</label></div>
-        <div class="quiz-question" data-q="3"><p>3. Do you spend more than an hour a day thinking about or checking your body (mirrors, weighing, comparing)?</p><label class="quiz-option"><input type="radio" name="q3" value="1"> Yes, it takes up a lot of my time</label><label class="quiz-option"><input type="radio" name="q3" value="0"> No, it's not a big part of my day</label></div>
-        <div class="quiz-question" data-q="4"><p>4. Would you say that food or your weight dominates your life and causes you distress?</p><label class="quiz-option"><input type="radio" name="q4" value="1"> Yes, it often makes me feel bad</label><label class="quiz-option"><input type="radio" name="q4" value="0"> No, I have a balanced relationship with it</label></div>
+        <div class="quiz-question" data-q="1">
+          <p>1. Do you make yourself sick or skip meals because you feel uncomfortably full or guilty?</p>
+          <label class="quiz-option"><input type="radio" name="q1" value="1"> Yes, sometimes</label>
+          <label class="quiz-option"><input type="radio" name="q1" value="0"> No, not really</label>
+        </div>
+        <div class="quiz-question" data-q="2">
+          <p>2. Do you believe you are fat, even when others tell you that you are too thin?</p>
+          <label class="quiz-option"><input type="radio" name="q2" value="1"> Yes, I often feel this way</label>
+          <label class="quiz-option"><input type="radio" name="q2" value="0"> No, my perception matches reality</label>
+        </div>
+        <div class="quiz-question" data-q="3">
+          <p>3. Do you spend more than an hour a day thinking about or checking your body?</p>
+          <label class="quiz-option"><input type="radio" name="q3" value="1"> Yes, it takes up a lot of my time</label>
+          <label class="quiz-option"><input type="radio" name="q3" value="0"> No, it's not a big part of my day</label>
+        </div>
+        <div class="quiz-question" data-q="4">
+          <p>4. Would you say that food or your weight dominates your life and causes you distress?</p>
+          <label class="quiz-option"><input type="radio" name="q4" value="1"> Yes, it often makes me feel bad</label>
+          <label class="quiz-option"><input type="radio" name="q4" value="0"> No, I have a balanced relationship with it</label>
+        </div>
       </div>
-      <button onclick="submitQuiz()" id="quizSubmitBtn">See My Result</button>
+
+      <button onclick="submitQuiz()" class="action-btn" id="quizSubmitBtn">See My Result</button>
+      
       <div class="quiz-result" id="quizResult">
-        <h3 id="quizResultTitle"></h3><p id="quizResultText"></p>
-        <button onclick="enterSite()" style="margin-top:10px;">Enter the Site</button>
-        <p style="font-size:12px; color:#999; margin-top:16px;">If you are struggling, please reach out to a healthcare professional.</p>
+        <h3 id="quizResultTitle"></h3>
+        <p id="quizResultText"></p>
+        <button onclick="enterSite()" class="action-btn" style="margin-top:10px; background-color: #2c3e50;">Enter the Site</button>
       </div>
     </div>
   </div>
 
-  <h1>Nutrient Plan</h1>
-  <p class="subtitle">A calorie-free approach to personalized nutrition. Focus on what your body needs, not the numbers.</p>
-
-  <div class="form-group"><label>Height (cm)</label><input id="height" type="number" placeholder="e.g., 170"></div>
-  <div class="form-group"><label>Weight (kg)</label><input id="weight" type="number" placeholder="e.g., 65"></div>
-  <div class="form-group"><label>Age</label><input id="age" type="number" placeholder="e.g., 25"></div>
-  <div class="form-group"><label>Sex</label><select id="sex"><option value="male">Male</option><option value="female">Female</option></select></div>
-  <div class="form-group"><label>Activity Level</label><select id="activity"><option value="sedentary">Sedentary</option><option value="light">Lightly active</option><option value="moderate">Moderately active</option><option value="high">Very active</option></select></div>
-  <div class="form-group"><label>Your Goal</label><select id="goal"><option value="maintain">Maintain current state</option><option value="lose">Reduce fat / Lose weight</option><option value="gain">Build muscle</option></select></div>
-
-  <button onclick="calculate()">Generate My Nutrient Targets</button>
-  <div id="result"></div>
-
-  <h2>Why We Built This</h2>
-  <div class="research-section">
-    <p><strong>Project Context:</strong> This platform is developed as part of a research project exploring the impact of social media on body image and dietary habits.</p>
-    <p>We identified several main issues in modern diet culture influenced by social media:</p>
-    <ul>
-      <li><strong>Social Media Influence:</strong> Constant exposure to idealized body images creates unrealistic standards.</li>
-      <li><strong>Restrictive Diets:</strong> Over-fixation on calorie counting and extreme restriction.</li>
-      <li><strong>Over-exercising:</strong> Unhealthy compensatory behaviors driven by guilt.</li>
-      <li><strong>Over Self-Checking:</strong> Constant weighing and mirror checking that lead to obsessive thoughts.</li>
-    </ul>
-    <p><strong>Our Solution:</strong> Instead of calories, we help you build a healthy relationship with food through <em>nutrients</em> and <em>how your body actually feels</em>.</p>
+  <!-- 💡 首页激励动画 -->
+  <div id="welcomeSlide" class="slide">
+    <h1 class="fade-in-text" id="welcomeQuote">"You don't have to be perfect to be healthy."</h1>
+    <p class="fade-in-subtext" id="welcomeSubtext">Let's shift the focus from numbers to nourishment.</p>
+    <button onclick="startJourney()" class="action-btn fade-in-subtext" style="width: auto; padding: 14px 40px; margin-top: 40px; cursor: pointer;">Start Your Journey</button>
   </div>
 
-  <h2>Food Library</h2>
-  <p>Click on a card to "chop" it. Add items to your Fridge to build a meal and check your fullness.</p>
-  
-  <input type="text" id="searchInput" placeholder="Search foods..." onkeyup="filterFoods()">
-  
-  <div class="categories">
-    <button class="category-btn active" onclick="filterCategory('All', this)">All</button>
-    <button class="category-btn" onclick="filterCategory('Protein', this)">Protein</button>
-    <button class="category-btn" onclick="filterCategory('Dairy', this)">Dairy</button>
-    <button class="category-btn" onclick="filterCategory('Carbs', this)">Carbs</button>
-    <button class="category-btn" onclick="filterCategory('Veggies', this)">Veggies & Fruits</button>
-    <button class="category-btn" onclick="filterCategory('Fats', this)">Healthy Fats</button>
+  <!-- Slide 1: Research Context -->
+  <div id="slide1" class="slide">
+    <h2>Why We Built This</h2>
+    <div class="research-section">
+      <p><strong>Project Context:</strong> This platform is developed as part of a research project exploring the impact of social media on body image and dietary habits.</p>
+      <p>We identified several main issues in modern diet culture influenced by social media:</p>
+      <ul>
+        <li><strong>Social Media Influence:</strong> Constant exposure to idealized body images creates unrealistic standards.</li>
+        <li><strong>Restrictive Diets:</strong> Over-fixation on calorie counting and extreme restriction.</li>
+        <li><strong>Over-exercising:</strong> Unhealthy compensatory behaviors driven by guilt.</li>
+        <li><strong>Over Self-Checking:</strong> Constant weighing and mirror checking that lead to obsessive thoughts.</li>
+      </ul>
+      <p><strong>Our Solution:</strong> Instead of calories, we help you build a healthy relationship with food through <em>nutrients</em> and <em>how your body actually feels</em>.</p>
+    </div>
   </div>
 
-  <div class="food-grid" id="foodGrid"></div>
+  <!-- Slide 2: Metrics -->
+  <div id="slide2" class="slide">
+    <h2>Your Body Metrics</h2>
+    <p class="subtitle">Let's calculate your unique nutrient targets. We do not track calories.</p>
+    <div class="form-group"><label>Height (cm)</label><input id="height" type="number" placeholder="e.g., 170"></div>
+    <div class="form-group"><label>Weight (kg)</label><input id="weight" type="number" placeholder="e.g., 65"></div>
+    <div class="form-group"><label>Age</label><input id="age" type="number" placeholder="e.g., 25"></div>
+    <div class="form-group"><label>Sex</label><select id="sex"><option value="male">Male</option><option value="female">Female</option></select></div>
+    <div class="form-group"><label>Activity Level</label><select id="activity"><option value="sedentary">Sedentary</option><option value="light">Lightly active</option><option value="moderate">Moderately active</option><option value="high">Very active</option></select></div>
+    <div class="form-group"><label>Your Goal</label><select id="goal"><option value="maintain">Maintain current state</option><option value="lose">Reduce fat / Lose weight</option><option value="gain">Build muscle</option></select></div>
+    <button onclick="calculate()" class="action-btn">Generate My Targets</button>
+    <div id="result" style="margin-top: 24px; padding: 20px; background: white; border: 1px solid #e0e0e0; border-radius: 12px; display: none;"></div>
+  </div>
 
-  <div id="fridgeSection">
+  <!-- Slide 3: Food Library -->
+  <div id="slide3" class="slide">
+    <h2>Food Library</h2>
+    <p>Click on a card to "chop" it. Add items to your Fridge to build a meal.</p>
+    <input type="text" id="searchInput" placeholder="Search foods..." onkeyup="filterFoods()">
+    <div class="categories">
+      <button class="category-btn active" onclick="filterCategory('All', this)">All</button>
+      <button class="category-btn" onclick="filterCategory('Protein', this)">Protein</button>
+      <button class="category-btn" onclick="filterCategory('Dairy', this)">Dairy</button>
+      <button class="category-btn" onclick="filterCategory('Carbs', this)">Carbs</button>
+      <button class="category-btn" onclick="filterCategory('Veggies', this)">Veggies & Fruits</button>
+      <button class="category-btn" onclick="filterCategory('Fats', this)">Healthy Fats</button>
+    </div>
+    <div class="food-grid" id="foodGrid"></div>
+  </div>
+
+  <!-- Slide 4: Fridge -->
+  <div id="slide4" class="slide">
     <h2>My Fridge</h2>
-    <p>Add foods above to see if your meal meets your targets and keeps you full.</p>
-    <div class="fridge-items" id="fridgeItems">
-      <p style="color:#999; font-size:14px;" id="emptyFridgeText">Your fridge is empty. Add some foods above!</p>
-    </div>
-    <div class="progress-container">
-      <div class="progress-label"><span>Protein (Target: <span id="targetProtein">--</span>g)</span><span id="currentProtein">0g</span></div>
-      <div class="progress-bar-bg"><div class="progress-bar-fill" id="proteinBar"></div></div>
-    </div>
-    <div class="progress-container">
-      <div class="progress-label"><span>Fat (Target: <span id="targetFat">--</span>g)</span><span id="currentFat">0g</span></div>
-      <div class="progress-bar-bg"><div class="progress-bar-fill" id="fatBar"></div></div>
-    </div>
-    <div class="progress-container">
-      <div class="progress-label"><span>Fiber (Target: 28g)</span><span id="currentFiber">0g</span></div>
-      <div class="progress-bar-bg"><div class="progress-bar-fill" id="fiberBar"></div></div>
-    </div>
-    <button onclick="generateMealSummary()" style="background-color:#d18e1a; margin-top:10px;">Evaluate Fullness & Meal</button>
-    <div class="satiety-box" id="satietyResult">
-      <h4>🍽️ How you'll feel:</h4>
-      <p id="satietyText"></p>
+    <p>Add foods to see if your meal meets your targets and keeps you full.</p>
+    <div id="fridgeSection">
+      <div class="fridge-items" id="fridgeItems">
+        <p style="color:#999; font-size:14px;" id="emptyFridgeText">Your fridge is empty.</p>
+      </div>
+      <div class="progress-container">
+        <div class="progress-label"><span>Protein (Target: <span id="targetProtein">--</span>g)</span><span id="currentProtein">0g</span></div>
+        <div class="progress-bar-bg"><div class="progress-bar-fill" id="proteinBar"></div></div>
+      </div>
+      <div class="progress-container">
+        <div class="progress-label"><span>Fat (Target: <span id="targetFat">--</span>g)</span><span id="currentFat">0g</span></div>
+        <div class="progress-bar-bg"><div class="progress-bar-fill" id="fatBar"></div></div>
+      </div>
+      <div class="progress-container">
+        <div class="progress-label"><span>Fiber (Target: 28g)</span><span id="currentFiber">0g</span></div>
+        <div class="progress-bar-bg"><div class="progress-bar-fill" id="fiberBar"></div></div>
+      </div>
+      <button onclick="generateMealSummary()" style="background-color:#d18e1a; margin-top:10px;" class="action-btn">Evaluate Fullness & Meal</button>
+      <div class="satiety-box" id="satietyResult">
+        <h4>🍽️ How you'll feel:</h4>
+        <p id="satietyText"></p>
+      </div>
     </div>
   </div>
 
-  <!-- 💡 行为追踪 -->
-  <div id="behaviorSection">
+  <!-- Slide 5: Behavior Tracker -->
+  <div id="slide5" class="slide">
     <h2>Behavior Tracker</h2>
     <p>Notice your body's signals without judgment. Did you experience extreme hunger or binge eating today?</p>
-    
-    <div class="behavior-log">
-      <div class="behavior-option">
-        <span>Today I felt overly hungry (Starving):</span>
-        <select id="behaviorHunger">
-          <option value="no">No</option>
-          <option value="yes">Yes</option>
-        </select>
-      </div>
-      <div class="behavior-option">
-        <span>Today I had a binge episode (Binge):</span>
-        <select id="behaviorBinge">
-          <option value="no">No</option>
-          <option value="yes">Yes</option>
-        </select>
-      </div>
-      <button onclick="logBehavior()" style="margin-top: 10px; background-color: #4a7c59;">Log Today's Behavior</button>
+    <div class="behavior-option">
+      <span>Today I felt overly hungry (Starving):</span>
+      <select id="behaviorHunger"><option value="no">No</option><option value="yes">Yes</option></select>
     </div>
-    <div class="behavior-summary" id="behaviorSummary"></div>
+    <div class="behavior-option">
+      <span>Today I had a binge episode (Binge):</span>
+      <select id="behaviorBinge"><option value="no">No</option><option value="yes">Yes</option></select>
+    </div>
+    <button onclick="logBehavior()" class="action-btn" style="background-color: #4a7c59;">Log Today's Behavior</button>
+    <div class="detox-feedback" id="behaviorSummary" style="margin-top:20px; display:none;"></div>
   </div>
 
-  <!-- 💡 分享与社区 -->
-  <div id="shareSection">
-    <h2>Support Network & Community</h2>
-    <p>Healing happens in community. Invite a friend or family member to see your daily check-ins, or share a recipe that made you feel great.</p>
-    
-    <div class="share-input">
-      <input type="text" id="friendName" placeholder="Enter friend or family member's name...">
-      <button onclick="inviteFriend()">Send Invite</button>
-    </div>
-
-    <div class="community-recipes" id="communityRecipes">
-      <h4>Your Shared Recipes:</h4>
-      <div id="recipeList">
-        <p style="color:#999; font-size:14px;" id="emptyRecipeText">No custom recipes yet. Share one below!</p>
-      </div>
-      <div style="margin-top: 20px; border-top: 1px solid #eee; padding-top: 20px;">
-        <input type="text" id="newRecipeName" placeholder="Recipe Name (e.g., Warm Berry Oats)" style="margin-bottom: 10px;">
-        <textarea id="newRecipeDesc" placeholder="How did it make you feel? (e.g., It kept me full and happy all morning!)" rows="2" style="margin-bottom: 10px;"></textarea>
-        <button onclick="addCustomRecipe()" style="background-color: #2c3e50; margin-top: 0;">Share Recipe & Feeling</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- 💡 两周健康报告 -->
-  <div id="reportSection">
-    <h2>Bi-Weekly Progress Report</h2>
-    <p>Let's look at your data over the last 14 days. This is a judgment-free zone.</p>
-    <button onclick="generateReport()" style="background-color: #8e44ad; margin-top: 10px;">Generate My Report</button>
-    
-    <div class="report-box" id="reportBox">
-      <h3>Your 14-Day Summary</h3>
-      <div id="reportContent"></div>
-    </div>
-  </div>
-
-  <!-- 数字排毒 -->
-  <div id="detoxSection">
+  <!-- Slide 6: Digital Detox -->
+  <div id="slide6" class="slide">
     <h2>Digital Detox & Algorithm Control</h2>
     <p>Social media algorithms push "ideal" body images based on what you search. By searching for positive nutrition and limiting screen time, you can retrain your feed.</p>
     <div class="detox-inputs">
@@ -334,64 +316,87 @@
     </div>
     <div class="challenge-box">
       <h4 style="margin-top:0; color:#2c3e50;">Today's Anti-Algorithm Challenge:</h4>
-      <label><input type="checkbox" id="checkAvoid"> I avoided searching for "body image", "weight loss", or "thinspo" today.</label>
-      <label><input type="checkbox" id="checkPositive"> I actively searched for positive content (e.g., "healthy recipes", "balanced diet").</label>
-      <label><input type="checkbox" id="checkUnfollow"> I clicked "Not Interested" or unfollowed accounts that made me feel bad.</label>
+      <label><input type="checkbox" id="checkAvoid"> I avoided searching for negative body image keywords today.</label>
+      <label><input type="checkbox" id="checkPositive"> I actively searched for positive content (e.g., healthy recipes).</label>
+      <label><input type="checkbox" id="checkUnfollow"> I clicked "Not Interested" or unfollowed triggering accounts.</label>
     </div>
-    <button onclick="checkDetox()" style="background-color: #2c3e50;">Evaluate My Digital Habits</button>
-    <div class="detox-feedback" id="detoxFeedback"></div>
+    <button onclick="checkDetox()" class="action-btn" style="background-color: #2c3e50;">Evaluate My Digital Habits</button>
+    <div class="detox-feedback" id="detoxFeedback" style="margin-top:20px;"></div>
   </div>
 
-  <div id="trendSection">
-    <h2>Weight Trend</h2>
-    <p>We don't recommend daily weighing. It causes anxiety. Based on your goal, we recommend checking in <strong>once a week</strong> under the same conditions.</p>
-    <div class="trend-log">
-      <input type="number" id="logWeight" placeholder="Today's weight (kg)" step="0.1" style="max-width: 200px; margin:0;">
-      <button onclick="logWeight()" style="width:auto; margin:0; padding: 10px 20px;">Log Weight</button>
+  <!-- Slide 7: Community & Share -->
+  <div id="slide7" class="slide">
+    <h2>Support Network & Community</h2>
+    <p>Healing happens in community. Invite a friend to share your journey, or add a recipe that made you feel great.</p>
+    <div style="display:flex; gap:10px; margin-bottom:20px;">
+      <input type="text" id="friendName" placeholder="Enter friend's name..." style="margin:0;">
+      <button onclick="inviteFriend()" class="action-btn" style="width:auto; margin:0; padding:10px 20px;">Send Invite</button>
     </div>
-    <div class="trend-box" id="trendResult">
-      <h4 style="margin-top:0; color: var(--primary);">Your Weight Trend Analysis:</h4>
-      <p id="trendText"></p>
+    <div style="background:white; padding:20px; border-radius:12px;">
+      <h4>Your Shared Recipes:</h4>
+      <div id="recipeList"><p style="color:#999; font-size:14px;" id="emptyRecipeText">No custom recipes yet.</p></div>
+      <div style="margin-top: 20px; border-top: 1px solid #eee; padding-top: 20px;">
+        <input type="text" id="newRecipeName" placeholder="Recipe Name" style="margin-bottom: 10px;">
+        <textarea id="newRecipeDesc" placeholder="How did it make you feel?" rows="2" style="margin-bottom: 10px;"></textarea>
+        <button onclick="addCustomRecipe()" class="action-btn" style="margin-top: 0; background-color: #2c3e50;">Share Recipe</button>
+      </div>
     </div>
   </div>
 
-  <!-- 心境日记 -->
-  <div id="diarySection">
+  <!-- Slide 8: Mindful Diary -->
+  <div id="slide8" class="slide">
     <h2>Mindful Diary</h2>
-    <p>Food affects our mood, and our mood affects our food choices. Track how you feel today. Are you moving towards a more positive place?</p>
+    <p>Food affects our mood, and our mood affects our food choices. Track how you feel today.</p>
     <div class="mood-selector">
       <button class="mood-btn" onclick="logMood('great', this)" title="Great">😄</button>
       <button class="mood-btn" onclick="logMood('okay', this)" title="Okay">🙂</button>
       <button class="mood-btn" onclick="logMood('anxious', this)" title="Anxious">😐</button>
       <button class="mood-btn" onclick="logMood('distressed', this)" title="Distressed">😞</button>
     </div>
-    <div class="diary-history" id="diaryHistory" style="display: none;">
-      <h4 style="margin-bottom: 12px; color:#555;">Your Weekly Logs:</h4>
+    <div id="diaryHistory" style="display:none; margin-top:20px;">
+      <h4 style="margin-bottom: 8px; color:#555;">Your Logs:</h4>
       <div id="historyList"></div>
-      <div class="chart-container" id="moodChart">
-        <h4 style="margin-bottom: 8px; color:#555;">Mood Distribution:</h4>
-        <div class="chart-bar" id="chartBar"></div>
-        <div class="chart-legend">
-          <div class="legend-item"><div class="legend-color" style="background:#2e7d32;"></div> Great</div>
-          <div class="legend-item"><div class="legend-color" style="background:#7cb342;"></div> Okay</div>
-          <div class="legend-item"><div class="legend-color" style="background:#f57c00;"></div> Anxious</div>
-          <div class="legend-item"><div class="legend-color" style="background:#c62828;"></div> Distressed</div>
-        </div>
+      <div class="chart-bar" id="chartBar"></div>
+      <div style="display: flex; gap: 16px; font-size: 12px; margin-top: 8px; justify-content: center;">
+        <span style="color:#2e7d32;">■ Great</span><span style="color:#7cb342;">■ Okay</span><span style="color:#f57c00;">■ Anxious</span><span style="color:#c62828;">■ Distressed</span>
       </div>
     </div>
   </div>
 
+  <!-- Slide 9: Report & Weight -->
+  <div id="slide9" class="slide">
+    <h2>Your Progress & Weight Trend</h2>
+    <p>We recommend checking weight once a week under the same conditions. Let's look at your data.</p>
+    
+    <div style="margin-bottom: 24px; display:flex; gap:10px;">
+      <input type="number" id="logWeight" placeholder="Today's weight (kg)" step="0.1" style="margin:0;">
+      <button onclick="logWeight()" class="action-btn" style="width:auto; margin:0; padding:10px 20px;">Log Weight</button>
+    </div>
+    <div id="trendResult" style="display:none; background:#f0f7f4; padding:16px; border-radius:8px; margin-bottom:24px; border-left:4px solid var(--primary);"></div>
+
+    <button onclick="generateReport()" class="action-btn" style="background-color: #8e44ad;">Generate Bi-Weekly Health Report</button>
+    <div id="reportBox" class="report-box" style="display:none;"></div>
+  </div>
+
+  <!-- 底部导航控制 -->
+  <div class="nav-controls" id="navControls" style="display: none;">
+    <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">Back</button>
+    <div class="progress-indicator" id="progressIndicator">Step 1 / 9</div>
+    <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next</button>
+  </div>
+
+  <!-- 食谱弹窗 -->
   <div class="modal-overlay" id="recipeModal" onclick="closeModal(event)">
     <div class="modal-content" onclick="event.stopPropagation()">
       <button class="close-modal" onclick="closeModal(event)">×</button>
-      <div class="recipe-tag">⏱️ Under 15 mins</div>
+      <div style="display:inline-block; background:#e8f0eb; color:var(--primary); padding:4px 10px; border-radius:12px; font-size:12px; font-weight:bold; margin-bottom:16px;">⏱️ Under 15 mins</div>
       <h3 id="recipeTitle">Recipe Title</h3>
       <ul class="recipe-steps" id="recipeSteps"></ul>
     </div>
   </div>
 
   <script>
-    // --- 全局变量 ---
+    // --- 全局状态 ---
     let targets = { protein: 0, fat: 0, fiber: 28 };
     let fridge = [];
     let userMetrics = { height: 0, weight: 0, goal: 'maintain' };
@@ -400,35 +405,100 @@
     let behaviorLogs = [];
     let customRecipes = [];
     let sharedFriends = [];
+    
+    // 幻灯片控制
+    let currentSlideIndex = 0;
+    const slides = document.querySelectorAll('.slide');
 
-    // --- 测评和 Quiz 逻辑 ---
+    // --- 1. Quiz 和 首页动画逻辑 ---
     function submitQuiz() {
       const q1 = document.querySelector('input[name="q1"]:checked');
       const q2 = document.querySelector('input[name="q2"]:checked');
       const q3 = document.querySelector('input[name="q3"]:checked');
       const q4 = document.querySelector('input[name="q4"]:checked');
       if (!q1 || !q2 || !q3 || !q4) { alert("Please answer all questions."); return; }
+      
       let score = parseInt(q1.value) + parseInt(q2.value) + parseInt(q3.value) + parseInt(q4.value);
       document.getElementById('quizQuestions').style.display = 'none';
       document.getElementById('quizSubmitBtn').style.display = 'none';
+      
       const resDiv = document.getElementById('quizResult');
       const title = document.getElementById('quizResultTitle');
       const text = document.getElementById('quizResultText');
       resDiv.style.display = 'block';
+
+      // 根据分数设置不同的心理暗示（Motivational Quotes）
       if (score <= 1) {
         title.className = 'result-green'; title.innerText = "You seem to be in a healthy headspace.";
         text.innerText = "You have a balanced relationship with food and your body. You can use this site freely to explore nutrients and how foods make you feel.";
+        document.getElementById('welcomeQuote').innerText = '"Health is a state of complete harmony of the body, mind, and spirit."';
+        document.getElementById('welcomeSubtext').innerText = "Let's focus on nourishing your body, not restricting it.";
       } else if (score <= 3) {
         title.className = 'result-yellow'; title.innerText = "You might be a bit hard on yourself.";
         text.innerText = "It sounds like you think about food or your body quite a lot. We recommend using this site to focus on how foods make you feel, rather than on numbers. Try skipping the 'Weight Trend' section for now.";
+        document.getElementById('welcomeQuote').innerText = '"You don\'t have to be perfect to be healthy."';
+        document.getElementById('welcomeSubtext').innerText = "Be gentle with yourself. Let's take it one step at a time.";
       } else {
         title.className = 'result-red'; title.innerText = "Food and body image may be weighing on you heavily.";
         text.innerText = "Your responses suggest that these thoughts are taking a significant toll. Please know you are not alone. This website is a tool for gentle exploration, but it is not a substitute for professional support. We strongly encourage you to speak with a doctor or a mental health professional.";
+        document.getElementById('welcomeQuote').innerText = '"You are so much more than your body."';
+        document.getElementById('welcomeSubtext').innerText = "Please be kind to yourself today. Recovery is possible, and you deserve support.";
       }
     }
 
-    function enterSite() { document.getElementById('quizOverlay').style.display = 'none'; }
+    function enterSite() {
+      document.getElementById('quizOverlay').style.display = 'none';
+      // 进入首页动画
+      slides[0].classList.add('active');
+      // 动画结束后显示导航
+      setTimeout(() => {
+        document.getElementById('navControls').style.display = 'flex';
+        updateNav();
+      }, 4000); // 给动画留出时间
+    }
 
+    function startJourney() {
+      // 如果用户不想等动画，直接点按钮进入
+      document.getElementById('navControls').style.display = 'flex';
+      changeSlide(1); // 直接跳到第一步
+    }
+
+    // --- 2. 幻灯片导航逻辑 ---
+    function changeSlide(direction) {
+      // 隐藏当前 slide
+      slides[currentSlideIndex].classList.remove('active');
+      
+      // 计算下一个索引
+      currentSlideIndex += direction;
+      
+      // 边界限制
+      if (currentSlideIndex < 0) currentSlideIndex = 0;
+      if (currentSlideIndex >= slides.length) currentSlideIndex = slides.length - 1;
+      
+      // 显示下一个 slide
+      slides[currentSlideIndex].classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      updateNav();
+    }
+
+    function updateNav() {
+      const indicator = document.getElementById('progressIndicator');
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      
+      // 首页不算进步骤里
+      if (currentSlideIndex === 0) {
+        indicator.innerText = "Welcome";
+        prevBtn.style.display = 'none';
+        nextBtn.innerText = "Start";
+      } else {
+        prevBtn.style.display = 'block';
+        indicator.innerText = `Step ${currentSlideIndex} / 9`;
+        nextBtn.innerText = currentSlideIndex === slides.length - 1 ? "Finish" : "Next";
+      }
+    }
+
+    // --- 3. 其余业务逻辑（不变） ---
     function calculate() {
       const h = parseFloat(document.getElementById('height').value);
       const w = parseFloat(document.getElementById('weight').value);
@@ -441,22 +511,23 @@
       let proteinPerKg = goal === 'gain' ? 1.8 : (goal === 'lose' ? 1.6 : 1.2);
       targets.protein = Math.round(w * proteinPerKg);
       targets.fat = Math.round(w * 0.8);
-      document.getElementById('result').style.display = 'block';
-      document.getElementById('result').innerHTML = `
-        <h3>Your Daily Nutrition Plan</h3>
+      
+      const res = document.getElementById('result');
+      res.style.display = 'block';
+      res.innerHTML = `
+        <h3 style="margin-top:0; color:var(--primary);">Your Daily Nutrition Plan</h3>
         <p><strong>BMI:</strong> ${bmi.toFixed(1)} (${bmiNote})</p>
         <hr style="border:0; border-top:1px solid #eee; margin: 16px 0;">
         <p><strong>Protein Target:</strong> ${targets.protein} g</p>
         <p><strong>Fat Target:</strong> ~${targets.fat} g</p>
         <p><strong>Dietary Fiber Target:</strong> 28 g</p>
-        <p class="disclaimer">* General guideline, not medical advice.</p>
+        <p style="font-size: 12px; color: #888; font-style: italic;">* General guideline, not medical advice.</p>
       `;
       document.getElementById('targetProtein').innerText = targets.protein;
       document.getElementById('targetFat').innerText = targets.fat;
       updateFridgeUI();
     }
 
-    // --- 食物库逻辑 ---
     const foods = [
       { name: "Chicken Breast", category: "Protein", protein: 31, fat: 3.6, fiber: 0, emoji: "🍗", satiety: "high", recipe: ["Pan-sear or air-fry for 10 mins with salt.", "Let it rest, then slice.", "Pair with greens."] },
       { name: "Salmon", category: "Protein", protein: 20, fat: 13, fiber: 0, emoji: "🐟", satiety: "high", recipe: ["Wrap in foil with lemon.", "Bake at 200°C for 12-15 mins.", "Enjoy directly."] },
@@ -597,199 +668,75 @@
       const text = document.getElementById('satietyText');
       box.style.display = 'block';
       let feedback = "";
-      if (satietyScore < threshold - 2) {
-        feedback = `Given your height and weight (BMI: ${bmi.toFixed(1)}), this meal might leave you feeling quite hungry very soon. Consider adding a high-satiety carb or more protein.`;
-      } else if (satietyScore >= threshold - 1 && satietyScore <= threshold + 2) {
-        feedback = `Perfect! For your body size (BMI: ${bmi.toFixed(1)}) and current goal, this combination should leave you feeling comfortably full and satisfied.`;
-      } else {
-        feedback = `This is a very heavy and filling meal! For your body size (BMI: ${bmi.toFixed(1)}), this might feel a bit too much. It will definitely keep you full for a long time.`;
-      }
-      const currentP = parseFloat(document.getElementById('currentProtein').innerText);
-      if (currentP < targets.protein * 0.5) { feedback += " (Note: Your protein is still a bit low for your daily target.)"; }
+      if (satietyScore < threshold - 2) feedback = `For your body size (BMI: ${bmi.toFixed(1)}), this might leave you hungry. Consider adding more protein or high-fiber carbs.`;
+      else if (satietyScore >= threshold - 1 && satietyScore <= threshold + 2) feedback = `Perfect! For your body size (BMI: ${bmi.toFixed(1)}), this combination should leave you comfortably full.`;
+      else feedback = `This is very filling! For your body size, it might be a bit much, but it will keep you full for a long time.`;
       text.innerText = feedback;
     }
 
-    // --- 行为追踪逻辑 ---
     function logBehavior() {
       const hungry = document.getElementById('behaviorHunger').value;
       const binge = document.getElementById('behaviorBinge').value;
       const today = new Date().toLocaleDateString('en-US');
-      
-      // 简单覆盖当天的记录
       const existingIndex = behaviorLogs.findIndex(log => log.date === today);
-      if (existingIndex > -1) {
-        behaviorLogs[existingIndex] = { date: today, hungry, binge };
-      } else {
-        behaviorLogs.push({ date: today, hungry, binge });
-      }
+      if (existingIndex > -1) behaviorLogs[existingIndex] = { date: today, hungry, binge };
+      else behaviorLogs.push({ date: today, hungry, binge });
 
       const summaryBox = document.getElementById('behaviorSummary');
       summaryBox.style.display = 'block';
-      
-      let feedback = `Recorded for ${today}. `;
       if (hungry === 'yes' || binge === 'yes') {
-        feedback += "Thank you for being honest. These things happen, and noticing them is the first step. Be gentle with yourself today.";
-        summaryBox.style.background = '#fff3cd';
-        summaryBox.style.color = '#856404';
-        summaryBox.style.borderLeftColor = '#ffc107';
+        summaryBox.innerHTML = "Thank you for being honest. These things happen. Notice how you feel, be gentle with yourself today, and try to add more filling foods tomorrow.";
+        summaryBox.style.background = '#fff3cd'; summaryBox.style.color = '#856404';
       } else {
-        feedback += "You had a great day listening to your body's hunger cues. Keep it up!";
-        summaryBox.style.background = '#e8f4ea';
-        summaryBox.style.color = '#2e7d32';
-        summaryBox.style.borderLeftColor = '#4a7c59';
+        summaryBox.innerHTML = "Great job listening to your body's hunger cues today. Keep it up!";
+        summaryBox.style.background = '#e8f5e9'; summaryBox.style.color = '#2e7d32';
       }
-      summaryBox.innerText = feedback;
     }
 
-    // --- 社交分享逻辑 ---
-    function inviteFriend() {
-      const name = document.getElementById('friendName').value.trim();
-      if (!name) { alert("Please enter a name."); return; }
-      if (!sharedFriends.includes(name)) sharedFriends.push(name);
-      document.getElementById('friendName').value = '';
-      alert(`Invitation sent to ${name}! They can now see your daily nutrient goals and mood check-ins (simulated).`);
-    }
-
-    function addCustomRecipe() {
-      const name = document.getElementById('newRecipeName').value.trim();
-      const desc = document.getElementById('newRecipeDesc').value.trim();
-      if (!name || !desc) { alert("Please fill in both the recipe name and how it made you feel."); return; }
-
-      customRecipes.push({ name, desc, author: "You (Shared with Friends)" });
-      
-      document.getElementById('newRecipeName').value = '';
-      document.getElementById('newRecipeDesc').value = '';
-      
-      updateRecipeList();
-    }
-
-    function updateRecipeList() {
-      const list = document.getElementById('recipeList');
-      const emptyText = document.getElementById('emptyRecipeText');
-      
-      if (customRecipes.length === 0) {
-        emptyText.style.display = 'block';
-        return;
-      }
-      emptyText.style.display = 'none';
-
-      // 保留提示文字，清空其他
-      list.innerHTML = '<p style="color:#999; font-size:14px; display:none;" id="emptyRecipeText">No custom recipes yet.</p>';
-
-      customRecipes.forEach(r => {
-        const div = document.createElement('div');
-        div.className = 'community-recipe-item';
-        div.innerHTML = `
-          <div class="recipe-author">${r.author}</div>
-          <div style="font-weight: bold; margin: 4px 0;">${r.name}</div>
-          <div class="recipe-desc">"${r.desc}"</div>
-        `;
-        list.appendChild(div);
-      });
-    }
-
-    // --- 两周报告逻辑 ---
-    function generateReport() {
-      const box = document.getElementById('reportBox');
-      const content = document.getElementById('reportContent');
-      box.style.display = 'block';
-
-      // 统计情绪
-      let positiveMoods = 0, negativeMoods = 0;
-      moodLogs.forEach(log => {
-        if (log.mood === 'great' || log.mood === 'okay') positiveMoods++;
-        else negativeMoods++;
-      });
-
-      // 统计行为
-      let hungryDays = 0, bingeDays = 0;
-      behaviorLogs.forEach(log => {
-        if (log.hungry === 'yes') hungryDays++;
-        if (log.binge === 'yes') bingeDays++;
-      });
-
-      let html = `<p>Over the last period, you have checked in <strong>${moodLogs.length}</strong> times for your mood, and <strong>${behaviorLogs.length}</strong> times for your behavior.</p>`;
-      
-      if (moodLogs.length > 0) {
-        html += `<p><strong>Mood:</strong> You logged ${positiveMoods} positive days and ${negativeMoods} difficult days. `;
-        if (positiveMoods > negativeMoods) {
-          html += `It looks like your overall mindset is moving in a positive direction. Keep nourishing yourself!</p>`;
-        } else {
-          html += `It seems like this has been a tough week. Remember to be kind to yourself and reach out to your support network.</p>`;
-        }
-      }
-
-      if (behaviorLogs.length > 0) {
-        html += `<p><strong>Behaviors:</strong> You reported feeling overly hungry on ${hungryDays} days, and having a binge episode on ${bingeDays} days. `;
-        if (hungryDays === 0 && bingeDays === 0) {
-          html += `Amazing! Your regular eating pattern is working perfectly for you.</p>`;
-        } else {
-          html += `This is valuable data. Are you restricting too much during the day? Try adding more filling snacks (like Greek Yogurt or Almonds) to prevent extreme hunger.</p>`;
-        }
-      }
-
-      html += `<p style="font-size:14px; color:#888; font-style:italic; margin-top:16px;">"Progress is not linear. Every day you observe your habits is a victory."</p>`;
-
-      content.innerHTML = html;
-    }
-
-    // --- 数字排毒逻辑 ---
     function checkDetox() {
       const time = parseFloat(document.getElementById('screenTimeInput').value);
       const limit = parseFloat(document.getElementById('screenTimeLimit').value);
       const avoid = document.getElementById('checkAvoid').checked;
       const positive = document.getElementById('checkPositive').checked;
       const unfollow = document.getElementById('checkUnfollow').checked;
-
-      if (isNaN(time) || isNaN(limit)) {
-        alert("Please enter your screen time and limit goal (in minutes).");
-        return;
-      }
-
-      const feedbackBox = document.getElementById('detoxFeedback');
-      feedbackBox.style.display = 'block';
-      let messages = [];
-
-      if (time > limit) {
-        messages.push(`⚠️ You exceeded your goal (${time} mins vs ${limit} mins). It's okay, tomorrow is a new day.`);
-        feedbackBox.style.background = '#fff3cd'; feedbackBox.style.color = '#856404'; feedbackBox.style.borderLeftColor = '#ffc107';
-      } else {
-        messages.push(`✅ Great job staying within your limit (${time} mins / ${limit} mins).`);
-        feedbackBox.style.background = '#e8f5e9'; feedbackBox.style.color = '#2e7d32'; feedbackBox.style.borderLeftColor = '#2e7d32';
-      }
-
-      if (avoid && positive && unfollow) {
-        messages.push("🌟 Incredible! You completely controlled your algorithm today.");
-      } else if (avoid || positive || unfollow) {
-        messages.push("👍 Good start. Keep trying to avoid negative keywords and unfollow accounts that hurt your mental health.");
-      } else {
-        messages.push("💡 Tip: Try clicking 'Not Interested' on body image posts. The algorithm learns from your clicks.");
-      }
-
-      feedbackBox.innerHTML = messages.join('<br><br>');
+      if (isNaN(time) || isNaN(limit)) { alert("Please enter your screen time and limit goal."); return; }
+      
+      const fb = document.getElementById('detoxFeedback');
+      fb.style.display = 'block';
+      let msg = time > limit ? `⚠️ You exceeded your limit (${time} vs ${limit} mins). Try leaving your phone in another room during meals.` : `✅ Great job staying within your limit (${time} mins).`;
+      if (avoid && positive && unfollow) msg += " 🌟 You controlled your algorithm today!";
+      else if (avoid || positive) msg += " 👍 Good start. Keep trying to avoid negative keywords.";
+      else msg += " 💡 Tip: Click 'Not Interested' on body image posts to retrain your feed.";
+      
+      fb.innerHTML = msg;
+      fb.style.background = time > limit ? '#fff3cd' : '#e8f5e9';
+      fb.style.color = time > limit ? '#856404' : '#2e7d32';
     }
 
-    // --- 体重趋势逻辑 ---
-    function logWeight() {
-      const val = parseFloat(document.getElementById('logWeight').value);
-      if (!val) return;
-      const today = new Date().toLocaleDateString();
-      weightLogs.push({ date: today, weight: val });
-      document.getElementById('logWeight').value = '';
-      const box = document.getElementById('trendResult');
-      const text = document.getElementById('trendText');
-      box.style.display = 'block';
-      if (weightLogs.length === 1) {
-        text.innerText = "Baseline logged. Come back in a week to see your trend. Remember, one number doesn't define you.";
-      } else {
-        const diff = weightLogs[weightLogs.length - 1].weight - weightLogs[weightLogs.length - 2].weight;
-        if (Math.abs(diff) < 0.5) text.innerText = "Your weight is stable. This is a great sign of consistency.";
-        else if (diff > 0) text.innerText = "Your weight has shifted up slightly. This is normal fluctuation. Don't panic.";
-        else text.innerText = "Your weight has shifted down slightly. Ensure you're eating enough filling foods.";
-      }
+    function inviteFriend() {
+      const name = document.getElementById('friendName').value.trim();
+      if (!name) { alert("Please enter a name."); return; }
+      if (!sharedFriends.includes(name)) sharedFriends.push(name);
+      document.getElementById('friendName').value = '';
+      alert(`Invitation sent to ${name}! They can now see your daily nutrient goals and mood check-ins.`);
     }
 
-    // --- 心境日记逻辑 ---
+    function addCustomRecipe() {
+      const name = document.getElementById('newRecipeName').value.trim();
+      const desc = document.getElementById('newRecipeDesc').value.trim();
+      if (!name || !desc) { alert("Please fill in both the recipe name and how it made you feel."); return; }
+      customRecipes.push({ name, desc, author: "You (Shared with Friends)" });
+      document.getElementById('newRecipeName').value = '';
+      document.getElementById('newRecipeDesc').value = '';
+      
+      const list = document.getElementById('recipeList');
+      document.getElementById('emptyRecipeText').style.display = 'none';
+      const div = document.createElement('div');
+      div.className = 'community-recipe-item';
+      div.innerHTML = `<div class="recipe-author">${customRecipes[customRecipes.length-1].author}</div><div style="font-weight: bold; margin: 4px 0;">${name}</div><div class="recipe-desc">"${desc}"</div>`;
+      list.appendChild(div);
+    }
+
     function logMood(mood, btn) {
       document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
@@ -797,51 +744,78 @@
       const existingIndex = moodLogs.findIndex(log => log.date === today);
       if (existingIndex > -1) moodLogs[existingIndex].mood = mood;
       else moodLogs.push({ date: today, mood: mood });
-      updateDiaryUI();
-    }
-
-    function updateDiaryUI() {
-      const historyDiv = document.getElementById('diaryHistory');
-      const listDiv = document.getElementById('historyList');
-      const chartDiv = document.getElementById('moodChart');
-      const chartBar = document.getElementById('chartBar');
-
-      if (moodLogs.length === 0) return;
-      historyDiv.style.display = 'block';
-      listDiv.innerHTML = '';
-
-      const moodTexts = { great: '😄 Great', okay: '🙂 Okay', anxious: '😐 Anxious', distressed: '😞 Distressed' };
-      const moodClasses = { great: 'mood-great', okay: 'mood-okay', anxious: 'mood-anxious', distressed: 'mood-distressed' };
-
+      
+      const hist = document.getElementById('diaryHistory');
+      const list = document.getElementById('historyList');
+      const bar = document.getElementById('chartBar');
+      hist.style.display = 'block';
+      list.innerHTML = '';
+      
+      const texts = { great: '😄 Great', okay: '🙂 Okay', anxious: '😐 Anxious', distressed: '😞 Distressed' };
       moodLogs.forEach(log => {
         const div = document.createElement('div');
         div.className = 'history-log';
-        div.innerHTML = `<span>${log.date}</span><span class="mood-text ${moodClasses[log.mood]}">${moodTexts[log.mood]}</span>`;
-        listDiv.appendChild(div);
+        div.innerHTML = `<span>${log.date}</span><span class="mood-text" style="color:${log.mood==='great'||log.mood==='okay'?'#2e7d32':'#c62828'}">${texts[log.mood]}</span>`;
+        list.appendChild(div);
       });
 
-      if (moodLogs.length >= 2) {
-        chartDiv.style.display = 'block';
-        chartBar.innerHTML = '';
-        const counts = { great: 0, okay: 0, anxious: 0, distressed: 0 };
-        moodLogs.forEach(log => counts[log.mood]++);
-        const total = moodLogs.length;
-        const colors = { great: '#2e7d32', okay: '#7cb342', anxious: '#f57c00', distressed: '#c62828' };
-        for (const key in counts) {
-          if (counts[key] > 0) {
-            const segment = document.createElement('div');
-            segment.className = 'chart-segment';
-            segment.style.width = (counts[key] / total) * 100 + '%';
-            segment.style.backgroundColor = colors[key];
-            chartBar.appendChild(segment);
-          }
+      // 更新图表
+      const counts = { great: 0, okay: 0, anxious: 0, distressed: 0 };
+      moodLogs.forEach(log => counts[log.mood]++);
+      const total = moodLogs.length;
+      const colors = { great: '#2e7d32', okay: '#7cb342', anxious: '#f57c00', distressed: '#c62828' };
+      bar.innerHTML = '';
+      for (const key in counts) {
+        if (counts[key] > 0) {
+          const seg = document.createElement('div');
+          seg.style.width = (counts[key] / total) * 100 + '%';
+          seg.style.backgroundColor = colors[key];
+          bar.appendChild(seg);
         }
-      } else {
-        chartDiv.style.display = 'none';
       }
     }
 
-    // --- 内置食谱弹窗逻辑 ---
+    function logWeight() {
+      const val = parseFloat(document.getElementById('logWeight').value);
+      if (!val) return;
+      weightLogs.push({ date: new Date().toLocaleDateString(), weight: val });
+      document.getElementById('logWeight').value = '';
+      const box = document.getElementById('trendResult');
+      box.style.display = 'block';
+      if (weightLogs.length === 1) {
+        box.innerText = "Baseline logged. Come back in a week to see your trend. Remember, one number doesn't define you.";
+      } else {
+        const diff = weightLogs[weightLogs.length - 1].weight - weightLogs[weightLogs.length - 2].weight;
+        if (Math.abs(diff) < 0.5) box.innerText = "Your weight is stable. This is a great sign of consistency.";
+        else if (diff > 0) box.innerText = "Your weight has shifted up slightly. This is normal fluctuation. Don't panic.";
+        else box.innerText = "Your weight has shifted down slightly. Ensure you're eating enough filling foods.";
+      }
+    }
+
+    function generateReport() {
+      const box = document.getElementById('reportBox');
+      box.style.display = 'block';
+      
+      let positiveMoods = 0, negativeMoods = 0;
+      moodLogs.forEach(log => { if (log.mood === 'great' || log.mood === 'okay') positiveMoods++; else negativeMoods++; });
+      let hungryDays = 0, bingeDays = 0;
+      behaviorLogs.forEach(log => { if (log.hungry === 'yes') hungryDays++; if (log.binge === 'yes') bingeDays++; });
+
+      let html = `<h3 style="margin-top:0; color:#8e44ad;">Your Bi-Weekly Summary</h3>`;
+      html += `<p>Over this period, you have checked in <strong>${moodLogs.length}</strong> times for your mood, and <strong>${behaviorLogs.length}</strong> times for your behavior.</p>`;
+      
+      if (moodLogs.length > 0) {
+        html += `<p><strong>Mood:</strong> You logged ${positiveMoods} positive days and ${negativeMoods} difficult days. `;
+        html += positiveMoods > negativeMoods ? `Your mindset is moving in a positive direction!</p>` : `It seems tough right now. Be kind to yourself and reach out to your support network.</p>`;
+      }
+      if (behaviorLogs.length > 0) {
+        html += `<p><strong>Behaviors:</strong> You reported feeling overly hungry on ${hungryDays} days, and having a binge episode on ${bingeDays} days. `;
+        html += (hungryDays === 0 && bingeDays === 0) ? `Amazing! Your regular eating pattern is working perfectly.</p>` : `Are you restricting too much? Try adding filling snacks to prevent extreme hunger.</p>`;
+      }
+      html += `<p style="font-size:14px; color:#888; font-style:italic; margin-top:16px;">"Progress is not linear. Every day you observe your habits is a victory."</p>`;
+      box.innerHTML = html;
+    }
+
     function showRecipe(name) {
       const food = foods.find(f => f.name === name);
       if (!food) return;
