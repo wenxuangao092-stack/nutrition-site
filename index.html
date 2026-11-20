@@ -9,74 +9,72 @@
       --primary: #2e7d32;
       --bg: #f9fbf9;
       --text: #333;
+      --card-bg: #ffffff;
     }
     body { 
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
-      max-width: 600px; 
+      max-width: 700px; 
       margin: 40px auto; 
       padding: 0 20px; 
       line-height: 1.6; 
       color: var(--text);
       background-color: var(--bg);
     }
-    h1 { font-size: 28px; color: var(--primary); margin-bottom: 8px;}
-    .subtitle { color: #666; font-size: 15px; margin-bottom: 30px; }
+    h1 { font-size: 32px; color: var(--primary); margin-bottom: 8px;}
+    h2 { font-size: 22px; color: var(--primary); margin-top: 40px; border-bottom: 2px solid #e0e0e0; padding-bottom: 8px;}
+    .subtitle { color: #666; font-size: 16px; margin-bottom: 30px; }
+    
+    /* 表单样式 */
     .form-group { margin-bottom: 16px; }
     label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; }
     input, select { 
-      width: 100%; 
-      padding: 10px; 
-      border: 1px solid #ccc; 
-      border-radius: 6px; 
-      box-sizing: border-box; 
-      font-size: 15px;
+      width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 15px;
     }
     button { 
-      width: 100%;
-      margin-top: 24px; 
-      padding: 12px; 
-      font-size: 16px; 
-      font-weight: 600;
-      color: white;
-      background-color: var(--primary);
-      border: none;
-      border-radius: 6px;
-      cursor: pointer; 
-      transition: background 0.2s;
+      width: 100%; margin-top: 24px; padding: 12px; font-size: 16px; font-weight: 600; color: white;
+      background-color: var(--primary); border: none; border-radius: 6px; cursor: pointer; transition: background 0.2s;
     }
     button:hover { background-color: #1b5e20; }
+    
+    /* 结果框样式 */
     #result { 
-      margin-top: 30px; 
-      padding: 20px; 
-      background: white; 
-      border: 1px solid #e0e0e0;
-      border-radius: 8px; 
-      display: none; 
-      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      margin-top: 30px; padding: 20px; background: var(--card-bg); border: 1px solid #e0e0e0;
+      border-radius: 8px; display: none; box-shadow: 0 4px 6px rgba(0,0,0,0.05);
     }
     #result h3 { margin-top: 0; color: var(--primary); }
     .disclaimer { font-size: 12px; color: #888; margin-top: 16px; font-style: italic; }
+
+    /* 研究背景样式 */
+    .research-section {
+      background-color: var(--card-bg);
+      padding: 24px;
+      border-radius: 8px;
+      border-left: 4px solid var(--primary);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      margin-top: 20px;
+    }
+    .research-section p { margin-bottom: 16px; }
+    .research-section ul { padding-left: 20px; }
+    .research-section li { margin-bottom: 8px; }
   </style>
 </head>
 <body>
   <h1>Nutrient Plan</h1>
   <p class="subtitle">A calorie-free approach to personalized nutrition. Focus on what your body needs, not the numbers.</p>
 
+  <!-- 测评部分 -->
   <div class="form-group">
     <label>Height (cm)</label>
     <input id="height" type="number" placeholder="e.g., 170">
   </div>
-
   <div class="form-group">
     <label>Weight (kg)</label>
     <input id="weight" type="number" placeholder="e.g., 65">
   </div>
-
   <div class="form-group">
     <label>Age</label>
     <input id="age" type="number" placeholder="e.g., 25">
   </div>
-
   <div class="form-group">
     <label>Sex</label>
     <select id="sex">
@@ -84,17 +82,15 @@
       <option value="female">Female</option>
     </select>
   </div>
-
   <div class="form-group">
     <label>Activity Level</label>
     <select id="activity">
-      <option value="sedentary">Sedentary (little to no exercise)</option>
+      <option value="sedentary">Sedentary</option>
       <option value="light">Lightly active</option>
       <option value="moderate">Moderately active</option>
       <option value="high">Very active</option>
     </select>
   </div>
-
   <div class="form-group">
     <label>Your Goal</label>
     <select id="goal">
@@ -108,12 +104,24 @@
 
   <div id="result"></div>
 
+  <!-- 研究背景部分 (Research Context) -->
+  <h2>Why We Built This</h2>
+  <div class="research-section">
+    <p><strong>Project Context:</strong> This platform is developed as part of a research project exploring the impact of social media on body image and dietary habits (often referred to as the "mafia" of social media).</p>
+    <p>We identified three main issues in modern diet culture:</p>
+    <ul>
+      <li><strong>Restrictive Diets:</strong> Over-fixation on calorie counting and food restriction.</li>
+      <li><strong>Over-exercising:</strong> Unhealthy compensatory behaviors.</li>
+      <li><strong>Over Self-Checking:</strong> Constant weighing and mirror checking that leads to body anxiety.</li>
+    </ul>
+    <p><strong>Our Solution:</strong> Instead of focusing on calories, we want to help individuals build a healthy relationship with food by understanding <em>nutrients</em>. We provide personalized nutrient targets, encourage using available food in your fridge, and promote a healthy, non-obsessive routine for weight monitoring.</p>
+  </div>
+
   <script>
     function calculate() {
       const h = parseFloat(document.getElementById('height').value);
       const w = parseFloat(document.getElementById('weight').value);
       const age = parseFloat(document.getElementById('age').value);
-      const sex = document.getElementById('sex').value;
       const goal = document.getElementById('goal').value;
 
       if (!h || !w || !age) {
@@ -125,7 +133,7 @@
       let bmiNote = '';
       if (bmi < 18.5) bmiNote = 'Underweight. Reducing diet is not recommended.';
       else if (bmi < 25) bmiNote = 'Normal range. Great!';
-      else bmiNote = 'Overweight. A slight calorie deficit (or focusing on nutrition) might be beneficial.';
+      else bmiNote = 'Overweight. Focusing on nutrition might be beneficial.';
 
       let proteinPerKg = 1.2;
       if (goal === 'gain') proteinPerKg = 1.8;
@@ -143,7 +151,7 @@
         <p><strong>Protein Target:</strong> ${protein} g</p>
         <p><strong>Fat Target:</strong> ~${fat} g</p>
         <p><strong>Dietary Fiber Target:</strong> ${fiber} g</p>
-        <p class="disclaimer">* This is a general guideline, not medical advice. We do not track calories.</p>
+        <p class="disclaimer">* This is a general guideline, not medical advice.</p>
       `;
     }
   </script>
