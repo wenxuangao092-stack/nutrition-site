@@ -17,7 +17,7 @@
       max-width: 900px; margin: 40px auto; padding: 0 20px; line-height: 1.7; 
       color: var(--text); background-color: var(--bg);
     }
-    h1, h2, h3, label, button { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    h1, h2, h3, label, button, .category-btn, .nutrient-row, .per-100g { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     h1 { font-size: 36px; color: var(--primary); margin-bottom: 8px; letter-spacing: -0.5px;}
     h2 { font-size: 24px; color: var(--primary); margin-top: 48px; border-bottom: 1px solid #e0e0e0; padding-bottom: 8px;}
     .subtitle { color: #666; font-size: 17px; margin-bottom: 30px; font-style: italic;}
@@ -37,56 +37,54 @@
     .research-section ul { padding-left: 20px; }
     .research-section li { margin-bottom: 8px; }
 
-    #searchInput { margin-bottom: 24px; padding: 14px; font-size: 16px; border-radius: 8px; border: 1px solid #ddd; width: 100%; box-sizing: border-box; font-family: sans-serif; }
+    /* 搜索和分类标签 */
+    #searchInput { margin-bottom: 16px; padding: 14px; font-size: 16px; border-radius: 8px; border: 1px solid #ddd; width: 100%; box-sizing: border-box; font-family: sans-serif; }
+    .categories { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; }
+    .category-btn { 
+      padding: 6px 16px; border-radius: 20px; border: 1px solid #ccc; background: white; 
+      cursor: pointer; font-size: 14px; transition: all 0.2s; color: #555;
+    }
+    .category-btn:hover { background: #f0f0f0; }
+    .category-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
     
-    /* 💡 食物卡片基础样式 */
+    /* 💡 食物卡片样式 */
     .food-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 24px; }
     .food-card {
       background: linear-gradient(135deg, var(--watercolor-bg-1), var(--watercolor-bg-2));
       border-radius: 16px; padding: 24px; box-shadow: 0 8px 20px rgba(0,0,0,0.04), inset 0 0 0 1px rgba(255,255,255,0.8);
-      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease; /* 弹跳曲线 */
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
       position: relative; overflow: hidden; cursor: pointer;
     }
-    /* 💡 跳跃性悬停效果 */
-    .food-card:hover { 
-      transform: translateY(-8px) scale(1.02); 
-      box-shadow: 0 15px 30px rgba(74, 124, 89, 0.15); 
-    }
-    
+    .food-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 15px 30px rgba(74, 124, 89, 0.15); }
     .food-card::before {
       content: ""; position: absolute; top: -20px; right: -20px; width: 100px; height: 100px;
       background: radial-gradient(circle, rgba(162, 196, 170, 0.2) 0%, rgba(255,255,255,0) 70%);
       border-radius: 50%; z-index: 0;
     }
-    
     .food-card-content { position: relative; z-index: 1; text-align: center; }
     
-    /* 💡 切菜动画核心容器 */
+    /* 💡 切菜动画核心 */
     .emoji-container {
       font-size: 48px; margin-bottom: 12px; display: flex; justify-content: center; align-items: center; height: 60px;
       transition: transform 0.3s ease;
     }
-    /* 动画类：点击时触发 */
     .chopping .emoji-container { animation: chop 0.4s ease forwards; }
     @keyframes chop {
       0% { transform: scale(1) rotate(0deg); }
       30% { transform: scale(1.1) rotate(-10deg); }
-      50% { transform: scale(1.1) rotate(10deg); } /* 模拟刀切下去的震动 */
-      100% { transform: scale(0.9) rotate(0deg); opacity: 0; } /* 切成两半并消失 */
+      50% { transform: scale(1.1) rotate(10deg); }
+      100% { transform: scale(0.9) rotate(0deg); opacity: 0; }
     }
-
     .food-card h4 { margin: 0 0 16px 0; font-size: 20px; color: var(--primary); font-family: "Georgia", serif;}
     
-    /* 数据面板默认隐藏，切菜后出现 */
     .nutrient-data { display: none; text-align: left; animation: fadeInUp 0.5s ease forwards; }
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
-    .nutrient-row { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 8px; color: #555; border-bottom: 1px dashed #dcdcdc; padding-bottom: 6px; font-family: sans-serif;}
+    .nutrient-row { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 8px; color: #555; border-bottom: 1px dashed #dcdcdc; padding-bottom: 6px;}
     .nutrient-row span:last-child { font-weight: bold; color: #222; }
-    .per-100g { font-size: 11px; color: #999; margin-top: 12px; text-align: right; font-family: sans-serif;}
+    .per-100g { font-size: 11px; color: #999; margin-top: 12px; text-align: right;}
   </style>
 </head>
 <body>
@@ -133,11 +131,21 @@
   <h2>Food Library</h2>
   <p>Click on the cards to "chop" the food and reveal its nutrients (per 100g). No calories, just nutrients.</p>
   
-  <input type="text" id="searchInput" placeholder="Search foods (e.g., Chicken, Rice, Broccoli)..." onkeyup="filterFoods()">
+  <input type="text" id="searchInput" placeholder="Search foods..." onkeyup="filterFoods()">
+  
+  <!-- 分类按钮 -->
+  <div class="categories">
+    <button class="category-btn active" onclick="filterCategory('All', this)">All</button>
+    <button class="category-btn" onclick="filterCategory('Protein', this)">Protein</button>
+    <button class="category-btn" onclick="filterCategory('Dairy', this)">Dairy</button>
+    <button class="category-btn" onclick="filterCategory('Carbs', this)">Carbs</button>
+    <button class="category-btn" onclick="filterCategory('Veggies', this)">Veggies & Fruits</button>
+    <button class="category-btn" onclick="filterCategory('Fats', this)">Healthy Fats</button>
+  </div>
+
   <div class="food-grid" id="foodGrid"></div>
 
   <script>
-    // 测评逻辑
     function calculate() {
       const h = parseFloat(document.getElementById('height').value);
       const w = parseFloat(document.getElementById('weight').value);
@@ -165,24 +173,47 @@
       `;
     }
 
-    // 食物数据库（加了 Emoji 图标）
+    // 扩充到 26 种食物，加入分类标签 (category)
     const foods = [
-      { name: "Chicken Breast", protein: 31, fat: 3.6, fiber: 0, emoji: "🍗" },
-      { name: "Salmon", protein: 20, fat: 13, fiber: 0, emoji: "🐟" },
-      { name: "Eggs", protein: 13, fat: 11, fiber: 0, emoji: "🥚" },
-      { name: "Lean Beef", protein: 26, fat: 15, fiber: 0, emoji: "🥩" },
-      { name: "Tofu", protein: 8, fat: 4.8, fiber: 0.3, emoji: "🧊" },
-      { name: "Oats", protein: 17, fat: 7, fiber: 10, emoji: "🌾" },
-      { name: "Brown Rice", protein: 2.6, fat: 0.9, fiber: 1.8, emoji: "🍚" },
-      { name: "Sweet Potato", protein: 1.6, fat: 0.1, fiber: 3, emoji: "🍠" },
-      { name: "Broccoli", protein: 2.8, fat: 0.4, fiber: 2.6, emoji: "🥦" },
-      { name: "Spinach", protein: 2.9, fat: 0.4, fiber: 2.2, emoji: "🥬" },
-      { name: "Avocado", protein: 2, fat: 15, fiber: 6.7, emoji: "🥑" },
-      { name: "Almonds", protein: 21, fat: 49, fiber: 12, emoji: "🥜" },
-      { name: "Banana", protein: 1.1, fat: 0.3, fiber: 2.6, emoji: "🍌" }
+      // Proteins
+      { name: "Chicken Breast", category: "Protein", protein: 31, fat: 3.6, fiber: 0, emoji: "🍗" },
+      { name: "Salmon", category: "Protein", protein: 20, fat: 13, fiber: 0, emoji: "🐟" },
+      { name: "Eggs", category: "Protein", protein: 13, fat: 11, fiber: 0, emoji: "🥚" },
+      { name: "Lean Beef", category: "Protein", protein: 26, fat: 15, fiber: 0, emoji: "🥩" },
+      { name: "Tofu", category: "Protein", protein: 8, fat: 4.8, fiber: 0.3, emoji: "🍲" }, // 换了新图标
+      { name: "Shrimp", category: "Protein", protein: 24, fat: 0.3, fiber: 0, emoji: "🍤" },
+      
+      // Dairy
+      { name: "Greek Yogurt", category: "Dairy", protein: 10, fat: 0.4, fiber: 0, emoji: "🥣" },
+      { name: "Whole Milk", category: "Dairy", protein: 3.2, fat: 3.3, fiber: 0, emoji: "🥛" },
+      { name: "Cheddar Cheese", category: "Dairy", protein: 25, fat: 33, fiber: 0, emoji: "🧀" },
+      { name: "Cottage Cheese", category: "Dairy", protein: 11, fat: 4.3, fiber: 0, emoji: "🍚" }, // 类似一碗的感觉
+      
+      // Carbs
+      { name: "Oats", category: "Carbs", protein: 17, fat: 7, fiber: 10, emoji: "🌾" },
+      { name: "Brown Rice", category: "Carbs", protein: 2.6, fat: 0.9, fiber: 1.8, emoji: "🍚" },
+      { name: "Sweet Potato", category: "Carbs", protein: 1.6, fat: 0.1, fiber: 3, emoji: "🍠" },
+      { name: "Quinoa", category: "Carbs", protein: 14, fat: 6, fiber: 7, emoji: "🌾" },
+      { name: "Whole Wheat Bread", category: "Carbs", protein: 13, fat: 3.4, fiber: 6, emoji: "🍞" },
+      { name: "Lentils", category: "Carbs", protein: 9, fat: 0.4, fiber: 8, emoji: "🫘" },
+
+      // Veggies & Fruits
+      { name: "Broccoli", category: "Veggies", protein: 2.8, fat: 0.4, fiber: 2.6, emoji: "🥦" },
+      { name: "Spinach", category: "Veggies", protein: 2.9, fat: 0.4, fiber: 2.2, emoji: "🥬" },
+      { name: "Avocado", category: "Veggies", protein: 2, fat: 15, fiber: 6.7, emoji: "🥑" },
+      { name: "Blueberries", category: "Veggies", protein: 0.7, fat: 0.3, fiber: 2.4, emoji: "🫐" },
+      { name: "Banana", category: "Veggies", protein: 1.1, fat: 0.3, fiber: 2.6, emoji: "🍌" },
+      { name: "Tomato", category: "Veggies", protein: 0.9, fat: 0.2, fiber: 1.2, emoji: "🍅" },
+      
+      // Healthy Fats
+      { name: "Almonds", category: "Fats", protein: 21, fat: 49, fiber: 12, emoji: "🥜" },
+      { name: "Olive Oil", category: "Fats", protein: 0, fat: 100, fiber: 0, emoji: "🫒" },
+      { name: "Chia Seeds", category: "Fats", protein: 17, fat: 31, fiber: 34, emoji: "🌱" },
+      { name: "Peanut Butter", category: "Fats", protein: 25, fat: 50, fiber: 6, emoji: "🥜" }
     ];
 
-    // 渲染食物卡片
+    let currentCategory = 'All';
+
     function renderFoods(foodArray) {
       const grid = document.getElementById('foodGrid');
       grid.innerHTML = '';
@@ -190,7 +221,7 @@
       foodArray.forEach(food => {
         const card = document.createElement('div');
         card.className = 'food-card';
-        card.onclick = function() { chopFood(this); }; // 绑定点击切菜事件
+        card.onclick = function() { chopFood(this); };
         
         card.innerHTML = `
           <div class="food-card-content">
@@ -208,32 +239,46 @@
       });
     }
 
-    // 💡 切菜动画逻辑
     function chopFood(card) {
-      // 防止重复点击
       if (card.classList.contains('chopping')) return;
-      
       card.classList.add('chopping');
-      
-      // 0.4秒动画结束后，隐藏 Emoji，显示营养素数据
       setTimeout(() => {
         card.querySelector('.emoji-container').style.display = 'none';
         card.querySelector('.nutrient-data').style.display = 'block';
-        // 移除动画类，方便下次可能重置
         card.classList.remove('chopping'); 
       }, 400);
     }
 
-    // 搜索过滤逻辑
     function filterFoods() {
       const query = document.getElementById('searchInput').value.toLowerCase();
-      const filtered = foods.filter(f => f.name.toLowerCase().includes(query));
+      applyFilters(query, currentCategory);
+    }
+
+    function filterCategory(category, btnElement) {
+      currentCategory = category;
+      // 更新按钮的高亮状态
+      document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+      btnElement.classList.add('active');
+      
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      applyFilters(query, currentCategory);
+    }
+
+    function applyFilters(query, category) {
+      let filtered = foods;
+      
+      if (category !== 'All') {
+        filtered = filtered.filter(f => f.category === category);
+      }
+      
+      if (query) {
+        filtered = filtered.filter(f => f.name.toLowerCase().includes(query));
+      }
+      
       renderFoods(filtered);
     }
 
-    // 初始化加载
     renderFoods(foods);
   </script>
 </body>
 </html>
-
