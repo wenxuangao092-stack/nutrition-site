@@ -10,24 +10,22 @@
       --text: #3a3a3a;
       --watercolor-bg-1: #f2f7f4;
       --watercolor-bg-2: #fdfaf6;
-      --fridge-bg: #eef2f5;
+      --fridge-bg: rgba(238, 242, 245, 0.85); /* 让冰箱背景稍微透明一点，透出底图 */
     }
     * { box-sizing: border-box; }
     
-    /* 💡 这里是你流动的水彩渐变背景 */
+    /* 💡 背景层：流动渐变 + 你的水彩图 */
     body { 
       font-family: "Georgia", "Times New Roman", serif; 
       margin: 0; padding: 0; line-height: 1.7; 
       color: var(--text); 
-      background: linear-gradient(135deg, #fdfaf6, #f2f7f4, #fcfbfa, #eef2f5);
-      background-size: 400% 400%;
-      animation: gradientFlow 15s ease infinite;
+      /* 下面这一行是你的水彩图，我加了 0.15 的透明度让它不会干扰文字 */
+      background-image: linear-gradient(rgba(252, 251, 250, 0.85), rgba(252, 251, 250, 0.85)), url('bg.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-color: #fcfbfa;
       overflow-x: hidden;
-    }
-    @keyframes gradientFlow {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
     }
 
     h1, h2, h3, label, button, .category-btn, .nutrient-row, .per-100g, .fridge-item, .satiety-box, .trend-box, .quiz-box, .diary-box, .detox-box, .behavior-box { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
@@ -51,20 +49,20 @@
     .action-btn { width: 100%; margin-top: 20px; padding: 14px; font-size: 16px; font-weight: 600; color: white; background-color: var(--primary); border: none; border-radius: 8px; cursor: pointer; transition: background 0.2s;}
     .action-btn:hover { background-color: #325a3f; }
 
-    .research-section { background: white; padding: 30px; border-radius: 16px; border-left: 6px solid var(--primary); box-shadow: 0 8px 20px rgba(0,0,0,0.04);}
+    .research-section { background: rgba(255,255,255,0.9); padding: 30px; border-radius: 16px; border-left: 6px solid var(--primary); box-shadow: 0 8px 20px rgba(0,0,0,0.04);}
     .research-section p { margin-bottom: 14px; font-size: 16px;}
     .research-section ul { padding-left: 20px; }
     .research-section li { margin-bottom: 10px; }
 
     #searchInput { margin-bottom: 16px; padding: 14px; font-size: 16px; border-radius: 8px; border: 1px solid #ddd; width: 100%; }
     .categories { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; }
-    .category-btn { padding: 6px 16px; border-radius: 20px; border: 1px solid #ccc; background: white; cursor: pointer; font-size: 14px; transition: all 0.2s; color: #555;}
+    .category-btn { padding: 6px 16px; border-radius: 20px; border: 1px solid #ccc; background: rgba(255,255,255,0.8); cursor: pointer; font-size: 14px; transition: all 0.2s; color: #555;}
     .category-btn:hover { background: #f0f0f0; }
     .category-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
 
     .food-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
     .food-card {
-      background: linear-gradient(135deg, var(--watercolor-bg-1), var(--watercolor-bg-2));
+      background: linear-gradient(135deg, rgba(242, 247, 244, 0.95), rgba(253, 250, 246, 0.95));
       border-radius: 16px; padding: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.04), inset 0 0 0 1px rgba(255,255,255,0.8);
       transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
       position: relative; overflow: hidden; cursor: pointer;
@@ -92,7 +90,7 @@
     .fridge-item { background: white; padding: 6px 12px; border-radius: 20px; font-size: 13px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 6px;}
     .fridge-item button { width: auto; margin: 0; padding: 0; background: none; color: #999; border: none; font-size: 16px; font-weight: bold; cursor: pointer;}
     .fridge-item button:hover { color: red; }
-    .progress-container { margin-bottom: 12px; background: white; padding: 12px; border-radius: 8px;}
+    .progress-container { margin-bottom: 12px; background: rgba(255,255,255,0.9); padding: 12px; border-radius: 8px;}
     .progress-label { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; font-weight: bold; }
     .progress-bar-bg { width: 100%; height: 10px; background: #e0e0e0; border-radius: 5px; overflow: hidden;}
     .progress-bar-fill { height: 100%; background: var(--primary); width: 0%; transition: width 0.4s ease;}
@@ -101,20 +99,20 @@
     .satiety-box p { margin: 0; font-size: 14px; color: #5c4a2c;}
 
     .mood-selector { display: flex; gap: 16px; justify-content: center; margin: 24px 0;}
-    .mood-btn { font-size: 30px; background: white; border: 2px solid #eee; border-radius: 50%; width: 60px; height: 60px; cursor: pointer; transition: all 0.2s; display: flex; justify-content: center; align-items: center; margin: 0; padding:0;}
+    .mood-btn { font-size: 30px; background: rgba(255,255,255,0.9); border: 2px solid #eee; border-radius: 50%; width: 60px; height: 60px; cursor: pointer; transition: all 0.2s; display: flex; justify-content: center; align-items: center; margin: 0; padding:0;}
     .mood-btn:hover { transform: scale(1.1); border-color: #ddd;}
     .mood-btn.selected { border-color: var(--primary); background: #eef6f0; transform: scale(1.1);}
-    .history-log { display: flex; justify-content: space-between; padding: 8px; border-bottom: 1px dashed #eee; font-size: 13px;}
+    .history-log { display: flex; justify-content: space-between; padding: 8px; border-bottom: 1px dashed #eee; font-size: 13px; background: rgba(255,255,255,0.7);}
     .mood-text { font-weight: bold; }
     .chart-bar { display: flex; height: 16px; border-radius: 8px; overflow: hidden; width: 100%; margin-top: 12px;}
 
-    .behavior-option { display: flex; justify-content: space-between; align-items: center; background: #f9f9f9; padding: 16px; border-radius: 8px; margin-bottom: 12px; border: 1px solid #eee;}
+    .behavior-option { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.9); padding: 16px; border-radius: 8px; margin-bottom: 12px; border: 1px solid #eee;}
     .behavior-option span { font-weight: 600; font-size: 15px; color: #333;}
     .behavior-option select { width: 120px; padding: 6px; }
 
     .detox-inputs { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 16px; }
     .detox-inputs > div { flex: 1; min-width: 200px;}
-    .challenge-box { background: white; padding: 20px; border-radius: 12px; margin-top: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);}
+    .challenge-box { background: rgba(255,255,255,0.9); padding: 20px; border-radius: 12px; margin-top: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);}
     .challenge-box label { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; margin-bottom: 12px; font-weight: normal;}
     .challenge-box input[type="checkbox"] { width: auto; margin-top: 4px; transform: scale(1.2); }
     .detox-feedback { margin-top: 16px; padding: 16px; border-radius: 8px; display: none; background: #e8f5e9; color: #2e7d32; font-weight: 600; font-size: 14px; border-left: 4px solid #2e7d32;}
@@ -123,27 +121,16 @@
     .community-recipe-item:last-child { border-bottom: none;}
     .recipe-author { font-size: 12px; color: #888; font-weight: bold;}
     .recipe-desc { font-size: 14px; color: #333; margin-top: 4px;}
-    .report-box { background: #f8faf9; padding: 24px; border-radius: 12px; margin-top: 20px; border: 1px solid #e0e6e3; display: none;}
+    .report-box { background: rgba(248, 250, 249, 0.95); padding: 24px; border-radius: 12px; margin-top: 20px; border: 1px solid #e0e6e3; display: none;}
 
-    /* 💡 欢迎页与动画 */
+    /* 欢迎页 */
     #welcomeSlide { position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; min-height: 85vh; overflow: hidden; }
-    
-    .welcome-greeting {
-      position: relative; z-index: 10; font-family: "Georgia", serif;
-      font-size: 20px; color: #8a9a8f; letter-spacing: 5px; text-transform: uppercase;
-      margin-bottom: 20px; opacity: 0; animation: welcomeFadeIn 1.5s ease 0.2s forwards;
-    }
-    .welcome-quote {
-      position: relative; z-index: 10; font-family: "Georgia", serif; font-size: 34px; color: var(--primary); font-style: italic;
-      max-width: 650px; line-height: 1.5; opacity: 0; animation: welcomeFadeIn 1.8s ease 1.2s forwards;
-    }
-    .welcome-subtext {
-      position: relative; z-index: 10; font-size: 17px; color: #777; margin-top: 20px; max-width: 500px;
-      opacity: 0; animation: welcomeFadeIn 1.8s ease 2.2s forwards;
-    }
+    .welcome-greeting { position: relative; z-index: 10; font-family: "Georgia", serif; font-size: 20px; color: #8a9a8f; letter-spacing: 5px; text-transform: uppercase; margin-bottom: 20px; opacity: 0; animation: welcomeFadeIn 1.5s ease 0.2s forwards; }
+    .welcome-quote { position: relative; z-index: 10; font-family: "Georgia", serif; font-size: 34px; color: var(--primary); font-style: italic; max-width: 650px; line-height: 1.5; opacity: 0; animation: welcomeFadeIn 1.8s ease 1.2s forwards; background: rgba(255,255,255,0.7); padding: 20px; border-radius: 20px;}
+    .welcome-subtext { position: relative; z-index: 10; font-size: 17px; color: #777; margin-top: 20px; max-width: 500px; opacity: 0; animation: welcomeFadeIn 1.8s ease 2.2s forwards; }
     @keyframes welcomeFadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-    .deco-float { position: absolute; z-index: 1; pointer-events: none; user-select: none; opacity: 0.7; }
+    .deco-float { position: absolute; z-index: 1; pointer-events: none; user-select: none; opacity: 0.6; }
     .deco-food { font-size: 44px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1)); }
     .food-1 { top: 12%; left: 8%; animation: floatBob 6s ease-in-out infinite; }
     .food-2 { top: 18%; right: 10%; animation: floatBob 7s ease-in-out infinite 1s; }
@@ -167,11 +154,11 @@
 
     /* Quiz */
     .quiz-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center; z-index: 2000; }
-    .quiz-content { background: #fcfbfa; width: 92%; max-width: 560px; border-radius: 16px; padding: 32px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); max-height: 88vh; overflow-y: auto; }
+    .quiz-content { background: rgba(252, 251, 250, 0.98); width: 92%; max-width: 560px; border-radius: 16px; padding: 32px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); max-height: 88vh; overflow-y: auto; }
     .quiz-content h2 { margin-top: 0; color: var(--primary); font-size: 24px;}
     .quiz-question { margin-bottom: 22px; text-align: left; }
     .quiz-question p { font-weight: 600; margin-bottom: 10px; font-size: 15px; color: #333; line-height: 1.5;}
-    .quiz-option { display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 8px; cursor: pointer; transition: all 0.2s; font-size: 14px; line-height: 1.5; width: 100%; box-sizing: border-box; }
+    .quiz-option { display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 8px; cursor: pointer; transition: all 0.2s; font-size: 14px; line-height: 1.5; width: 100%; box-sizing: border-box; background: white;}
     .quiz-option:hover { background: #f5f5f5; }
     .quiz-option input { width: auto; margin: 3px 0 0 0; flex-shrink: 0; }
     .quiz-option span { flex: 1; word-wrap: break-word; overflow-wrap: break-word; }
@@ -192,7 +179,7 @@
 </head>
 <body>
 
-  <!-- Quiz 拦截 -->
+  <!-- Quiz 拦截 (和之前一样，省略重复展示，完整代码在下面) -->
   <div class="quiz-overlay" id="quizOverlay">
     <div class="quiz-content">
       <h2>Before You Start</h2>
@@ -273,7 +260,7 @@
     <div class="form-group"><label>Activity Level</label><select id="activity"><option value="sedentary">Sedentary</option><option value="light">Lightly active</option><option value="moderate">Moderately active</option><option value="high">Very active</option></select></div>
     <div class="form-group"><label>Your Goal</label><select id="goal"><option value="maintain">Maintain current state</option><option value="lose">Reduce fat / Lose weight</option><option value="gain">Build muscle</option></select></div>
     <button onclick="calculate()" class="action-btn">Generate My Targets</button>
-    <div id="result" style="margin-top: 20px; padding: 20px; background: white; border: 1px solid #e0e0e0; border-radius: 12px; display: none;"></div>
+    <div id="result" style="margin-top: 20px; padding: 20px; background: rgba(255,255,255,0.9); border: 1px solid #e0e0e0; border-radius: 12px; display: none;"></div>
   </div>
 
   <!-- Slide 3: Food Library -->
@@ -362,7 +349,7 @@
       <input type="text" id="friendName" placeholder="Enter friend's name..." style="margin:0;">
       <button onclick="inviteFriend()" class="action-btn" style="width:auto; margin:0; padding:10px 20px;">Send Invite</button>
     </div>
-    <div style="background:white; padding:20px; border-radius:12px;">
+    <div style="background:rgba(255,255,255,0.9); padding:20px; border-radius:12px;">
       <h4>Your Shared Recipes:</h4>
       <div id="recipeList"><p style="color:#999; font-size:14px;" id="emptyRecipeText">No custom recipes yet.</p></div>
       <div style="margin-top: 20px; border-top: 1px solid #eee; padding-top: 20px;">
@@ -387,7 +374,7 @@
       <h4 style="margin-bottom: 8px; color:#555;">Your Logs:</h4>
       <div id="historyList"></div>
       <div class="chart-bar" id="chartBar"></div>
-      <div style="display: flex; gap: 16px; font-size: 12px; margin-top: 8px; justify-content: center;">
+      <div style="display: flex; gap: 16px; font-size: 12px; margin-top: 8px; justify-content: center; background: rgba(255,255,255,0.7); padding: 8px; border-radius: 8px;">
         <span style="color:#2e7d32;">■ Great</span><span style="color:#7cb342;">■ Okay</span><span style="color:#f57c00;">■ Anxious</span><span style="color:#c62828;">■ Distressed</span>
       </div>
     </div>
@@ -401,19 +388,17 @@
       <input type="number" id="logWeight" placeholder="Today's weight (kg)" step="0.1" style="margin:0;">
       <button onclick="logWeight()" class="action-btn" style="width:auto; margin:0; padding:10px 20px;">Log Weight</button>
     </div>
-    <div id="trendResult" style="display:none; background:#f0f7f4; padding:16px; border-radius:8px; margin-bottom:24px; border-left:4px solid var(--primary);"></div>
+    <div id="trendResult" style="display:none; background:rgba(240, 247, 244, 0.9); padding:16px; border-radius:8px; margin-bottom:24px; border-left:4px solid var(--primary);"></div>
     <button onclick="generateReport()" class="action-btn" style="background-color: #8e44ad;">Generate Bi-Weekly Health Report</button>
     <div id="reportBox" class="report-box" style="display:none;"></div>
   </div>
 
-  <!-- 底部导航 -->
   <div class="nav-controls" id="navControls" style="display: none;">
     <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">Back</button>
     <div class="progress-indicator" id="progressIndicator">Welcome</div>
     <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Start</button>
   </div>
 
-  <!-- 食谱弹窗 -->
   <div class="modal-overlay" id="recipeModal" onclick="closeModal(event)">
     <div class="modal-content" onclick="event.stopPropagation()">
       <button class="close-modal" onclick="closeModal(event)">×</button>
@@ -424,16 +409,36 @@
   </div>
 
   <script>
-    let targets = { protein: 0, fat: 0, fiber: 28 };
-    let fridge = [];
-    let userMetrics = { height: 0, weight: 0, goal: 'maintain' };
-    let weightLogs = [];
-    let moodLogs = [];
-    let behaviorLogs = [];
-    let customRecipes = [];
-    let sharedFriends = [];
+    // --- 本地存储读取 (防止刷新丢失) ---
+    let targets = JSON.parse(localStorage.getItem('targets')) || { protein: 0, fat: 0, fiber: 28 };
+    let fridge = JSON.parse(localStorage.getItem('fridge')) || [];
+    let userMetrics = JSON.parse(localStorage.getItem('userMetrics')) || { height: 0, weight: 0, goal: 'maintain' };
+    let weightLogs = JSON.parse(localStorage.getItem('weightLogs')) || [];
+    let moodLogs = JSON.parse(localStorage.getItem('moodLogs')) || [];
+    let behaviorLogs = JSON.parse(localStorage.getItem('behaviorLogs')) || [];
+    let customRecipes = JSON.parse(localStorage.getItem('customRecipes')) || [];
+    
     let currentSlideIndex = 0;
     const slides = document.querySelectorAll('.slide');
+
+    // 如果有数据，预先回填界面
+    if (userMetrics.height > 0) {
+      document.getElementById('height').value = userMetrics.height;
+      document.getElementById('weight').value = userMetrics.weight;
+      document.getElementById('goal').value = userMetrics.goal;
+      // 重新触发一次计算以更新进度条
+      setTimeout(() => calculate(), 100); 
+    }
+
+    function saveData() {
+      localStorage.setItem('targets', JSON.stringify(targets));
+      localStorage.setItem('fridge', JSON.stringify(fridge));
+      localStorage.setItem('userMetrics', JSON.stringify(userMetrics));
+      localStorage.setItem('weightLogs', JSON.stringify(weightLogs));
+      localStorage.setItem('moodLogs', JSON.stringify(moodLogs));
+      localStorage.setItem('behaviorLogs', JSON.stringify(behaviorLogs));
+      localStorage.setItem('customRecipes', JSON.stringify(customRecipes));
+    }
 
     function submitQuiz() {
       const q1 = document.querySelector('input[name="q1"]:checked');
@@ -512,6 +517,9 @@
       let proteinPerKg = goal === 'gain' ? 1.8 : (goal === 'lose' ? 1.6 : 1.2);
       targets.protein = Math.round(w * proteinPerKg);
       targets.fat = Math.round(w * 0.8);
+      
+      saveData(); // 保存数据
+
       const res = document.getElementById('result');
       res.style.display = 'block';
       res.innerHTML = `
@@ -620,12 +628,14 @@
       const food = foods.find(f => f.name === name);
       if (fridge.find(item => item.name === name)) { alert(name + " is already in your fridge!"); return; }
       fridge.push(food);
+      saveData();
       updateFridgeUI();
       document.getElementById('satietyResult').style.display = 'none';
     }
 
     function removeFromFridge(name) {
       fridge = fridge.filter(item => item.name !== name);
+      saveData();
       updateFridgeUI();
       document.getElementById('satietyResult').style.display = 'none';
     }
@@ -681,6 +691,7 @@
       const existingIndex = behaviorLogs.findIndex(log => log.date === today);
       if (existingIndex > -1) behaviorLogs[existingIndex] = { date: today, hungry, binge };
       else behaviorLogs.push({ date: today, hungry, binge });
+      saveData();
       const summaryBox = document.getElementById('behaviorSummary');
       summaryBox.style.display = 'block';
       if (hungry === 'yes' || binge === 'yes') {
@@ -713,7 +724,6 @@
     function inviteFriend() {
       const name = document.getElementById('friendName').value.trim();
       if (!name) { alert("Please enter a name."); return; }
-      if (!sharedFriends.includes(name)) sharedFriends.push(name);
       document.getElementById('friendName').value = '';
       alert(`Invitation sent to ${name}! They can now see your daily nutrient goals and mood check-ins.`);
     }
@@ -723,8 +733,10 @@
       const desc = document.getElementById('newRecipeDesc').value.trim();
       if (!name || !desc) { alert("Please fill in both the recipe name and how it made you feel."); return; }
       customRecipes.push({ name, desc, author: "You (Shared with Friends)" });
+      saveData();
       document.getElementById('newRecipeName').value = '';
       document.getElementById('newRecipeDesc').value = '';
+      
       const list = document.getElementById('recipeList');
       document.getElementById('emptyRecipeText').style.display = 'none';
       const div = document.createElement('div');
@@ -740,11 +752,14 @@
       const existingIndex = moodLogs.findIndex(log => log.date === today);
       if (existingIndex > -1) moodLogs[existingIndex].mood = mood;
       else moodLogs.push({ date: today, mood: mood });
+      saveData();
+      
       const hist = document.getElementById('diaryHistory');
       const list = document.getElementById('historyList');
       const bar = document.getElementById('chartBar');
       hist.style.display = 'block';
       list.innerHTML = '';
+      
       const texts = { great: '😄 Great', okay: '🙂 Okay', anxious: '😐 Anxious', distressed: '😞 Distressed' };
       moodLogs.forEach(log => {
         const div = document.createElement('div');
@@ -752,6 +767,7 @@
         div.innerHTML = `<span>${log.date}</span><span class="mood-text" style="color:${log.mood==='great'||log.mood==='okay'?'#2e7d32':'#c62828'}">${texts[log.mood]}</span>`;
         list.appendChild(div);
       });
+
       const counts = { great: 0, okay: 0, anxious: 0, distressed: 0 };
       moodLogs.forEach(log => counts[log.mood]++);
       const total = moodLogs.length;
@@ -771,6 +787,7 @@
       const val = parseFloat(document.getElementById('logWeight').value);
       if (!val) return;
       weightLogs.push({ date: new Date().toLocaleDateString(), weight: val });
+      saveData();
       document.getElementById('logWeight').value = '';
       const box = document.getElementById('trendResult');
       box.style.display = 'block';
@@ -787,12 +804,15 @@
     function generateReport() {
       const box = document.getElementById('reportBox');
       box.style.display = 'block';
+      
       let positiveMoods = 0, negativeMoods = 0;
       moodLogs.forEach(log => { if (log.mood === 'great' || log.mood === 'okay') positiveMoods++; else negativeMoods++; });
       let hungryDays = 0, bingeDays = 0;
       behaviorLogs.forEach(log => { if (log.hungry === 'yes') hungryDays++; if (log.binge === 'yes') bingeDays++; });
+
       let html = `<h3 style="margin-top:0; color:#8e44ad;">Your Bi-Weekly Summary</h3>`;
       html += `<p>Over this period, you have checked in <strong>${moodLogs.length}</strong> times for your mood, and <strong>${behaviorLogs.length}</strong> times for your behavior.</p>`;
+      
       if (moodLogs.length > 0) {
         html += `<p><strong>Mood:</strong> You logged ${positiveMoods} positive days and ${negativeMoods} difficult days. `;
         html += positiveMoods > negativeMoods ? `Your mindset is moving in a positive direction!</p>` : `It seems tough right now. Be kind to yourself and reach out to your support network.</p>`;
