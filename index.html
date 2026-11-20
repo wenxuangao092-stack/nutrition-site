@@ -7,54 +7,44 @@
   <style>
     :root {
       --primary: #4a7c59;
-      --bg: #fcfbfa;
       --text: #3a3a3a;
       --watercolor-bg-1: #f2f7f4;
       --watercolor-bg-2: #fdfaf6;
       --fridge-bg: #eef2f5;
     }
     * { box-sizing: border-box; }
+    
+    /* 💡 这里是你流动的水彩渐变背景 */
     body { 
       font-family: "Georgia", "Times New Roman", serif; 
       margin: 0; padding: 0; line-height: 1.7; 
-      color: var(--text); background-color: var(--bg);
+      color: var(--text); 
+      background: linear-gradient(135deg, #fdfaf6, #f2f7f4, #fcfbfa, #eef2f5);
+      background-size: 400% 400%;
+      animation: gradientFlow 15s ease infinite;
       overflow-x: hidden;
     }
+    @keyframes gradientFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
     h1, h2, h3, label, button, .category-btn, .nutrient-row, .per-100g, .fridge-item, .satiety-box, .trend-box, .quiz-box, .diary-box, .detox-box, .behavior-box { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     h1 { font-size: 36px; color: var(--primary); margin-bottom: 8px; letter-spacing: -0.5px;}
     h2 { font-size: 24px; color: var(--primary); margin-bottom: 16px;}
     .subtitle { color: #666; font-size: 17px; margin-bottom: 30px; font-style: italic;}
 
-    /* ===== Slide 架构 ===== */
-    .slide {
-      display: none;
-      padding: 60px 20px 120px;
-      max-width: 900px;
-      margin: 0 auto;
-      min-height: 85vh;
-      animation: slideFadeIn 0.5s ease forwards;
-    }
+    .slide { display: none; padding: 60px 20px 120px; max-width: 900px; margin: 0 auto; min-height: 85vh; animation: slideFadeIn 0.5s ease forwards; }
     .slide.active { display: block; }
-    @keyframes slideFadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes slideFadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* ===== 底部导航 ===== */
-    .nav-controls {
-      position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(252, 251, 250, 0.97);
-      padding: 16px 24px; display: flex; justify-content: space-between; align-items: center;
-      box-shadow: 0 -2px 10px rgba(0,0,0,0.06); backdrop-filter: blur(8px); z-index: 500;
-    }
-    .nav-btn {
-      padding: 10px 28px; font-size: 15px; font-weight: 600; border-radius: 30px; border: none;
-      cursor: pointer; transition: all 0.2s; background-color: var(--primary); color: white;
-    }
+    .nav-controls { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(252, 251, 250, 0.97); padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 -2px 10px rgba(0,0,0,0.06); backdrop-filter: blur(8px); z-index: 500; }
+    .nav-btn { padding: 10px 28px; font-size: 15px; font-weight: 600; border-radius: 30px; border: none; cursor: pointer; transition: all 0.2s; background-color: var(--primary); color: white; }
     .nav-btn:hover { background-color: #325a3f; transform: translateY(-2px); }
     .nav-btn:disabled { background-color: #ccc; cursor: not-allowed; transform: none; }
     .progress-indicator { font-family: monospace; font-size: 13px; color: #888; }
 
-    /* ===== 表单 ===== */
     .form-group { margin-bottom: 16px; }
     label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; }
     input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 15px; font-family: sans-serif;}
@@ -135,35 +125,25 @@
     .recipe-desc { font-size: 14px; color: #333; margin-top: 4px;}
     .report-box { background: #f8faf9; padding: 24px; border-radius: 12px; margin-top: 20px; border: 1px solid #e0e6e3; display: none;}
 
-    /* ===== 💡 欢迎页（独立 Slide + 装饰动画） ===== */
-    #welcomeSlide {
-      position: relative;
-      display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
-      min-height: 85vh; max-width: 900px; margin: 0 auto; padding: 40px 20px;
-      overflow: hidden;
+    /* 💡 欢迎页与动画 */
+    #welcomeSlide { position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; min-height: 85vh; overflow: hidden; }
+    
+    .welcome-greeting {
+      position: relative; z-index: 10; font-family: "Georgia", serif;
+      font-size: 20px; color: #8a9a8f; letter-spacing: 5px; text-transform: uppercase;
+      margin-bottom: 20px; opacity: 0; animation: welcomeFadeIn 1.5s ease 0.2s forwards;
     }
     .welcome-quote {
-      position: relative; z-index: 10;
-      font-family: "Georgia", serif; font-size: 34px; color: var(--primary); font-style: italic;
-      max-width: 650px; line-height: 1.5;
-      opacity: 0; animation: welcomeFadeIn 1.8s ease 0.5s forwards;
+      position: relative; z-index: 10; font-family: "Georgia", serif; font-size: 34px; color: var(--primary); font-style: italic;
+      max-width: 650px; line-height: 1.5; opacity: 0; animation: welcomeFadeIn 1.8s ease 1.2s forwards;
     }
     .welcome-subtext {
-      position: relative; z-index: 10;
-      font-size: 17px; color: #777; margin-top: 20px; max-width: 500px;
-      opacity: 0; animation: welcomeFadeIn 1.8s ease 1.5s forwards;
+      position: relative; z-index: 10; font-size: 17px; color: #777; margin-top: 20px; max-width: 500px;
+      opacity: 0; animation: welcomeFadeIn 1.8s ease 2.2s forwards;
     }
-    @keyframes welcomeFadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes welcomeFadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* 浮动装饰容器 */
-    .deco-float {
-      position: absolute; z-index: 1; pointer-events: none; user-select: none;
-      opacity: 0.7;
-    }
-    /* 食物 Emoji 装饰 */
+    .deco-float { position: absolute; z-index: 1; pointer-events: none; user-select: none; opacity: 0.7; }
     .deco-food { font-size: 44px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1)); }
     .food-1 { top: 12%; left: 8%; animation: floatBob 6s ease-in-out infinite; }
     .food-2 { top: 18%; right: 10%; animation: floatBob 7s ease-in-out infinite 1s; }
@@ -172,43 +152,26 @@
     .food-5 { top: 50%; left: 3%; animation: floatBob 8s ease-in-out infinite 1.5s; font-size: 36px;}
     .food-6 { top: 45%; right: 4%; animation: floatBob 7.5s ease-in-out infinite 0.8s; font-size: 38px;}
 
-    /* 手绘人物 CSS 装饰（简化人形，用边框和圆做出手绘感） */
-    .deco-person {
-      width: 60px; height: 100px; position: relative;
-    }
+    .deco-person { width: 60px; height: 100px; position: relative; }
     .person-1 { top: 30%; left: 18%; animation: floatBob 9s ease-in-out infinite 0.3s; }
     .person-2 { top: 25%; right: 18%; animation: floatBob 8.5s ease-in-out infinite 1.2s; }
     .person-3 { bottom: 28%; left: 20%; animation: floatBob 10s ease-in-out infinite 0.7s; }
     .person-4 { bottom: 25%; right: 20%; animation: floatBob 9.5s ease-in-out infinite 2s; }
-
-    /* 简化人物：头 + 身体 + 简单动作线 */
-    .deco-person::before {
-      content: "🏃"; font-size: 42px; position: absolute; top: 0; left: 0;
-      filter: drop-shadow(0 3px 6px rgba(0,0,0,0.1));
-    }
+    .deco-person::before { font-size: 42px; position: absolute; top: 0; left: 0; filter: drop-shadow(0 3px 6px rgba(0,0,0,0.1)); }
     .person-1::before { content: "🧘"; }
     .person-2::before { content: "🚴"; }
     .person-3::before { content: "🤸"; }
     .person-4::before { content: "🏋️"; }
 
-    @keyframes floatBob {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      30% { transform: translateY(-18px) rotate(-3deg); }
-      70% { transform: translateY(-8px) rotate(3deg); }
-    }
+    @keyframes floatBob { 0%, 100% { transform: translateY(0px) rotate(0deg); } 30% { transform: translateY(-18px) rotate(-3deg); } 70% { transform: translateY(-8px) rotate(3deg); } }
 
-    /* ===== Quiz 弹窗（修复格式） ===== */
+    /* Quiz */
     .quiz-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center; z-index: 2000; }
-    .quiz-content { background: var(--bg); width: 92%; max-width: 560px; border-radius: 16px; padding: 32px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); max-height: 88vh; overflow-y: auto; }
+    .quiz-content { background: #fcfbfa; width: 92%; max-width: 560px; border-radius: 16px; padding: 32px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); max-height: 88vh; overflow-y: auto; }
     .quiz-content h2 { margin-top: 0; color: var(--primary); font-size: 24px;}
     .quiz-question { margin-bottom: 22px; text-align: left; }
     .quiz-question p { font-weight: 600; margin-bottom: 10px; font-size: 15px; color: #333; line-height: 1.5;}
-    .quiz-option {
-      display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px;
-      border: 1px solid #ddd; border-radius: 8px; margin-bottom: 8px;
-      cursor: pointer; transition: all 0.2s; font-size: 14px; line-height: 1.5;
-      width: 100%; box-sizing: border-box;
-    }
+    .quiz-option { display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 8px; cursor: pointer; transition: all 0.2s; font-size: 14px; line-height: 1.5; width: 100%; box-sizing: border-box; }
     .quiz-option:hover { background: #f5f5f5; }
     .quiz-option input { width: auto; margin: 3px 0 0 0; flex-shrink: 0; }
     .quiz-option span { flex: 1; word-wrap: break-word; overflow-wrap: break-word; }
@@ -217,10 +180,9 @@
     .quiz-result p { font-size: 14px; line-height: 1.6; margin-bottom: 16px; }
     .result-green { color: #2e7d32; } .result-yellow { color: #d18e1a; } .result-red { color: #c62828; }
 
-    /* 弹窗 */
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 1000; opacity: 0; transition: opacity 0.3s; }
     .modal-overlay.active { display: flex; opacity: 1; }
-    .modal-content { background: var(--bg); width: 90%; max-width: 500px; border-radius: 16px; padding: 28px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); position: relative;}
+    .modal-content { background: #fcfbfa; width: 90%; max-width: 500px; border-radius: 16px; padding: 28px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); position: relative;}
     .close-modal { position: absolute; top: 15px; right: 20px; font-size: 24px; cursor: pointer; color: #999; border: none; background: none;}
     .close-modal:hover { color: #333; }
     .modal-content h3 { margin-top: 0; color: var(--primary); font-size: 22px; }
@@ -266,21 +228,20 @@
     </div>
   </div>
 
-  <!-- 💡 欢迎页（独立 Slide，有装饰动画） -->
+  <!-- 💡 欢迎页 -->
   <div id="welcomeSlide" class="slide">
-    <!-- 食物装饰 -->
     <div class="deco-float deco-food food-1">🥑</div>
     <div class="deco-float deco-food food-2">🍓</div>
     <div class="deco-float deco-food food-3">🥦</div>
     <div class="deco-float deco-food food-4">🍋</div>
     <div class="deco-float deco-food food-5">🥕</div>
     <div class="deco-float deco-food food-6">🫐</div>
-    <!-- 手绘人物装饰（用 Emoji 模拟动作） -->
     <div class="deco-float deco-person person-1"></div>
     <div class="deco-float deco-person person-2"></div>
     <div class="deco-float deco-person person-3"></div>
     <div class="deco-float deco-person person-4"></div>
 
+    <p class="welcome-greeting">Welcome</p>
     <h1 class="welcome-quote" id="welcomeQuote">"You don't have to be perfect to be healthy."</h1>
     <p class="welcome-subtext" id="welcomeSubtext">Let's shift the focus from numbers to nourishment.</p>
   </div>
@@ -463,7 +424,6 @@
   </div>
 
   <script>
-    // ===== 全局状态 =====
     let targets = { protein: 0, fat: 0, fiber: 28 };
     let fridge = [];
     let userMetrics = { height: 0, weight: 0, goal: 'maintain' };
@@ -472,12 +432,9 @@
     let behaviorLogs = [];
     let customRecipes = [];
     let sharedFriends = [];
-
-    // ===== 幻灯片控制 =====
     let currentSlideIndex = 0;
     const slides = document.querySelectorAll('.slide');
 
-    // ===== Quiz =====
     function submitQuiz() {
       const q1 = document.querySelector('input[name="q1"]:checked');
       const q2 = document.querySelector('input[name="q2"]:checked');
@@ -511,13 +468,11 @@
 
     function enterSite() {
       document.getElementById('quizOverlay').style.display = 'none';
-      // 显示欢迎页（Slide 0）
       slides[0].classList.add('active');
       document.getElementById('navControls').style.display = 'flex';
       updateNav();
     }
 
-    // ===== 幻灯片导航 =====
     function changeSlide(direction) {
       if (currentSlideIndex >= 0 && currentSlideIndex < slides.length) {
         slides[currentSlideIndex].classList.remove('active');
@@ -545,7 +500,6 @@
       }
     }
 
-    // ===== 其余业务逻辑 =====
     function calculate() {
       const h = parseFloat(document.getElementById('height').value);
       const w = parseFloat(document.getElementById('weight').value);
