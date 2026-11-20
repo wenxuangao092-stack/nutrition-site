@@ -13,6 +13,7 @@
       --watercolor-bg-2: #fdfaf6;
       --fridge-bg: #eef2f5;
     }
+    * { box-sizing: border-box; }
     body { 
       font-family: "Georgia", "Times New Roman", serif; 
       margin: 0; padding: 0; line-height: 1.7; 
@@ -24,55 +25,53 @@
     h2 { font-size: 24px; color: var(--primary); margin-bottom: 16px;}
     .subtitle { color: #666; font-size: 17px; margin-bottom: 30px; font-style: italic;}
 
-    /* 💡 幻灯片架构 */
+    /* ===== Slide 架构 ===== */
     .slide {
-      display: none; /* 默认隐藏 */
-      padding: 60px 20px;
+      display: none;
+      padding: 60px 20px 120px;
       max-width: 900px;
       margin: 0 auto;
-      min-height: 80vh;
+      min-height: 85vh;
       animation: slideFadeIn 0.5s ease forwards;
     }
-    .slide.active {
-      display: block; /* 激活时显示 */
-    }
+    .slide.active { display: block; }
     @keyframes slideFadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* 导航控制 */
+    /* ===== 底部导航 ===== */
     .nav-controls {
-      position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(252, 251, 250, 0.95);
-      padding: 16px; display: flex; justify-content: space-between; align-items: center;
-      box-shadow: 0 -2px 10px rgba(0,0,0,0.05); backdrop-filter: blur(5px); z-index: 500;
+      position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(252, 251, 250, 0.97);
+      padding: 16px 24px; display: flex; justify-content: space-between; align-items: center;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.06); backdrop-filter: blur(8px); z-index: 500;
     }
     .nav-btn {
-      padding: 10px 24px; font-size: 16px; font-weight: 600; border-radius: 30px; border: none;
+      padding: 10px 28px; font-size: 15px; font-weight: 600; border-radius: 30px; border: none;
       cursor: pointer; transition: all 0.2s; background-color: var(--primary); color: white;
     }
     .nav-btn:hover { background-color: #325a3f; transform: translateY(-2px); }
     .nav-btn:disabled { background-color: #ccc; cursor: not-allowed; transform: none; }
-    .progress-indicator { font-family: monospace; font-size: 14px; color: #666; }
+    .progress-indicator { font-family: monospace; font-size: 13px; color: #888; }
 
-    /* 内容样式（之前的基础样式） */
+    /* ===== 表单 ===== */
     .form-group { margin-bottom: 16px; }
     label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; }
-    input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 15px; font-family: sans-serif;}
-    .action-btn { width: 100%; margin-top: 24px; padding: 14px; font-size: 16px; font-weight: 600; color: white; background-color: var(--primary); border: none; border-radius: 8px; cursor: pointer; transition: background 0.2s;}
+    input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 15px; font-family: sans-serif;}
+    .action-btn { width: 100%; margin-top: 20px; padding: 14px; font-size: 16px; font-weight: 600; color: white; background-color: var(--primary); border: none; border-radius: 8px; cursor: pointer; transition: background 0.2s;}
     .action-btn:hover { background-color: #325a3f; }
-    
-    .research-section { background-color: white; padding: 30px; border-radius: 16px; border-left: 6px solid var(--primary); box-shadow: 0 8px 20px rgba(0,0,0,0.04);}
-    .research-section p { margin-bottom: 16px; font-size: 16px;}
-    .research-section ul { padding-left: 20px; }
-    .research-section li { margin-bottom: 12px; }
 
-    #searchInput { margin-bottom: 16px; padding: 14px; font-size: 16px; border-radius: 8px; border: 1px solid #ddd; width: 100%; box-sizing: border-box; font-family: sans-serif; }
+    .research-section { background: white; padding: 30px; border-radius: 16px; border-left: 6px solid var(--primary); box-shadow: 0 8px 20px rgba(0,0,0,0.04);}
+    .research-section p { margin-bottom: 14px; font-size: 16px;}
+    .research-section ul { padding-left: 20px; }
+    .research-section li { margin-bottom: 10px; }
+
+    #searchInput { margin-bottom: 16px; padding: 14px; font-size: 16px; border-radius: 8px; border: 1px solid #ddd; width: 100%; }
     .categories { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; }
     .category-btn { padding: 6px 16px; border-radius: 20px; border: 1px solid #ccc; background: white; cursor: pointer; font-size: 14px; transition: all 0.2s; color: #555;}
     .category-btn:hover { background: #f0f0f0; }
     .category-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
-    
+
     .food-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
     .food-card {
       background: linear-gradient(135deg, var(--watercolor-bg-1), var(--watercolor-bg-2));
@@ -98,20 +97,19 @@
     .recipe-btn { background: #f0f0f0; color: #555; border: 1px solid #ddd;}
     .recipe-btn:hover { background: #e0e0e0; }
 
-    #fridgeSection { background-color: var(--fridge-bg); padding: 24px; border-radius: 16px; margin-top: 20px;}
+    #fridgeSection { background: var(--fridge-bg); padding: 24px; border-radius: 16px; margin-top: 20px;}
     .fridge-items { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; min-height: 40px;}
     .fridge-item { background: white; padding: 6px 12px; border-radius: 20px; font-size: 13px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 6px;}
     .fridge-item button { width: auto; margin: 0; padding: 0; background: none; color: #999; border: none; font-size: 16px; font-weight: bold; cursor: pointer;}
     .fridge-item button:hover { color: red; }
     .progress-container { margin-bottom: 12px; background: white; padding: 12px; border-radius: 8px;}
-    .progress-label { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; font-weight: bold; font-family: sans-serif;}
+    .progress-label { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; font-weight: bold; }
     .progress-bar-bg { width: 100%; height: 10px; background: #e0e0e0; border-radius: 5px; overflow: hidden;}
     .progress-bar-fill { height: 100%; background: var(--primary); width: 0%; transition: width 0.4s ease;}
     .satiety-box { margin-top: 16px; padding: 16px; background: #fff9eb; border: 1px solid #fce7c0; border-radius: 8px; display: none;}
     .satiety-box h4 { margin: 0 0 8px 0; color: #d18e1a;}
     .satiety-box p { margin: 0; font-size: 14px; color: #5c4a2c;}
 
-    /* 心境、行为、排毒、报告模块 */
     .mood-selector { display: flex; gap: 16px; justify-content: center; margin: 24px 0;}
     .mood-btn { font-size: 30px; background: white; border: 2px solid #eee; border-radius: 50%; width: 60px; height: 60px; cursor: pointer; transition: all 0.2s; display: flex; justify-content: center; align-items: center; margin: 0; padding:0;}
     .mood-btn:hover { transform: scale(1.1); border-color: #ddd;}
@@ -137,70 +135,129 @@
     .recipe-desc { font-size: 14px; color: #333; margin-top: 4px;}
     .report-box { background: #f8faf9; padding: 24px; border-radius: 12px; margin-top: 20px; border: 1px solid #e0e6e3; display: none;}
 
-    /* 💡 首页激励动画 */
-    #welcomeSlide { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; height: 100vh; max-width: 800px; margin: 0 auto; padding: 20px;}
-    .fade-in-text { opacity: 0; animation: textFadeIn 2s ease forwards; font-family: "Georgia", serif; font-size: 32px; color: var(--primary); font-style: italic;}
-    .fade-in-subtext { opacity: 0; animation: textFadeIn 2s ease 1.5s forwards; font-size: 18px; color: #666; margin-top: 20px;}
-    @keyframes textFadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+    /* ===== 💡 欢迎页（独立 Slide + 装饰动画） ===== */
+    #welcomeSlide {
+      position: relative;
+      display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+      min-height: 85vh; max-width: 900px; margin: 0 auto; padding: 40px 20px;
+      overflow: hidden;
+    }
+    .welcome-quote {
+      position: relative; z-index: 10;
+      font-family: "Georgia", serif; font-size: 34px; color: var(--primary); font-style: italic;
+      max-width: 650px; line-height: 1.5;
+      opacity: 0; animation: welcomeFadeIn 1.8s ease 0.5s forwards;
+    }
+    .welcome-subtext {
+      position: relative; z-index: 10;
+      font-size: 17px; color: #777; margin-top: 20px; max-width: 500px;
+      opacity: 0; animation: welcomeFadeIn 1.8s ease 1.5s forwards;
+    }
+    @keyframes welcomeFadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-    /* Quiz 弹窗 */
+    /* 浮动装饰容器 */
+    .deco-float {
+      position: absolute; z-index: 1; pointer-events: none; user-select: none;
+      opacity: 0.7;
+    }
+    /* 食物 Emoji 装饰 */
+    .deco-food { font-size: 44px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1)); }
+    .food-1 { top: 12%; left: 8%; animation: floatBob 6s ease-in-out infinite; }
+    .food-2 { top: 18%; right: 10%; animation: floatBob 7s ease-in-out infinite 1s; }
+    .food-3 { bottom: 22%; left: 12%; animation: floatBob 5.5s ease-in-out infinite 0.5s; }
+    .food-4 { bottom: 15%; right: 8%; animation: floatBob 6.5s ease-in-out infinite 2s; }
+    .food-5 { top: 50%; left: 3%; animation: floatBob 8s ease-in-out infinite 1.5s; font-size: 36px;}
+    .food-6 { top: 45%; right: 4%; animation: floatBob 7.5s ease-in-out infinite 0.8s; font-size: 38px;}
+
+    /* 手绘人物 CSS 装饰（简化人形，用边框和圆做出手绘感） */
+    .deco-person {
+      width: 60px; height: 100px; position: relative;
+    }
+    .person-1 { top: 30%; left: 18%; animation: floatBob 9s ease-in-out infinite 0.3s; }
+    .person-2 { top: 25%; right: 18%; animation: floatBob 8.5s ease-in-out infinite 1.2s; }
+    .person-3 { bottom: 28%; left: 20%; animation: floatBob 10s ease-in-out infinite 0.7s; }
+    .person-4 { bottom: 25%; right: 20%; animation: floatBob 9.5s ease-in-out infinite 2s; }
+
+    /* 简化人物：头 + 身体 + 简单动作线 */
+    .deco-person::before {
+      content: "🏃"; font-size: 42px; position: absolute; top: 0; left: 0;
+      filter: drop-shadow(0 3px 6px rgba(0,0,0,0.1));
+    }
+    .person-1::before { content: "🧘"; }
+    .person-2::before { content: "🚴"; }
+    .person-3::before { content: "🤸"; }
+    .person-4::before { content: "🏋️"; }
+
+    @keyframes floatBob {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      30% { transform: translateY(-18px) rotate(-3deg); }
+      70% { transform: translateY(-8px) rotate(3deg); }
+    }
+
+    /* ===== Quiz 弹窗（修复格式） ===== */
     .quiz-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center; z-index: 2000; }
-    .quiz-content { background: var(--bg); width: 90%; max-width: 550px; border-radius: 16px; padding: 36px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); max-height: 85vh; overflow-y: auto; }
-    .quiz-content h2 { margin-top: 0; color: var(--primary); }
-    .quiz-question { margin-bottom: 24px; text-align: left; }
-    .quiz-question p { font-weight: 600; margin-bottom: 10px; font-family: sans-serif; color: #333;}
-    .quiz-option { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 8px; cursor: pointer; transition: all 0.2s; font-family: sans-serif; }
+    .quiz-content { background: var(--bg); width: 92%; max-width: 560px; border-radius: 16px; padding: 32px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); max-height: 88vh; overflow-y: auto; }
+    .quiz-content h2 { margin-top: 0; color: var(--primary); font-size: 24px;}
+    .quiz-question { margin-bottom: 22px; text-align: left; }
+    .quiz-question p { font-weight: 600; margin-bottom: 10px; font-size: 15px; color: #333; line-height: 1.5;}
+    .quiz-option {
+      display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px;
+      border: 1px solid #ddd; border-radius: 8px; margin-bottom: 8px;
+      cursor: pointer; transition: all 0.2s; font-size: 14px; line-height: 1.5;
+      width: 100%; box-sizing: border-box;
+    }
     .quiz-option:hover { background: #f5f5f5; }
-    .quiz-result { display: none; text-align: center; padding: 20px 0; }
-    .quiz-result h3 { font-size: 22px; margin-bottom: 16px; }
-    .quiz-result p { font-family: sans-serif; font-size: 15px; line-height: 1.6; margin-bottom: 20px; }
+    .quiz-option input { width: auto; margin: 3px 0 0 0; flex-shrink: 0; }
+    .quiz-option span { flex: 1; word-wrap: break-word; overflow-wrap: break-word; }
+    .quiz-result { display: none; text-align: center; padding: 16px 0; }
+    .quiz-result h3 { font-size: 20px; margin-bottom: 12px; }
+    .quiz-result p { font-size: 14px; line-height: 1.6; margin-bottom: 16px; }
     .result-green { color: #2e7d32; } .result-yellow { color: #d18e1a; } .result-red { color: #c62828; }
 
     /* 弹窗 */
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 1000; opacity: 0; transition: opacity 0.3s; }
     .modal-overlay.active { display: flex; opacity: 1; }
-    .modal-content { background: var(--bg); width: 90%; max-width: 500px; border-radius: 16px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transform: translateY(20px); transition: transform 0.3s; position: relative;}
-    .modal-overlay.active .modal-content { transform: translateY(0); }
+    .modal-content { background: var(--bg); width: 90%; max-width: 500px; border-radius: 16px; padding: 28px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); position: relative;}
     .close-modal { position: absolute; top: 15px; right: 20px; font-size: 24px; cursor: pointer; color: #999; border: none; background: none;}
     .close-modal:hover { color: #333; }
-    .modal-content h3 { margin-top: 0; color: var(--primary); font-size: 24px; }
-    .recipe-steps { padding-left: 20px; font-family: sans-serif; color: #444; }
-    .recipe-steps li { margin-bottom: 12px; }
+    .modal-content h3 { margin-top: 0; color: var(--primary); font-size: 22px; }
+    .recipe-steps { padding-left: 20px; color: #444; }
+    .recipe-steps li { margin-bottom: 10px; font-size: 14px;}
   </style>
 </head>
 <body>
 
   <!-- Quiz 拦截 -->
   <div class="quiz-overlay" id="quizOverlay">
-    <div class="quiz-content" id="quizContent">
+    <div class="quiz-content">
       <h2>Before You Start</h2>
-      <p style="color:#666; font-size:14px; margin-bottom:24px;">This is not a diagnosis. It's a gentle check-in to make sure this tool is right for you right now.</p>
-      
+      <p style="color:#666; font-size:13px; margin-bottom:20px;">This is not a diagnosis. It's a gentle check-in to make sure this tool is right for you right now.</p>
       <div id="quizQuestions">
-        <div class="quiz-question" data-q="1">
+        <div class="quiz-question">
           <p>1. Do you make yourself sick or skip meals because you feel uncomfortably full or guilty?</p>
-          <label class="quiz-option"><input type="radio" name="q1" value="1"> Yes, sometimes</label>
-          <label class="quiz-option"><input type="radio" name="q1" value="0"> No, not really</label>
+          <label class="quiz-option"><input type="radio" name="q1" value="1"><span>Yes, sometimes</span></label>
+          <label class="quiz-option"><input type="radio" name="q1" value="0"><span>No, not really</span></label>
         </div>
-        <div class="quiz-question" data-q="2">
+        <div class="quiz-question">
           <p>2. Do you believe you are fat, even when others tell you that you are too thin?</p>
-          <label class="quiz-option"><input type="radio" name="q2" value="1"> Yes, I often feel this way</label>
-          <label class="quiz-option"><input type="radio" name="q2" value="0"> No, my perception matches reality</label>
+          <label class="quiz-option"><input type="radio" name="q2" value="1"><span>Yes, I often feel this way</span></label>
+          <label class="quiz-option"><input type="radio" name="q2" value="0"><span>No, my perception matches reality</span></label>
         </div>
-        <div class="quiz-question" data-q="3">
+        <div class="quiz-question">
           <p>3. Do you spend more than an hour a day thinking about or checking your body?</p>
-          <label class="quiz-option"><input type="radio" name="q3" value="1"> Yes, it takes up a lot of my time</label>
-          <label class="quiz-option"><input type="radio" name="q3" value="0"> No, it's not a big part of my day</label>
+          <label class="quiz-option"><input type="radio" name="q3" value="1"><span>Yes, it takes up a lot of my time</span></label>
+          <label class="quiz-option"><input type="radio" name="q3" value="0"><span>No, it's not a big part of my day</span></label>
         </div>
-        <div class="quiz-question" data-q="4">
+        <div class="quiz-question">
           <p>4. Would you say that food or your weight dominates your life and causes you distress?</p>
-          <label class="quiz-option"><input type="radio" name="q4" value="1"> Yes, it often makes me feel bad</label>
-          <label class="quiz-option"><input type="radio" name="q4" value="0"> No, I have a balanced relationship with it</label>
+          <label class="quiz-option"><input type="radio" name="q4" value="1"><span>Yes, it often makes me feel bad</span></label>
+          <label class="quiz-option"><input type="radio" name="q4" value="0"><span>No, I have a balanced relationship with it</span></label>
         </div>
       </div>
-
       <button onclick="submitQuiz()" class="action-btn" id="quizSubmitBtn">See My Result</button>
-      
       <div class="quiz-result" id="quizResult">
         <h3 id="quizResultTitle"></h3>
         <p id="quizResultText"></p>
@@ -209,11 +266,23 @@
     </div>
   </div>
 
-  <!-- 💡 首页激励动画 -->
+  <!-- 💡 欢迎页（独立 Slide，有装饰动画） -->
   <div id="welcomeSlide" class="slide">
-    <h1 class="fade-in-text" id="welcomeQuote">"You don't have to be perfect to be healthy."</h1>
-    <p class="fade-in-subtext" id="welcomeSubtext">Let's shift the focus from numbers to nourishment.</p>
-    <button onclick="startJourney()" class="action-btn fade-in-subtext" style="width: auto; padding: 14px 40px; margin-top: 40px; cursor: pointer;">Start Your Journey</button>
+    <!-- 食物装饰 -->
+    <div class="deco-float deco-food food-1">🥑</div>
+    <div class="deco-float deco-food food-2">🍓</div>
+    <div class="deco-float deco-food food-3">🥦</div>
+    <div class="deco-float deco-food food-4">🍋</div>
+    <div class="deco-float deco-food food-5">🥕</div>
+    <div class="deco-float deco-food food-6">🫐</div>
+    <!-- 手绘人物装饰（用 Emoji 模拟动作） -->
+    <div class="deco-float deco-person person-1"></div>
+    <div class="deco-float deco-person person-2"></div>
+    <div class="deco-float deco-person person-3"></div>
+    <div class="deco-float deco-person person-4"></div>
+
+    <h1 class="welcome-quote" id="welcomeQuote">"You don't have to be perfect to be healthy."</h1>
+    <p class="welcome-subtext" id="welcomeSubtext">Let's shift the focus from numbers to nourishment.</p>
   </div>
 
   <!-- Slide 1: Research Context -->
@@ -243,7 +312,7 @@
     <div class="form-group"><label>Activity Level</label><select id="activity"><option value="sedentary">Sedentary</option><option value="light">Lightly active</option><option value="moderate">Moderately active</option><option value="high">Very active</option></select></div>
     <div class="form-group"><label>Your Goal</label><select id="goal"><option value="maintain">Maintain current state</option><option value="lose">Reduce fat / Lose weight</option><option value="gain">Build muscle</option></select></div>
     <button onclick="calculate()" class="action-btn">Generate My Targets</button>
-    <div id="result" style="margin-top: 24px; padding: 20px; background: white; border: 1px solid #e0e0e0; border-radius: 12px; display: none;"></div>
+    <div id="result" style="margin-top: 20px; padding: 20px; background: white; border: 1px solid #e0e0e0; border-radius: 12px; display: none;"></div>
   </div>
 
   <!-- Slide 3: Food Library -->
@@ -282,7 +351,7 @@
         <div class="progress-label"><span>Fiber (Target: 28g)</span><span id="currentFiber">0g</span></div>
         <div class="progress-bar-bg"><div class="progress-bar-fill" id="fiberBar"></div></div>
       </div>
-      <button onclick="generateMealSummary()" style="background-color:#d18e1a; margin-top:10px;" class="action-btn">Evaluate Fullness & Meal</button>
+      <button onclick="generateMealSummary()" class="action-btn" style="background-color:#d18e1a; margin-top:10px;">Evaluate Fullness & Meal</button>
       <div class="satiety-box" id="satietyResult">
         <h4>🍽️ How you'll feel:</h4>
         <p id="satietyText"></p>
@@ -367,22 +436,20 @@
   <div id="slide9" class="slide">
     <h2>Your Progress & Weight Trend</h2>
     <p>We recommend checking weight once a week under the same conditions. Let's look at your data.</p>
-    
     <div style="margin-bottom: 24px; display:flex; gap:10px;">
       <input type="number" id="logWeight" placeholder="Today's weight (kg)" step="0.1" style="margin:0;">
       <button onclick="logWeight()" class="action-btn" style="width:auto; margin:0; padding:10px 20px;">Log Weight</button>
     </div>
     <div id="trendResult" style="display:none; background:#f0f7f4; padding:16px; border-radius:8px; margin-bottom:24px; border-left:4px solid var(--primary);"></div>
-
     <button onclick="generateReport()" class="action-btn" style="background-color: #8e44ad;">Generate Bi-Weekly Health Report</button>
     <div id="reportBox" class="report-box" style="display:none;"></div>
   </div>
 
-  <!-- 底部导航控制 -->
+  <!-- 底部导航 -->
   <div class="nav-controls" id="navControls" style="display: none;">
     <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">Back</button>
-    <div class="progress-indicator" id="progressIndicator">Step 1 / 9</div>
-    <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next</button>
+    <div class="progress-indicator" id="progressIndicator">Welcome</div>
+    <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Start</button>
   </div>
 
   <!-- 食谱弹窗 -->
@@ -396,7 +463,7 @@
   </div>
 
   <script>
-    // --- 全局状态 ---
+    // ===== 全局状态 =====
     let targets = { protein: 0, fat: 0, fiber: 28 };
     let fridge = [];
     let userMetrics = { height: 0, weight: 0, goal: 'maintain' };
@@ -405,29 +472,25 @@
     let behaviorLogs = [];
     let customRecipes = [];
     let sharedFriends = [];
-    
-    // 幻灯片控制
+
+    // ===== 幻灯片控制 =====
     let currentSlideIndex = 0;
     const slides = document.querySelectorAll('.slide');
 
-    // --- 1. Quiz 和 首页动画逻辑 ---
+    // ===== Quiz =====
     function submitQuiz() {
       const q1 = document.querySelector('input[name="q1"]:checked');
       const q2 = document.querySelector('input[name="q2"]:checked');
       const q3 = document.querySelector('input[name="q3"]:checked');
       const q4 = document.querySelector('input[name="q4"]:checked');
       if (!q1 || !q2 || !q3 || !q4) { alert("Please answer all questions."); return; }
-      
       let score = parseInt(q1.value) + parseInt(q2.value) + parseInt(q3.value) + parseInt(q4.value);
       document.getElementById('quizQuestions').style.display = 'none';
       document.getElementById('quizSubmitBtn').style.display = 'none';
-      
       const resDiv = document.getElementById('quizResult');
       const title = document.getElementById('quizResultTitle');
       const text = document.getElementById('quizResultText');
       resDiv.style.display = 'block';
-
-      // 根据分数设置不同的心理暗示（Motivational Quotes）
       if (score <= 1) {
         title.className = 'result-green'; title.innerText = "You seem to be in a healthy headspace.";
         text.innerText = "You have a balanced relationship with food and your body. You can use this site freely to explore nutrients and how foods make you feel.";
@@ -448,34 +511,20 @@
 
     function enterSite() {
       document.getElementById('quizOverlay').style.display = 'none';
-      // 进入首页动画
+      // 显示欢迎页（Slide 0）
       slides[0].classList.add('active');
-      // 动画结束后显示导航
-      setTimeout(() => {
-        document.getElementById('navControls').style.display = 'flex';
-        updateNav();
-      }, 4000); // 给动画留出时间
-    }
-
-    function startJourney() {
-      // 如果用户不想等动画，直接点按钮进入
       document.getElementById('navControls').style.display = 'flex';
-      changeSlide(1); // 直接跳到第一步
+      updateNav();
     }
 
-    // --- 2. 幻灯片导航逻辑 ---
+    // ===== 幻灯片导航 =====
     function changeSlide(direction) {
-      // 隐藏当前 slide
-      slides[currentSlideIndex].classList.remove('active');
-      
-      // 计算下一个索引
+      if (currentSlideIndex >= 0 && currentSlideIndex < slides.length) {
+        slides[currentSlideIndex].classList.remove('active');
+      }
       currentSlideIndex += direction;
-      
-      // 边界限制
       if (currentSlideIndex < 0) currentSlideIndex = 0;
       if (currentSlideIndex >= slides.length) currentSlideIndex = slides.length - 1;
-      
-      // 显示下一个 slide
       slides[currentSlideIndex].classList.add('active');
       window.scrollTo({ top: 0, behavior: 'smooth' });
       updateNav();
@@ -485,8 +534,6 @@
       const indicator = document.getElementById('progressIndicator');
       const prevBtn = document.getElementById('prevBtn');
       const nextBtn = document.getElementById('nextBtn');
-      
-      // 首页不算进步骤里
       if (currentSlideIndex === 0) {
         indicator.innerText = "Welcome";
         prevBtn.style.display = 'none';
@@ -498,7 +545,7 @@
       }
     }
 
-    // --- 3. 其余业务逻辑（不变） ---
+    // ===== 其余业务逻辑 =====
     function calculate() {
       const h = parseFloat(document.getElementById('height').value);
       const w = parseFloat(document.getElementById('weight').value);
@@ -511,7 +558,6 @@
       let proteinPerKg = goal === 'gain' ? 1.8 : (goal === 'lose' ? 1.6 : 1.2);
       targets.protein = Math.round(w * proteinPerKg);
       targets.fat = Math.round(w * 0.8);
-      
       const res = document.getElementById('result');
       res.style.display = 'block';
       res.innerHTML = `
@@ -681,7 +727,6 @@
       const existingIndex = behaviorLogs.findIndex(log => log.date === today);
       if (existingIndex > -1) behaviorLogs[existingIndex] = { date: today, hungry, binge };
       else behaviorLogs.push({ date: today, hungry, binge });
-
       const summaryBox = document.getElementById('behaviorSummary');
       summaryBox.style.display = 'block';
       if (hungry === 'yes' || binge === 'yes') {
@@ -700,14 +745,12 @@
       const positive = document.getElementById('checkPositive').checked;
       const unfollow = document.getElementById('checkUnfollow').checked;
       if (isNaN(time) || isNaN(limit)) { alert("Please enter your screen time and limit goal."); return; }
-      
       const fb = document.getElementById('detoxFeedback');
       fb.style.display = 'block';
       let msg = time > limit ? `⚠️ You exceeded your limit (${time} vs ${limit} mins). Try leaving your phone in another room during meals.` : `✅ Great job staying within your limit (${time} mins).`;
       if (avoid && positive && unfollow) msg += " 🌟 You controlled your algorithm today!";
       else if (avoid || positive) msg += " 👍 Good start. Keep trying to avoid negative keywords.";
       else msg += " 💡 Tip: Click 'Not Interested' on body image posts to retrain your feed.";
-      
       fb.innerHTML = msg;
       fb.style.background = time > limit ? '#fff3cd' : '#e8f5e9';
       fb.style.color = time > limit ? '#856404' : '#2e7d32';
@@ -728,7 +771,6 @@
       customRecipes.push({ name, desc, author: "You (Shared with Friends)" });
       document.getElementById('newRecipeName').value = '';
       document.getElementById('newRecipeDesc').value = '';
-      
       const list = document.getElementById('recipeList');
       document.getElementById('emptyRecipeText').style.display = 'none';
       const div = document.createElement('div');
@@ -744,13 +786,11 @@
       const existingIndex = moodLogs.findIndex(log => log.date === today);
       if (existingIndex > -1) moodLogs[existingIndex].mood = mood;
       else moodLogs.push({ date: today, mood: mood });
-      
       const hist = document.getElementById('diaryHistory');
       const list = document.getElementById('historyList');
       const bar = document.getElementById('chartBar');
       hist.style.display = 'block';
       list.innerHTML = '';
-      
       const texts = { great: '😄 Great', okay: '🙂 Okay', anxious: '😐 Anxious', distressed: '😞 Distressed' };
       moodLogs.forEach(log => {
         const div = document.createElement('div');
@@ -758,8 +798,6 @@
         div.innerHTML = `<span>${log.date}</span><span class="mood-text" style="color:${log.mood==='great'||log.mood==='okay'?'#2e7d32':'#c62828'}">${texts[log.mood]}</span>`;
         list.appendChild(div);
       });
-
-      // 更新图表
       const counts = { great: 0, okay: 0, anxious: 0, distressed: 0 };
       moodLogs.forEach(log => counts[log.mood]++);
       const total = moodLogs.length;
@@ -795,15 +833,12 @@
     function generateReport() {
       const box = document.getElementById('reportBox');
       box.style.display = 'block';
-      
       let positiveMoods = 0, negativeMoods = 0;
       moodLogs.forEach(log => { if (log.mood === 'great' || log.mood === 'okay') positiveMoods++; else negativeMoods++; });
       let hungryDays = 0, bingeDays = 0;
       behaviorLogs.forEach(log => { if (log.hungry === 'yes') hungryDays++; if (log.binge === 'yes') bingeDays++; });
-
       let html = `<h3 style="margin-top:0; color:#8e44ad;">Your Bi-Weekly Summary</h3>`;
       html += `<p>Over this period, you have checked in <strong>${moodLogs.length}</strong> times for your mood, and <strong>${behaviorLogs.length}</strong> times for your behavior.</p>`;
-      
       if (moodLogs.length > 0) {
         html += `<p><strong>Mood:</strong> You logged ${positiveMoods} positive days and ${negativeMoods} difficult days. `;
         html += positiveMoods > negativeMoods ? `Your mindset is moving in a positive direction!</p>` : `It seems tough right now. Be kind to yourself and reach out to your support network.</p>`;
