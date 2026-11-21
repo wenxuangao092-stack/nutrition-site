@@ -442,6 +442,30 @@
     </div>
     <div id="trendResult" style="display:none; background:#fff; padding:16px; border-radius:8px; margin-bottom:24px; border-left:4px solid var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.05);"></div>
     <button onclick="generateReport()" class="action-btn" style="background-color: #8e44ad;">Generate Bi-Weekly Health Report</button>
+   <!-- 💡 TPB 健康契约模块 -->
+    <div id="tpbPactBox" style="display:none; margin-top: 30px; padding: 24px; background: #fcfbfa; border: 2px solid var(--primary); border-radius: 12px; box-shadow: 0 4px 15px rgba(74,124,89,0.1);">
+      <h3 style="margin-top:0; color:var(--primary); text-align:center;">Make Your Health Pact</h3>
+      <p style="font-size:14px; color:#666; text-align:center; margin-bottom:20px;">Based on the Theory of Planned Behavior, forming a specific intention increases your chance of success.</p>
+      
+      <label style="display:flex; gap:10px; margin-bottom:12px; font-weight:normal; cursor:pointer;">
+        <input type="checkbox" class="pact-check" onchange="checkPact()" style="width:auto; margin-top:4px;"> 
+        <span><strong>Attitude:</strong> I believe my worth is not defined by my weight.</span>
+      </label>
+      
+      <label style="display:flex; gap:10px; margin-bottom:12px; font-weight:normal; cursor:pointer;">
+        <input type="checkbox" class="pact-check" onchange="checkPact()" style="width:auto; margin-top:4px;"> 
+        <span><strong>Social Support:</strong> I will invite a friend to support my journey.</span>
+      </label>
+      
+      <label style="display:flex; gap:10px; margin-bottom:12px; font-weight:normal; cursor:pointer;">
+        <input type="checkbox" class="pact-check" onchange="checkPact()" style="width:auto; margin-top:4px;"> 
+        <span><strong>Behavioral Control:</strong> I will pause and use this site when I feel anxious.</span>
+      </label>
+
+      <div id="pactSuccess" style="display:none; text-align:center; margin-top:20px; padding:16px; background:#e8f5e9; border-radius:8px; color:#2e7d32; font-weight:bold;">
+        🌟 Pact Sealed! Your intention is set. You are ready for the next two weeks.
+      </div>
+    </div>
     <div id="reportBox" class="report-box" style="display:none;"></div>
 
     <button onclick="resetApp()" class="action-btn" style="background:#ccc; color:#333; margin-top:30px; font-size:14px;">Reset All Data (For Demo)</button>
@@ -890,7 +914,7 @@
       html += `<p style="font-size:14px; color:#888; font-style:italic; margin-top:16px;">"Progress is not linear. Every day you observe your habits is a victory."</p>`;
       box.innerHTML = html;
     }
-
+document.getElementById('tpbPactBox').style.display = 'block';
     function showRecipe(name) {
       const food = foods.find(f => f.name === name);
       if (!food) return;
@@ -917,6 +941,18 @@
 
     renderFoods(foods);
     initMealSelects();
+    function checkPact() {
+      const checks = document.querySelectorAll('.pact-check');
+      const allChecked = Array.from(checks).every(c => c.checked);
+      const successMsg = document.getElementById('pactSuccess');
+      
+      if (allChecked) {
+        successMsg.style.display = 'block';
+        successMsg.style.animation = 'fadeIn 1s ease';
+      } else {
+        successMsg.style.display = 'none';
+      }
+    }
   </script>
 </body>
 </html>
