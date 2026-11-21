@@ -15,7 +15,9 @@
     * { box-sizing: border-box; }
     body { 
       font-family: "Georgia", serif; margin: 0; padding: 0; line-height: 1.7; color: var(--text); 
-      background-color: #fcfbfa;background-image: linear-gradient(rgba(252, 251, 250, 0.85), rgba(252, 251, 250, 0.85)), url('bg.jpg');      background-size: cover; background-position: center; background-attachment: fixed; overflow-x: hidden;
+      background-color: #fcfbfa; 
+      background-image: linear-gradient(rgba(252, 251, 250, 0.85), rgba(252, 251, 250, 0.85)), url('bg.jpg'); 
+      background-size: cover; background-position: center; background-attachment: fixed; overflow-x: hidden;
     }
     h1, h2, h3, label, button, .category-btn, .nutrient-row, .per-100g, .fridge-item, .satiety-box, .trend-box, .quiz-box, .diary-box, .detox-box, .behavior-box { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     h1 { font-size: 36px; color: var(--primary); margin-bottom: 8px; letter-spacing: -0.5px;}
@@ -75,7 +77,7 @@
     .recipe-btn:hover { background: #e0e0e0; }
 
     #fridgeSection { background: var(--fridge-bg); padding: 24px; border-radius: 16px; margin-top: 20px;}
-    .fridge-items { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; min-height: 40px;}
+    .fridge-items { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; min-height: 30px;}
     .fridge-item { background: white; padding: 6px 12px; border-radius: 20px; font-size: 13px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 6px;}
     .fridge-item button { width: auto; margin: 0; padding: 0; background: none; color: #999; border: none; font-size: 16px; font-weight: bold; cursor: pointer;}
     .fridge-item button:hover { color: red; }
@@ -86,6 +88,12 @@
     .satiety-box { margin-top: 16px; padding: 16px; background: #fff9eb; border: 1px solid #fce7c0; border-radius: 8px; display: none;}
     .satiety-box h4 { margin: 0 0 8px 0; color: #d18e1a;}
     .satiety-box p { margin: 0; font-size: 14px; color: #5c4a2c;}
+
+    .meal-box { border: 1px solid #ddd; border-radius: 12px; padding: 16px; margin-bottom: 16px; background: rgba(255,255,255,0.8); }
+    .meal-box h4 { margin-top:0; color:var(--primary); margin-bottom: 10px;}
+    .meal-flex { display:flex; gap:10px; margin-top: 10px;}
+    .meal-flex select { flex:1; padding:8px; border-radius:6px; }
+    .meal-flex button { width:auto; margin:0; padding:8px 16px; font-size:14px; }
 
     .mood-selector { display: flex; gap: 16px; justify-content: center; margin: 24px 0;}
     .mood-btn { font-size: 30px; background: white; border: 2px solid #eee; border-radius: 50%; width: 60px; height: 60px; cursor: pointer; transition: all 0.2s; display: flex; justify-content: center; align-items: center; margin: 0; padding:0;}
@@ -262,29 +270,67 @@
   </div>
 
   <div id="slide4" class="slide">
-    <h2>My Fridge</h2>
-    <p>Add foods to see if your meal meets your targets and keeps you full.</p>
+    <h2>Today's Meals</h2>
+    <p>Add foods to your meals to see if your daily intake meets your targets and keeps you full.</p>
     <div id="fridgeSection">
-      <div class="fridge-items" id="fridgeItems">
-        <p style="color:#999; font-size:14px;" id="emptyFridgeText">Your fridge is empty.</p>
+      
+      <div class="meal-box">
+        <h4>Breakfast</h4>
+        <div class="fridge-items" id="meal-breakfast"></div>
+        <div class="meal-flex">
+          <select id="select-breakfast"></select>
+          <button onclick="addToMeal('breakfast')" class="action-btn">Add</button>
+        </div>
       </div>
-      <div class="progress-container">
-        <div class="progress-label"><span>Protein (Target: <span id="targetProtein">--</span>g)</span><span id="currentProtein">0g</span></div>
-        <div class="progress-bar-bg"><div class="progress-bar-fill" id="proteinBar"></div></div>
+
+      <div class="meal-box">
+        <h4>Lunch</h4>
+        <div class="fridge-items" id="meal-lunch"></div>
+        <div class="meal-flex">
+          <select id="select-lunch"></select>
+          <button onclick="addToMeal('lunch')" class="action-btn">Add</button>
+        </div>
       </div>
-      <div class="progress-container">
-        <div class="progress-label"><span>Fat (Target: <span id="targetFat">--</span>g)</span><span id="currentFat">0g</span></div>
-        <div class="progress-bar-bg"><div class="progress-bar-fill" id="fatBar"></div></div>
+
+      <div class="meal-box">
+        <h4>Dinner</h4>
+        <div class="fridge-items" id="meal-dinner"></div>
+        <div class="meal-flex">
+          <select id="select-dinner"></select>
+          <button onclick="addToMeal('dinner')" class="action-btn">Add</button>
+        </div>
       </div>
-      <div class="progress-container">
-        <div class="progress-label"><span>Fiber (Target: 28g)</span><span id="currentFiber">0g</span></div>
-        <div class="progress-bar-bg"><div class="progress-bar-fill" id="fiberBar"></div></div>
+
+      <div class="meal-box">
+        <h4>Snacks</h4>
+        <div class="fridge-items" id="meal-snacks"></div>
+        <div class="meal-flex">
+          <select id="select-snacks"></select>
+          <button onclick="addToMeal('snacks')" class="action-btn">Add</button>
+        </div>
       </div>
-      <button onclick="generateMealSummary()" class="action-btn" style="background-color:#d18e1a; margin-top:10px;">Evaluate Fullness & Meal</button>
-      <div class="satiety-box" id="satietyResult">
-        <h4>🍽️ How you'll feel:</h4>
-        <p id="satietyText"></p>
+
+      <div style="margin-top: 30px; border-top: 2px dashed #ccc; padding-top: 20px;">
+        <h4 style="margin-top:0; color:var(--primary);">Daily Totals</h4>
+        <div class="progress-container">
+          <div class="progress-label"><span>Protein (Target: <span id="targetProtein">--</span>g)</span><span id="currentProtein">0g</span></div>
+          <div class="progress-bar-bg"><div class="progress-bar-fill" id="proteinBar"></div></div>
+        </div>
+        <div class="progress-container">
+          <div class="progress-label"><span>Fat (Target: <span id="targetFat">--</span>g)</span><span id="currentFat">0g</span></div>
+          <div class="progress-bar-bg"><div class="progress-bar-fill" id="fatBar"></div></div>
+        </div>
+        <div class="progress-container">
+          <div class="progress-label"><span>Fiber (Target: 28g)</span><span id="currentFiber">0g</span></div>
+          <div class="progress-bar-bg"><div class="progress-bar-fill" id="fiberBar"></div></div>
+        </div>
+        <button onclick="generateMealSummary()" class="action-btn" style="background-color:#d18e1a; margin-top:10px;">Evaluate Fullness & Meal</button>
+        <div class="satiety-box" id="satietyResult">
+          <h4>🍽️ How you'll feel:</h4>
+          <p id="satietyText"></p>
+        </div>
       </div>
+      
     </div>
   </div>
 
@@ -368,7 +414,6 @@
     <button onclick="generateReport()" class="action-btn" style="background-color: #8e44ad;">Generate Bi-Weekly Health Report</button>
     <div id="reportBox" class="report-box" style="display:none;"></div>
 
-    <!-- 💡 这里加入了重置按钮 -->
     <button onclick="resetApp()" class="action-btn" style="background:#ccc; color:#333; margin-top:30px; font-size:14px;">Reset All Data (For Demo)</button>
   </div>
 
@@ -389,7 +434,7 @@
 
   <script>
     let targets = JSON.parse(localStorage.getItem('targets')) || { protein: 0, fat: 0, fiber: 28 };
-    let fridge = JSON.parse(localStorage.getItem('fridge')) || [];
+    let meals = JSON.parse(localStorage.getItem('meals')) || { breakfast: [], lunch: [], dinner: [], snacks: [] };
     let userMetrics = JSON.parse(localStorage.getItem('userMetrics')) || { height: 0, weight: 0, goal: 'maintain' };
     let weightLogs = JSON.parse(localStorage.getItem('weightLogs')) || [];
     let moodLogs = JSON.parse(localStorage.getItem('moodLogs')) || [];
@@ -408,7 +453,7 @@
 
     function saveData() {
       localStorage.setItem('targets', JSON.stringify(targets));
-      localStorage.setItem('fridge', JSON.stringify(fridge));
+      localStorage.setItem('meals', JSON.stringify(meals));
       localStorage.setItem('userMetrics', JSON.stringify(userMetrics));
       localStorage.setItem('weightLogs', JSON.stringify(weightLogs));
       localStorage.setItem('moodLogs', JSON.stringify(moodLogs));
@@ -507,7 +552,7 @@
       `;
       document.getElementById('targetProtein').innerText = targets.protein;
       document.getElementById('targetFat').innerText = targets.fat;
-      updateFridgeUI();
+      updateMealUI();
     }
 
     const foods = [
@@ -558,7 +603,6 @@
               <div class="nutrient-row"><span>Fiber</span><span>${food.fiber} g</span></div>
               <div class="per-100g">per 100g</div>
               <div class="action-btns">
-                <button class="add-btn" onclick="addToFridge('${food.name}')">+ Fridge</button>
                 <button class="recipe-btn" onclick="showRecipe('${food.name}')">Recipe</button>
               </div>
             </div>
@@ -598,63 +642,88 @@
       renderFoods(filtered);
     }
 
-    function addToFridge(name) {
-      const food = foods.find(f => f.name === name);
-      if (fridge.find(item => item.name === name)) { alert(name + " is already in your fridge!"); return; }
-      fridge.push(food);
-      saveData();
-      updateFridgeUI();
-      document.getElementById('satietyResult').style.display = 'none';
-    }
-
-    function removeFromFridge(name) {
-      fridge = fridge.filter(item => item.name !== name);
-      saveData();
-      updateFridgeUI();
-      document.getElementById('satietyResult').style.display = 'none';
-    }
-
-    function updateFridgeUI() {
-      const container = document.getElementById('fridgeItems');
-      const emptyText = document.getElementById('emptyFridgeText');
-      Array.from(container.children).forEach(child => { if (child.id !== 'emptyFridgeText') container.removeChild(child); });
-      if (fridge.length === 0) emptyText.style.display = 'block'; else emptyText.style.display = 'none';
-      let totalP = 0, totalF = 0, totalFi = 0;
-      fridge.forEach(item => {
-        totalP += item.protein; totalF += item.fat; totalFi += item.fiber;
-        const tag = document.createElement('div');
-        tag.className = 'fridge-item';
-        tag.innerHTML = `<span>${item.name}</span><button onclick="removeFromFridge('${item.name}')">×</button>`;
-        container.appendChild(tag);
+    // 初始化下拉菜单
+    function initMealSelects() {
+      ['breakfast','lunch','dinner','snacks'].forEach(meal => {
+        const sel = document.getElementById(`select-${meal}`);
+        sel.innerHTML = '';
+        foods.forEach(f => { sel.innerHTML += `<option value="${f.name}">${f.name}</option>`; });
       });
+    }
+
+    function addToMeal(meal) {
+      const foodName = document.getElementById(`select-${meal}`).value;
+      const food = foods.find(f => f.name === foodName);
+      if(food) {
+        meals[meal].push(food);
+        saveData();
+        updateMealUI();
+        document.getElementById('satietyResult').style.display = 'none';
+      }
+    }
+
+    function removeFromMeal(meal, index) {
+      meals[meal].splice(index, 1);
+      saveData();
+      updateMealUI();
+      document.getElementById('satietyResult').style.display = 'none';
+    }
+
+    function updateMealUI() {
+      let totalP = 0, totalF = 0, totalFi = 0;
+      
+      ['breakfast','lunch','dinner','snacks'].forEach(meal => {
+        const container = document.getElementById(`meal-${meal}`);
+        container.innerHTML = '';
+        
+        if (meals[meal].length === 0) {
+          container.innerHTML = '<span style="color:#999; font-size:12px;">No foods added.</span>';
+        } else {
+          meals[meal].forEach((item, index) => {
+            totalP += item.protein; totalF += item.fat; totalFi += item.fiber;
+            const tag = document.createElement('div');
+            tag.className = 'fridge-item';
+            tag.innerHTML = `<span>${item.name}</span><button onclick="removeFromMeal('${meal}', ${index})">×</button>`;
+            container.appendChild(tag);
+          });
+        }
+      });
+
       document.getElementById('currentProtein').innerText = totalP.toFixed(1) + 'g';
       document.getElementById('currentFat').innerText = totalF.toFixed(1) + 'g';
       document.getElementById('currentFiber').innerText = totalFi.toFixed(1) + 'g';
+
       if (targets.protein > 0) document.getElementById('proteinBar').style.width = Math.min((totalP / targets.protein) * 100, 100) + '%';
       if (targets.fat > 0) document.getElementById('fatBar').style.width = Math.min((totalF / targets.fat) * 100, 100) + '%';
       document.getElementById('fiberBar').style.width = Math.min((totalFi / targets.fiber) * 100, 100) + '%';
     }
 
     function generateMealSummary() {
-      if (fridge.length === 0) { alert("Add some foods to your fridge first!"); return; }
+      let allFoods = [...meals.breakfast, ...meals.lunch, ...meals.dinner, ...meals.snacks];
+      if (allFoods.length === 0) { alert("Add some foods to your meals first!"); return; }
       if (userMetrics.weight === 0) { alert("Please fill in your body metrics at the top first!"); return; }
+      
       let satietyScore = 0;
-      fridge.forEach(item => {
+      allFoods.forEach(item => {
         if (item.satiety === 'high') satietyScore += 3;
         else if (item.satiety === 'med') satietyScore += 2;
         else satietyScore += 1;
       });
+
       const bmi = userMetrics.weight / ((userMetrics.height / 100) ** 2);
-      let threshold = 8;
+      let threshold = 8; 
       if (bmi > 25 || userMetrics.goal === 'gain') threshold = 10; 
       else if (bmi < 18.5 || userMetrics.goal === 'lose') threshold = 6;
+      
       const box = document.getElementById('satietyResult');
       const text = document.getElementById('satietyText');
       box.style.display = 'block';
+      
       let feedback = "";
-      if (satietyScore < threshold - 2) feedback = `For your body size (BMI: ${bmi.toFixed(1)}), this might leave you hungry. Consider adding more protein or high-fiber carbs.`;
-      else if (satietyScore >= threshold - 1 && satietyScore <= threshold + 2) feedback = `Perfect! For your body size (BMI: ${bmi.toFixed(1)}), this combination should leave you comfortably full.`;
+      if (satietyScore < threshold - 2) feedback = `For your body size (BMI: ${bmi.toFixed(1)}), this might leave you hungry. Consider adding more protein or high-fiber carbs to your meals.`;
+      else if (satietyScore >= threshold - 1 && satietyScore <= threshold + 2) feedback = `Perfect! For your body size (BMI: ${bmi.toFixed(1)}), this combination of meals should leave you comfortably full.`;
       else feedback = `This is very filling! For your body size, it might be a bit much, but it will keep you full for a long time.`;
+      
       text.innerText = feedback;
     }
 
@@ -809,7 +878,6 @@
       document.getElementById('recipeModal').classList.remove('active');
     }
 
-    // 💡 这个就是你要加的清空重置功能
     function resetApp() {
       if(confirm("Are you sure you want to clear all your data and restart? This cannot be undone.")) {
         localStorage.clear();
@@ -818,6 +886,7 @@
     }
 
     renderFoods(foods);
+    initMealSelects();
   </script>
 </body>
 </html>
